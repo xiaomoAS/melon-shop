@@ -1,0 +1,22 @@
+.count_cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.count_cont .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34rpx;
+  height: 34rpx;
+}
+.count_cont .btn.disabled{
+	opacity: 0.5;
+    pointer-events: none; 
+}
+.count_cont .int {
+  width: 70rpx;
+  height: 34rpx;
+  text-align: center;
+  border: none;
+}

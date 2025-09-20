@@ -1,0 +1,84 @@
+{
+	"pages": [
+		{
+		"path": "pages/index/index",
+		"style": {
+			//"navigationBarTitleText": "蔬菜商城"
+			"navigationStyle":"custom"
+		}
+		},
+		{
+			"path": "pages/ifica/ifica"
+		},
+		{
+			"path": "pages/order/order"
+		},
+		{
+			"path": "pages/orderlb/orderlb"
+		},
+		{
+			"path": "pages/detail/detail"
+		},
+		{
+			"path": "pages/adres/adres"
+		},
+		{
+			"path": "pages/adresxz/adresxz"
+		},
+		{
+			"path": "pages/mycoupon/mycoupon"
+		},
+		{
+			"path": "pages/my/my",
+			"style": {
+				"navigationBarTitleText": "我的",
+				"navigationStyle":"custom"
+			}
+		}
+	],
+	"tabBar": {
+		"color": "#999999",
+		"selectedColor": "#60C45D",
+		"borderStyle": "black",
+		"backgroundColor": "#ffffff",
+		"list": [
+			{
+				"pagePath": "pages/index/index",
+				"iconPath": "/static/image/foot_nav_1.png",
+				"selectedIconPath": "/static/image/foot_nav_1h.png",
+				"text": "首页"
+			},
+			{
+				"pagePath": "pages/ifica/ifica",
+				"iconPath": "/static/image/foot_nav_2.png",
+				"selectedIconPath": "/static/image/foot_nav_2h.png",
+				"text": "分类"
+			},
+			{
+				"pagePath": "pages/orderlb/orderlb",
+				"iconPath": "/static/image/foot_nav_3.png",
+				"selectedIconPath": "/static/image/foot_nav_3h.png",
+				"text": "订单"
+			},
+			{
+				"pagePath": "pages/my/my",
+				"iconPath": "/static/image/foot_nav_4.png",
+				"selectedIconPath": "/static/image/foot_nav_4h.png",
+				"text": "我的"
+			}
+		]
+	},
+	"globalStyle": {
+		"navigationBarTextStyle": "black",
+		// #ifdef H5
+		"navigationStyle":"custom", //设置成 custom 即可解决微信 H5 双标题的问题
+		// #endif 
+		"navigationBarTitleText": "蔬菜商城",
+		"navigationBarTextStyle":"black",
+		"navigationBarBackgroundColor": "#fff",
+		"backgroundColor": "#fff",
+		"app-plus": {
+			"background": "#fff"
+		}
+	}
+}

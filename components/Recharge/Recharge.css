@@ -1,0 +1,207 @@
+.recharge_dc_cont {
+  position: fixed;
+  top: 50%;
+  left: 5%;
+  width: 90%;
+  transform: translateY(-50%);
+  border-radius: 10rpx;
+  background: linear-gradient(#cfffce, #FFFFFF 30%);
+  z-index: 12;
+  padding: 20rpx;
+}
+.recharge_dc_cont .title_head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.recharge_dc_cont .title_head .tle {
+  position: relative;
+  font-size: 30rpx;
+  font-weight: bold;
+  color: #000000;
+}
+.recharge_dc_cont .title_head .tle::after {
+  content: "";
+  display: block;
+  width: 6rpx;
+  height: 26rpx;
+  background: #61C55E;
+  border-top-right-radius: 10rpx;
+  border-bottom-right-radius: 10rpx;
+  position: absolute;
+  left: -20rpx;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.recharge_dc_cont .title_head .shut {
+  width: 19rpx;
+}
+.recharge_dc_cont .user_inf_cont {
+  margin-bottom: 20rpx;
+  background: #61C55E;
+  border-radius: 10rpx;
+  padding: 20rpx;
+}
+.recharge_dc_cont .user_inf_cont .user_inf_head {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20rpx;
+}
+.recharge_dc_cont .user_inf_cont .ava {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 69rpx;
+  height: 69rpx;
+  border-radius: 100%;
+  overflow: hidden;
+}
+.recharge_dc_cont .user_inf_cont .ava image {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+.recharge_dc_cont .user_inf_cont .inf_cont {
+  width: calc(100% - 69rpx);
+  padding-left: 10rpx;
+}
+.recharge_dc_cont .user_inf_cont .inf_cont .name {
+  font-size: 26rpx;
+  color: #FFFFFF;
+  margin-bottom: 10rpx;
+}
+.recharge_dc_cont .user_inf_cont .inf_cont .id {
+  display: inline-block;
+  padding: 5rpx 12rpx;
+  border-radius: 100rpx;
+  background: #fff;
+  font-size: 22rpx;
+  color: #61C55E;
+}
+.recharge_dc_cont .member_bit_inf {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.recharge_dc_cont .member_bit_inf .lv {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #FFFFFF;
+}
+.recharge_dc_cont .member_bit_inf .lv .i {
+  display: block;
+  width: 39rpx;
+  margin: 0 12rpx;
+}
+.recharge_dc_cont .member_bit_inf .balance {
+  font-size: 24rpx;
+  color: #FFFFFF;
+}
+.recharge_dc_cont .member_bit_inf .balance text {
+  color: #FF5745;
+}
+.recharge_dc_cont .member_last_cont {
+  display: flex;
+  flex-wrap: wrap;
+}
+.recharge_dc_cont .member_last_cont .list {
+  width: 32%;
+  margin-right: 2%;
+  margin-bottom: 20rpx;
+  padding: 20rpx 0;
+  border-radius: 10rpx;
+  background: #F7F7F7;
+  text-align: center;
+}
+.recharge_dc_cont .member_last_cont .list:nth-child(3n) {
+  margin-right: 0;
+}
+.recharge_dc_cont .member_last_cont .list .tle {
+  font-size: 28rpx;
+  color: #5F5F5F;
+  margin-bottom: 20rpx;
+}
+.recharge_dc_cont .member_last_cont .list .price {
+  font-size: 25rpx;
+  color: #000000;
+  font-weight: bold;
+  margin-bottom: 20rpx;
+}
+.recharge_dc_cont .member_last_cont .list .price text {
+  font-size: 42rpx;
+}
+.recharge_dc_cont .member_last_cont .list .bits {
+  display: inline-block;
+  padding: 5rpx 14rpx;
+  border-radius: 5rpx;
+  background: #EDEDED;
+  font-size: 22rpx;
+  color: #5F5F5F;
+}
+.recharge_dc_cont .member_last_cont .list.active {
+  background: linear-gradient(#FCE0B9, #FFEFD6);
+}
+.recharge_dc_cont .member_last_cont .list.active .tle {
+  color: #000000;
+}
+.recharge_dc_cont .member_last_cont .list.active .price {
+  color: #794802;
+}
+.recharge_dc_cont .member_last_cont .list.active .bits {
+  background: #F4D5AF;
+  color: #794802;
+}
+.recharge_dc_cont .tips_guide {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 20rpx;
+  border-radius: 10rpx;
+  background: #FCE1BA33;
+  font-size: 28rpx;
+  color: #794802;
+  margin-bottom: 20rpx;
+}
+.recharge_dc_cont .tips_guide .i {
+  width: 42rpx;
+  margin-right: 10rpx;
+}
+.recharge_dc_cont .recharge_int_cont {
+  margin-bottom: 20rpx;
+}
+.recharge_dc_cont .recharge_int_cont .title {
+  font-size: 28rpx;
+  color: #000000;
+  margin-bottom: 25rpx;
+}
+.recharge_dc_cont .recharge_int_cont .int_cont {
+  display: flex;
+  align-items: center;
+  padding: 10rpx 0;
+  border-bottom: 1rpx solid #A0A0A0;
+}
+.recharge_dc_cont .recharge_int_cont .int_cont .dt {
+  width: 40rpx;
+  text-align: center;
+  font-size: 30rpx;
+  color: #000000;
+}
+.recharge_dc_cont .recharge_int_cont .int_cont input {
+  width: calc(100% - 40rpx);
+  padding-left: 10rpx;
+  box-sizing: border-box;
+  font-size: 30rpx;
+}
+.recharge_dc_cont .recharge_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 60%;
+  height: 80rpx;
+  border-radius: 100rpx;
+  margin: 20rpx auto;
+  background: #61C55E;
+  font-size: 30rpx;
+  color: #FFFFFF;
+}

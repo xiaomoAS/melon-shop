@@ -1,0 +1,1 @@
+{"version":3,"file":"mycoupon.js","sources":["D:/HBuilderX/plugins/uniapp-cli-vite/uniPage:/cGFnZXMvbXljb3Vwb24vbXljb3Vwb24udnVl"],"sourcesContent":["import MiniProgramPage from 'E:/uni/蔬菜商城/pages/mycoupon/mycoupon.vue'\nwx.createPage(MiniProgramPage)"],"names":[],"mappings":";;;;;;;;;;;;;;;;;;;AACA,GAAG,WAAW,eAAe;"}
