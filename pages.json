@@ -2,10 +2,10 @@
 	"pages": [
 		{
 		"path": "pages/index/index",
-		"style": {
-			//"navigationBarTitleText": "蔬菜商城"
-			"navigationStyle":"custom"
-		}
+      "style": {
+        //"navigationBarTitleText": "蔬菜商城"
+        "navigationStyle":"custom"
+      }
 		},
 		{
 			"path": "pages/ifica/ifica"
