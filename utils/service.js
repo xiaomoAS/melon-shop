@@ -1,12 +1,13 @@
 import Request from '@/utils/luch-request/index.js'
 
-if (process.env.NODE_ENV === 'development') {
-	// 开发环境
-	// var baseURL = 'http://127.0.0.1:4523/m1/6785558-6497977-default'; //域名(网站启动时的域名)，目前用这个 js（【注意】记住改manifest.josn 源码视图中的h5配置）
-} else {
-	// 生产环境
-	var baseURL = '101.201.111.162'; //域名(网站启动时的域名)，目前用这个 js
-}
+const baseURL = '//101.201.111.162';
+// if (process.env.NODE_ENV === 'development') {
+// 	// 开发环境
+// 	// var baseURL = 'http://127.0.0.1:4523/m1/6785558-6497977-default'; //域名(网站启动时的域名)，目前用这个 js（【注意】记住改manifest.josn 源码视图中的h5配置）
+// } else {
+// 	// 生产环境
+// 	var baseURL = '101.201.111.162'; //域名(网站启动时的域名)，目前用这个 js
+// }
 
 const http = new Request()
 

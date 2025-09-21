@@ -18,6 +18,7 @@ import { createSSRApp } from 'vue'
 
 import {baseURL, http} from './utils/service.js' // 全局挂载引入，配置相关在该index.js文件里修改
 
+import App from './App.vue'
 export function createApp() {
   const app = createSSRApp(App)
   app.config.globalProperties.$http = http; //把 请求 变成全局文件 就可以直接 访问 （this.$http.post）--注意：$http可以自己命名
