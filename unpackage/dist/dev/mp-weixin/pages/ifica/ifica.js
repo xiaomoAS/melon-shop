@@ -20,10 +20,13 @@ const _sfc_main = {
     that.filenav()();
   },
   methods: {
-    filenav() {
+    catItemsid(id) {
+      this.filenav(id);
+    },
+    filenav(id) {
       this.loading = true;
       var that = this;
-      let param = {};
+      let param = { id };
       this.$http.get("/index/cats", param, {}).then((res) => {
         that.filnav = res;
       });
@@ -41,14 +44,16 @@ const _sfc_main = {
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
     a: common_assets._imports_0$1,
-    b: common_vendor.f($options.filenav, (item, index, i0) => {
+    b: common_vendor.f($data.filnav, (item, index, i0) => {
       return {
         a: common_vendor.t(item.Name),
-        b: item.Name
+        b: item.Name,
+        c: item.id,
+        d: common_vendor.o(($event) => $options.catItemsid(item.id), item.Name)
       };
     }),
     c: common_assets._imports_1$1,
-    d: common_assets._imports_2$3,
+    d: common_assets._imports_2$1,
     e: common_vendor.f($data.prorow, (item, index, i0) => {
       return {
         a: item.mainImgUrl,
@@ -60,16 +65,16 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       };
     }),
     f: common_assets._imports_3$1,
-    g: common_assets._imports_4$2,
+    g: common_assets._imports_4$1,
     h: common_assets._imports_3$1,
     i: common_vendor.o(($event) => $data.reportFileShow = !$data.reportFileShow),
-    j: common_assets._imports_4$2,
+    j: common_assets._imports_4$1,
     k: common_assets._imports_3$1,
     l: $data.reportFile
   }, $data.reportFile ? {
-    m: common_assets._imports_5$1,
-    n: common_assets._imports_2$1,
-    o: common_assets._imports_7,
+    m: common_assets._imports_5$2,
+    n: common_assets._imports_2$3,
+    o: common_assets._imports_7$1,
     p: $data.reportFileShow
   } : {});
 }

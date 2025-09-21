@@ -13,7 +13,7 @@ if (!Math) {
 function _sfc_render(_ctx, _cache) {
   return {
     a: common_assets._imports_0$6,
-    b: common_vendor.sr("Couponlast", "3e87f028-0")
+    b: common_vendor.sr("Couponlast", "4e9a6850-0")
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);

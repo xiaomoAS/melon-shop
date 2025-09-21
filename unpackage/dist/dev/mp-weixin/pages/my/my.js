@@ -54,9 +54,9 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     y: $data.lvdj === "pt" ? 1 : "",
     z: $data.lvdj === "zs" ? 1 : "",
     A: common_assets._imports_14,
-    B: common_vendor.sr("Couponlast", "2489ed28-0"),
+    B: common_vendor.sr("Couponlast", "fe465e50-0"),
     C: $data.dczt,
-    D: common_vendor.sr("Recharge", "2489ed28-1"),
+    D: common_vendor.sr("Recharge", "fe465e50-1"),
     E: $data.dczt
   });
 }

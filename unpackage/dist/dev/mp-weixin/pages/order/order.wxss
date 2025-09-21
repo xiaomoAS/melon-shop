@@ -36,7 +36,7 @@ page {
   height: 40rpx;
 }
 .order_adres_cont .dt image {
-  widht: 31rpx;
+  width: 31rpx;
 }
 .order_adres_cont .dd {
   width: calc(100% - 40rpx);

@@ -52,7 +52,7 @@ const _sfc_main = {
   }
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return common_vendor.e({
+  return {
     a: common_assets._imports_0,
     b: common_assets._imports_0$1,
     c: common_vendor.f($data.lbt, (item, index, i0) => {
@@ -61,56 +61,56 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         b: index
       };
     }),
-    d: common_assets._imports_2$2,
+    d: common_assets._imports_2,
     e: common_assets._imports_3,
-    f: common_assets._imports_4$1,
-    g: common_assets._imports_5$2,
-    h: common_assets._imports_6$1,
-    i: common_assets._imports_7$1,
+    f: common_assets._imports_4,
+    g: common_assets._imports_5,
+    h: common_assets._imports_6,
+    i: common_assets._imports_7,
     j: common_assets._imports_8,
     k: common_assets._imports_1,
     l: common_assets._imports_10,
     m: common_assets._imports_1$1,
-    n: common_assets._imports_2$3,
+    n: common_assets._imports_2$1,
     o: common_vendor.f($data.prorow, (item, index, i0) => {
-      return {
+      return common_vendor.e({
         a: item.mainImgUrl,
         b: common_vendor.t(item.itemName),
-        c: common_vendor.t(item.price),
-        d: item.itemId
-      };
+        c: common_vendor.t(item.price)
+      }, $data.reportFile ? {
+        d: common_assets._imports_5$2,
+        e: common_vendor.o(($event) => $data.reportFileShow = !$data.reportFileShow, item.itemId),
+        f: common_assets._imports_2$3,
+        g: common_assets._imports_7$1,
+        h: $data.reportFileShow
+      } : {}, {
+        i: item.itemId
+      });
     }),
     p: common_assets._imports_3$1,
-    q: common_assets._imports_4$2,
-    r: common_assets._imports_3$1,
-    s: common_vendor.o(($event) => $data.reportFileShow = !$data.reportFileShow),
-    t: common_assets._imports_4$2,
-    v: common_assets._imports_3$1,
-    w: common_assets._imports_2,
-    x: common_vendor.o(($event) => $data.joinCart = !$data.joinCart),
-    y: $data.reportFile
-  }, $data.reportFile ? {
-    z: common_assets._imports_5$1,
-    A: common_vendor.o(($event) => $data.reportFileShow = !$data.reportFileShow),
-    B: common_assets._imports_2$1,
-    C: common_assets._imports_7,
-    D: $data.reportFileShow
-  } : {}, {
-    E: common_assets._imports_19,
-    F: common_assets._imports_8,
-    G: $data.quantity <= 1 ? 1 : "",
-    H: common_vendor.o((...args) => $options.decrease && $options.decrease(...args)),
-    I: common_assets._imports_20,
-    J: common_vendor.t($data.quantity),
-    K: common_vendor.o(($event) => $data.quantity++),
-    L: common_assets._imports_21,
-    M: common_assets._imports_5,
-    N: common_assets._imports_4,
-    O: common_assets._imports_6,
-    P: common_assets._imports_4,
-    Q: common_assets._imports_2,
-    R: $data.joinCart
-  });
+    q: $data.reportFile,
+    r: common_assets._imports_4$1,
+    s: common_assets._imports_3$1,
+    t: common_vendor.o(($event) => $data.reportFileShow = !$data.reportFileShow),
+    v: common_assets._imports_4$1,
+    w: common_assets._imports_3$1,
+    x: common_assets._imports_2$2,
+    y: common_vendor.o(($event) => $data.joinCart = !$data.joinCart),
+    z: common_assets._imports_19,
+    A: common_assets._imports_8,
+    B: $data.quantity <= 1 ? 1 : "",
+    C: common_vendor.o((...args) => $options.decrease && $options.decrease(...args)),
+    D: common_assets._imports_20,
+    E: common_vendor.t($data.quantity),
+    F: common_vendor.o(($event) => $data.quantity++),
+    G: common_assets._imports_21,
+    H: common_assets._imports_5$1,
+    I: common_assets._imports_4$2,
+    J: common_assets._imports_6$1,
+    K: common_assets._imports_4$2,
+    L: common_assets._imports_2$2,
+    M: $data.joinCart
+  };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);
 wx.createPage(MiniProgramPage);
