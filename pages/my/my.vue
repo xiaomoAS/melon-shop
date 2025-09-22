@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<image src="@/static/image/index_head_bg.png" class="index_head_bg" mode="widthFix"></image>
+		<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/916cae2f99af4241acf65617a6a07bd9/index_head_bg.png?Expires=2073875593&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=6l%2B1kM%2BmbcTT4vmhVbD6zlktjVo%3D" class="index_head_bg" mode="widthFix"></image>
 		<view class="user_head_bg">
 			我的
 		</view>

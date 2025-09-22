@@ -1,321 +1,206 @@
 <template>
-	<view>
-		<view class="head_logo">LOGO</view>
-		<image src="@/static/image/index_head_bg.png" class="index_head_bg" mode="widthFix"></image>
-		<view class="contain">
-			<view class="index_header_cont">
-				<view class="index_search">
-					<image class="i" src="@/static/image/ico_1.png" mode="widthFix"></image>
-					<input type="text" placeholder="搜索您喜欢的...">
-					<navigator url="/pages/ifica/ifica" open-type="switchTab" class="btn">搜索</navigator>
-				</view>
-				<swiper class="index_baner" :autoplay="true" :interval="3000" :duration="1000">
-					<swiper-item v-for="(item,index) in lbt" :key="index">
-						<view class="swiper-item"><image :src="item.ItemUrl" name="{{item.itemName}}" id="{{item.itemId}}" mode="aspectFill"></image> </view>
-					</swiper-item>
-				</swiper>
-				<view class="index_navi_cont">
-					<view class="list">
-						<view class="tis_i"><image src="@/static/image/index_nav_1.png" mode="widthFix"></image> </view>
-						<view class="txt">全部商品</view>
+	<scroll-view scroll-y="true" @scrolltolower="loadMoreData" style="height: 100vh">
+		<view>
+			<view class="head_logo">LOGO</view>
+			<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/916cae2f99af4241acf65617a6a07bd9/index_head_bg.png?Expires=2073875593&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=6l%2B1kM%2BmbcTT4vmhVbD6zlktjVo%3D" class="index_head_bg" mode="widthFix"></image>
+			<view class="contain">
+				<view class="index_header_cont">
+					<view class="index_search">
+						<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix"></image>
+						<input type="text" placeholder="搜索您喜欢的...">
+						<navigator url="/pages/ifica/ifica" open-type="switchTab" class="btn">搜索</navigator>
 					</view>
-					<view class="list">
-						<view class="tis_i"><image src="@/static/image/index_nav_2.png" mode="widthFix"></image> </view>
-						<view class="txt">产地水果</view>
-					</view>
-					<view class="list">
-						<view class="tis_i"><image src="@/static/image/index_nav_3.png" mode="widthFix"></image> </view>
-						<view class="txt">备点直播</view>
-					</view>
-					<view class="list">
-						<view class="tis_i"><image src="@/static/image/index_nav_4.png" mode="widthFix"></image> </view>
-						<view class="txt">蒙牛品牌</view>
-					</view>
-					<view class="list">
-						<view class="tis_i"><image src="@/static/image/index_nav_5.png" mode="widthFix"></image> </view>
-						<view class="txt">贵州专场</view>
-					</view>
-				</view>
-				<view class="index_new_vip">
-					<image class="tips" src="@/static/image/tip_1.png" mode="widthFix"></image>
-					<view class="head_title">
-						<view class="tle">新人<text>专享</text> </view>
-						<view class="txt">开启品质生活</view>
-					</view>
-					<view class="pro_last">
-						<view class="list_cont">
-							<view class="tis_i">
-								<image class="i" src="@/static/image/index_case1_1.png" mode="widthFix"></image> 
-								<view class="tip_txt">新客专享</view>
-							</view>
-							<view class="pro_name">广西高山沃柑超...</view>
-							<view class="pro_price">
-								<view class="dt">新人价</view>
-								<view class="dd">￥2.99</view>
-							</view>
+					<swiper class="index_baner" :autoplay="true" :interval="3000" :duration="1000">
+						<swiper-item v-for="(item,index) in carouselImages" :key="index">
+							<view class="swiper-item"><image :src="item.url" name="{{item.name}}" id="{{item.id}}" mode="aspectFill"></image> </view>
+						</swiper-item>
+					</swiper>
+					<view class="index_navi_cont">
+						<view v-for="item in cateList" :key="item.id" class="list">
+							<view class="tis_i"><image :src="item.logoUrl" mode="widthFix"></image> </view>
+							<view class="txt">{{ item.name }}</view>
 						</view>
-						<view class="list_cont">
-							<view class="tis_i">
-								<image class="i" src="@/static/image/index_case1_2.png" mode="widthFix"></image> 
-								<view class="tip_txt">新客专享</view>
-							</view>
-							<view class="pro_name">广西高山沃柑超...</view>
-							<view class="pro_price">
-								<view class="dt">新人价</view>
-								<view class="dd">￥2.99</view>
-							</view>
+					</view>
+					<view class="index_new_vip">
+						<image class="tips" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/29b37b79ca524070b69881a8a0be4d84/tip_1.png?Expires=2073875832&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yea3i%2FfwVPnD91oEwgNeiUyJ4x8%3D" mode="widthFix"></image>
+						<view class="head_title">
+							<view class="tle">新人<text>专享</text> </view>
+							<view class="txt">开启品质生活</view>
 						</view>
-						<view class="list_cont">
-							<view class="tis_i">
-								<image class="i" src="@/static/image/index_case1_3.png" mode="widthFix"></image> 
-								<view class="tip_txt">新客专享</view>
-							</view>
-							<view class="pro_name">广西高山沃柑超...</view>
-							<view class="pro_price">
-								<view class="dt">新人价</view>
-								<view class="dd">￥2.99</view>
+						<view v-if="newPersonList.length" class="pro_last">
+							<view v-for="(newItem, index) in newPersonList" :key="index" class="list_cont">
+								<view class="tis_i">
+									<image class="i" :src="newItem.imgUrl" mode="widthFix"></image> 
+									<view class="tip_txt">新客专享</view>
+								</view>
+								<view class="pro_name">{{ newItem.title }}</view>
+								<view class="pro_price">
+									<view class="dt">新人价</view>
+									<view class="dd">￥{{ newItem.realpayPrice }}</view>
+								</view>
 							</view>
 						</view>
 					</view>
 				</view>
 			</view>
-		</view>
-		<view class="index_pro_contain">
-			<image class="pro_head_bg" src="@/static/image/index_case2_bg.png" mode="widthFix"></image>
-			<view class="title_head">
-				<image class="logo" src="@/static/image/pro_logo.png" mode="widthFix"></image>
-				<view class="dt">团购好货</view>
-				<view class="txt">三餐四季 尽在知花</view>
-			</view>
-			<view class="pro_list_cont" v-for="(item,index) in prorow" :key="item.itemId">
-				<view class="pro_i">
-					<image class="i" :src="item.mainImgUrl" mode="widthFix"></image> 
-					<image class="i_over" src="@/static/image/pro_over.png" mode="widthFix"></image> 
+			<view class="index_pro_contain">
+				<image class="pro_head_bg" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/608def905ee846eab80b698d5d29c6e5/index_case2_bg.png?Expires=2073875992&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Zd2Oz8m0uYQy8idN34qA4pxtSJc%3D" mode="widthFix"></image>
+				<view class="title_head">
+					<image class="logo" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/b5a62a0a9f344046b6ecccd5d5f9184a/pro_logo.png?Expires=2073875894&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=UhwsRTz1JJlnDOlP0K4Tm0ABWGk%3D" mode="widthFix"></image>
+					<view class="dt">团购好货</view>
+					<view class="txt">三餐四季 尽在知花</view>
 				</view>
-				<view class="bit_cont">
-					<view class="name">{{ item.itemName }}</view>
-					<view class="det_txt">
-						高山种植 | 天然不洗果 | 个别带青苔 | 甜润爽喉 | 新鲜鲜甜
-					</view>
-					<view class="bit_deta">
-						<view class="tips_dl">
-							<view class="dd bg_1">送货上门</view>
-							<view class="dd bg_2">免费包邮</view>
-							<view class="dd bg_3">无公害果蔬</view>
-						</view>
-						<view class="ys_time">
-							<view class="dt">预售期</view>
-							<view class="dd">6月28日</view>
-						</view>
-					</view>
-					<view class="bit_seet">
-						<view class="price">￥<text>{{ item.price}}</text> 
-							<view class="dd">/斤/个/份</view> 
-						</view>
-						<view class="btn_dl">
-							<view class="btn btn_ys_1">检测报告</view>
-							<view class="btn btn_ys_2">加入购物车</view>
-						</view>
-					</view>
-				</view>
-				<view v-if="reportFile" v-show="reportFileShow" class="test_report_dc">
-					<view class="title_head">
-						<view class="tle">
-							<image class="i"  src="@/static/image/ico_3.png" mode="widthFix"></image>
-							广西高山粑粑柑
-						</view>
-						<image class="arr"  @click="reportFileShow =! reportFileShow" src="@/static/image/arr_1.png" mode="widthFix"></image>
-					</view>
-					<view class="report_img">
-						<image src="@/static/image/report_i_1.png" mode="widthFix"></image>
-					</view>
-					<view class="bit_page_btn">
-						<view class="btn">上一个</view>
-						<view class="btn">下一个</view>
-					</view>
+				<view class="pro_list_cont" v-for="item in productList" :key="item.productId" :class="{ 'null': !item.stock }">
+					<ProductItem :info="item" />
 				</view>
 			</view>
-			<view class="pro_list_cont">
-				<view class="pro_i">
-					<image class="i" src="@/static/image/pro_i_1.png" mode="widthFix"></image> 
-					<image class="i_over" src="@/static/image/pro_over.png" mode="widthFix"></image> 
-				</view>
-				<view class="bit_cont">
-					<view class="name">广西高山沃柑超甜多水（中型果）</view>
-					<view class="det_txt">
-						高山种植 | 天然不洗果 | 个别带青苔 | 甜润爽喉 | 新鲜鲜甜
-					</view>
-					<view class="bit_deta">
-						<view class="tips_dl">
-							<view class="dd bg_1">送货上门</view>
-							<view class="dd bg_2">免费包邮</view>
-							<view class="dd bg_3">无公害果蔬</view>
-						</view>
-						<view class="ys_time">
-							<view class="dt">预售期</view>
-							<view class="dd">6月28日</view>
-						</view>
-					</view>
-					<view class="bit_seet">
-						<view class="price">￥<text>29.99</text> 
-							<view class="dd">/斤/个/份</view> 
-						</view>
-						<view class="btn_dl">
-							<view class="btn btn_ys_1" @click="reportFileShow =! reportFileShow">检测报告</view>
-							<view class="btn btn_ys_2">加入购物车</view>
-						</view>
-					</view>
-				</view>
+			<view @click="joinCart =! joinCart" class="buycar_floor">
+				<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
+				<view class="txt">23</view>
 			</view>
-			<view class="pro_list_cont null">
-				<view class="pro_i">
-					<image class="i" src="@/static/image/pro_i_1.png" mode="widthFix"></image> 
-					<image class="i_over" src="@/static/image/pro_over.png" mode="widthFix"></image> 
+			
+			<view v-show="joinCart" class="join_cart_cont">
+				<view class="deta_header">
+					<view class="l_cont">
+						<label class="sele_rad">
+							<view class="ring"><radio value="" /></view>
+							<text>全选</text>
+						</label>
+						<view class="det_all">（共3件商品，总重量约128g）</view>
+					</view>
+					<view class="del_all"><image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/fe8f46b9761d4e7e8a57bec3f4e49200/ico_2.png?Expires=2073876106&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=ebfmzCkkDbDP7O2pjeFhK8pSobI%3D" mode="widthFix"></image>清空购物车</view>
 				</view>
-				<view class="bit_cont">
-					<view class="name">广西高山沃柑超甜多水（中型果）</view>
-					<view class="det_txt">
-						高山种植 | 天然不洗果 | 个别带青苔 | 甜润爽喉 | 新鲜鲜甜
-					</view>
-					<view class="bit_deta">
-						<view class="tips_dl">
-							<view class="dd bg_1">送货上门</view>
-							<view class="dd bg_2">免费包邮</view>
-							<view class="dd bg_3">无公害果蔬</view>
-						</view>
-						<view class="ys_time">
-							<view class="dt">预售期</view>
-							<view class="dd">6月28日</view>
-						</view>
-					</view>
-					<view class="bit_seet">
-						<view class="price">￥<text>29.99</text> 
-							<view class="dd">/斤/个/份</view> 
-						</view>
-						<view class="btn_dl">
-							<view class="btn btn_ys_1">检测报告</view>
-							<view class="btn btn_ys_2">加入购物车</view>
-						</view>
-					</view>
-				</view>
-			</view>
-		</view>
-		<view @click="joinCart =! joinCart" class="buycar_floor">
-			<image class="i" src="@/static/image/buycar_floor.png" mode="widthFix"></image>
-			<view class="txt">23</view>
-		</view>
-		
-		<view v-show="joinCart" class="join_cart_cont">
-			<view class="deta_header">
-				<view class="l_cont">
+				<view class="pro_list">
 					<label class="sele_rad">
 						<view class="ring"><radio value="" /></view>
-						<text>全选</text>
 					</label>
-					<view class="det_all">（共3件商品，总重量约128g）</view>
-				</view>
-				<view class="del_all"><image class="i" src="@/static/image/ico_2.png" mode="widthFix"></image>清空购物车</view>
-			</view>
-			<view class="pro_list">
-				<label class="sele_rad">
-					<view class="ring"><radio value="" /></view>
-				</label>
-				<view class="pro_detail_cont">
-					<view class="pro_i"><image src="@/static/image/index_case1_1.png" mode=""></image> </view>
-					<view class="detail_inf">
-						<view class="title">广西高山沃柑超甜多水（中型果）</view>
-						<view class="bits">￥82件/500g</view>
-						<view class="count_cont">
-							<image class="btn less" :class="{disabled:quantity <= 1}" @click="decrease" src="@/static/image/acout_less.png"  mode="widthFix"></image>
-							<text class="int">{{quantity}}</text>
-							<image class="btn plus" @click="quantity++" src="@/static/image/acout_plus.png" mode="widthFix"></image>
+					<view class="pro_detail_cont">
+						<view class="pro_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/985181d675f64280b76b5f37ffdd35dc/index_case1_1.png?Expires=2073876166&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=owGQQbcz%2BJyTI6fB6yUiAaSSOmM%3D" mode=""></image> </view>
+						<view class="detail_inf">
+							<view class="title">广西高山沃柑超甜多水（中型果）</view>
+							<view class="bits">￥82件/500g</view>
+							<view class="count_cont">
+								<image class="btn less" :class="{disabled:quantity <= 1}" @click="decrease" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
+								<text class="int">{{quantity}}</text>
+								<image class="btn plus" @click="quantity++" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
+							</view>
 						</view>
 					</view>
 				</view>
-			</view>
-			<view class="total_price_cont">
-				<view class="title_head">
-					<view class="tle">商品总价</view>
-					<view class="total">￥640.5</view>
-				</view>
-				<view class="dl">
-					<view class="dt">
-						<view class="i"><image src="@/static/image/order_ico_2.png" mode="widthFix"></image> </view>
-						运费券
+				<view class="total_price_cont">
+					<view class="title_head">
+						<view class="tle">商品总价</view>
+						<view class="total">￥640.5</view>
 					</view>
-					<view class="dd">-￥15.6 <image class="arr" src="@/static/image/arr_2.png" mode="widthFix"></image> </view>
-				</view>
-				<view class="dl">
-					<view class="dt">
-						<view class="i"><image src="@/static/image/order_ico_3.png" mode="widthFix"></image> </view>
-						新人专享券
+					<view class="dl">
+						<view class="dt">
+							<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/05a860ef9f874ed696e19c3374f7419c/order_ico_2.png?Expires=2073876488&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5edejPW2awsLyvfjOWNrI8yBClU%3D" mode="widthFix"></image> </view>
+							运费券
+						</view>
+						<view class="dd">-￥15.6 <image class="arr" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1c1b0a37f2274686890fdc70f9a7331f/arr_2.png?Expires=2073876560&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gTx%2F3%2BfjIlY9%2FKTXvmmYbv%2Fq5dE%3D" mode="widthFix"></image> </view>
 					</view>
-					<view class="dd">-￥5.6 <image class="arr" src="@/static/image/arr_2.png" mode="widthFix"></image> </view>
+					<view class="dl">
+						<view class="dt">
+							<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/525a98181c884d0e854f14f241cde3d4/order_ico_3.png?Expires=2073876622&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lJjlb4qD0VewJtyVTV5656JOFo8%3D" mode="widthFix"></image> </view>
+							新人专享券
+						</view>
+						<view class="dd">-￥5.6 <image class="arr" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1c1b0a37f2274686890fdc70f9a7331f/arr_2.png?Expires=2073876560&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gTx%2F3%2BfjIlY9%2FKTXvmmYbv%2Fq5dE%3D" mode="widthFix"></image> </view>
+					</view>
+				</view>
+				<view class="bit_buy_cont">
+					<view class="l_cont">
+						<view class="buy_num">
+							<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
+							<text class="num">23</text>
+						</view>
+						<view class="xj">￥255</view>
+						<view class="yj">￥275</view>
+					</view>
+					<view class="buy_btn">加入购物车</view>
 				</view>
 			</view>
-			<view class="bit_buy_cont">
-				<view class="l_cont">
-					<view class="buy_num">
-						<image src="@/static/image/buycar_floor.png" mode="widthFix"></image>
-						<text class="num">23</text>
-					</view>
-					<view class="xj">￥255</view>
-					<view class="yj">￥275</view>
-				</view>
-				<view class="buy_btn">加入购物车</view>
-			</view>
+			
 		</view>
-		
-	</view>
+	</scroll-view>
 </template>
 <script>
+	import ProductItem from '@/components/product-item/ProductItem.vue'
 	const app = getApp()
 	export default {
 		data() {
 			return {
 				baseUrl: this.$baseURL,
-				lbt: [],
+				carouselImages: [],
+				cateList: [], // 所有类目
+				newPersonList: [],
 				isShow:0,
 				joinCart:false,
-				prorow: [],
-				page: 0,
-				total: 0,
+				productList: [],
+				noMoreData: false,
+				page: 1,
+				pageSize: 5,
 				records: 0,
-				loading: true,
 				quantity:1,
 				reportFile:[],
 				reportFileShow:false,
 			}
 		},
-		onLoad(option) {
-			var that = this;
-			that.getAll();
-			that.proAll();
-			
+		components: {
+			ProductItem,
+		},
+		mounted(option) {
+			this.getCarouselImages();
+			this.getCates();
+			this.getNewPerson()
+			this.getProductList()
 		},
 		methods: {
-			
-			getAll() {
-				var that = this;
-				let param = {};
-				
-				this.$http.get('/index/carousel', param, {
-					custom: {
-						show: false
-					}
-				}).then((res) => {
-					that.lbt=res
-				})
+			loadMoreData() {
+				if (this.noMoreData) return
+				this.page = this.page + 1
+				this.getProductList()
 			},
-			proAll() {
-				this.loading = true;
-				var that = this;
-				let param = {};
-				
-				this.$http.get('/items/catItems', param, {
-				}).then((res) => {
-					that.prorow=res.rows || []; 
-				})
+			async getProductList() {
+				try {
+					const { rows } = await this.$http.post('/items/recommend', {
+						page: this.page,
+						pageSize: this.pageSize,
+					})
+					// 加载完了
+					if (!rows.length) {
+						this.noMoreData = true
+						return
+					} 
+					this.productList = rows
+				} catch (error) {
+					this.productList = []
+				}
+			},
+			async getCarouselImages() {
+				try {
+				console.log(11111)
+					this.carouselImages = await this.$http.post('/index/carousel', {})
+				} catch (error) {
+					this.carouselImages = []
+				}
+			},
+			async getCates() {
+				try {
+					this.cateList = await this.$http.post('/index/cats', {})
+				} catch (error) {
+					this.cateList = []
+				}
+			},
+			async getNewPerson() {
+				try {
+					const { rows } = await this.$http.post('/items/newperson', {
+						page: 1,
+						pageSize: 10
+					})
+					this.newPersonList = rows.slice(0, 3)
+				} catch (error) {
+					this.newPersonList = []
+				}
 			},
 			decrease() {
 				 if (this.quantity > 1) {

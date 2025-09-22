@@ -10,6 +10,7 @@ if (!Math) {
   "./pages/adres/adres.js";
   "./pages/adresxz/adresxz.js";
   "./pages/mycoupon/mycoupon.js";
+  "./pages/user-login/login.js";
   "./pages/my/my.js";
 }
 const _sfc_main$1 = {};

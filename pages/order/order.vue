@@ -1,7 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="order_baner">
-			<image src="@/static/image/order_baner.png" mode="widthFix"></image>
+			<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/54f5a8bc158e4dcfb6cf4187ab8b3711/order_baner.png?Expires=2073876026&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lAFR587No%2B7paT%2F4bUr4YNED5zk%3Dimage/order_baner.png" mode="widthFix"></image>
 		</view>
 		<navigator url="/pages/adres/adres" class="order_adres_cont">
 			<view class="l_cont">
@@ -41,7 +41,7 @@
 					</view>
 				</view>
 			</view>
-			<view class="bit_more">展开(共<text>11</text>件) <image class="arr" src="@/static/image/arr_2.png" mode="widthFix"></image> </view>
+			<view class="bit_more">展开(共<text>11</text>件) <image class="arr" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1c1b0a37f2274686890fdc70f9a7331f/arr_2.png?Expires=2073876560&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gTx%2F3%2BfjIlY9%2FKTXvmmYbv%2Fq5dE%3D" mode="widthFix"></image> </view>
 		</view>
 		<view class="order_coupon_cont">
 			<view class="title_head">
@@ -51,7 +51,7 @@
 			<view class="det_cont">
 				<view class="dl">
 					<view class="dt">
-						<view class="i"><image src="@/static/image/order_ico_2.png" mode="widthFix"></image> </view>
+						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/05a860ef9f874ed696e19c3374f7419c/order_ico_2.png?Expires=2073876488&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5edejPW2awsLyvfjOWNrI8yBClU%3D" mode="widthFix"></image> </view>
 						运费券
 					</view>
 					<view class="dd">
@@ -61,7 +61,7 @@
 				</view>
 				<view class="dl">
 					<view class="dt">
-						<view class="i"><image src="@/static/image/order_ico_3.png" mode="widthFix"></image> </view>
+						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/525a98181c884d0e854f14f241cde3d4/order_ico_3.png?Expires=2073876622&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lJjlb4qD0VewJtyVTV5656JOFo8%3D" mode="widthFix"></image> </view>
 						新人专享券
 					</view>
 					<view class="dd">

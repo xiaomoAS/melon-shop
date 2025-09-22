@@ -27,6 +27,8 @@
 		},
 		{
 			"path": "pages/mycoupon/mycoupon"
+		},{
+			"path": "pages/user-login/login"
 		},
 		{
 			"path": "pages/my/my",

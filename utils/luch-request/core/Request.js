@@ -95,6 +95,7 @@ export default class Request {
   }
 
   post(url, data, options = {}) {
+	console.log(url, 'url')
     return this.middleware({
       url,
       data,

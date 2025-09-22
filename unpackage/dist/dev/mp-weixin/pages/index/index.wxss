@@ -60,16 +60,20 @@ page {
 }
 .index_baner {
   display: block;
-  height: 450rpx;
+  height: 158rpx;
   margin-bottom: 20rpx;
 }
-.index_baner image {
-  display: block;
+.index_baner .swiper-item {
   width: 100%;
+  height: 100%;
+}
+.index_baner .swiper-item image{
+  width: 100%;
+  height: 100%;
 }
 .index_navi_cont {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   margin-bottom: 20rpx;
 }
 .index_navi_cont .list {
@@ -82,9 +86,12 @@ page {
   justify-content: center;
   width: 100%;
   height: 86rpx;
+  border-radius: 50%;
 }
 .index_navi_cont .list .tis_i image {
   width: 86rpx;
+  height: 86rpx;
+  border-radius: 50%;
 }
 .index_navi_cont .list .txt {
   padding: 20rpx 0 0;

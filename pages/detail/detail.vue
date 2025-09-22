@@ -32,7 +32,7 @@
 				<view class="bit_buy_cont">
 					<view class="l_cont">
 						<view class="buy_num">
-							<image src="@/static/image/buycar_floor.png" mode="widthFix"></image>
+							<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
 							<text class="num">23</text>
 						</view>
 						<view class="xj">￥255</view>

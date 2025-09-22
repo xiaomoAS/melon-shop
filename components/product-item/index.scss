@@ -1,0 +1,133 @@
+.pro_list_cont {
+  margin-bottom: 20rpx;
+}
+.pro_list_cont .pro_i {
+  display: block;
+  width: 100%;
+  border-radius: 10rpx;
+  overflow: hidden;
+  margin-bottom: 20rpx;
+  position: relative;
+  background: #000;
+}
+.pro_list_cont .pro_i .i {
+  display: block;
+  width: 100%;
+}
+.pro_list_cont .pro_i .i_over {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 146rpx;
+  display: none;
+}
+.pro_list_cont .name {
+  font-size: 28rpx;
+  color: #000000;
+  margin-bottom: 20rpx;
+}
+.pro_list_cont .det_txt {
+  font-size: 24rpx;
+  color: #FF5F36;
+  margin-bottom: 20rpx;
+}
+.pro_list_cont .bit_deta {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20rpx;
+}
+.pro_list_cont .bit_deta .tips_dl {
+  display: flex;
+  align-items: center;
+  width: 70%;
+}
+.pro_list_cont .bit_deta .tips_dl .dd {
+  padding: 6rpx 12rpx;
+  margin-right: 6rpx;
+  border-radius: 5rpx;
+  font-size: 20rpx;
+}
+.pro_list_cont .bit_deta .tips_dl .dd.bg_1 {
+  background: rgba(255, 95, 54, 0.1);
+  color: #FF5F36;
+}
+.pro_list_cont .bit_deta .tips_dl .dd.bg_2 {
+  background: rgba(26, 95, 255, 0.1);
+  color: #1A5FFF;
+}
+.pro_list_cont .bit_deta .tips_dl .dd.bg_3 {
+  background: rgba(96, 196, 93, 0.1);
+  color: #60C45D;
+}
+.pro_list_cont .bit_deta .ys_time {
+  display: inline-flex;
+  align-items: center;
+  border-radius: 5rpx;
+  overflow: hidden;
+  background: rgba(255, 54, 54, 0.1);
+}
+.pro_list_cont .bit_deta .ys_time .dt {
+  border-radius: 5rpx;
+  font-size: 20rpx;
+  color: #fff;
+  letter-spacing: 0;
+  padding: 8rpx 5rpx;
+  background: #FF3636;
+}
+.pro_list_cont .bit_deta .ys_time .dd {
+  padding: 8rpx 10rpx;
+  font-size: 20rpx;
+  color: #FF3636;
+}
+.pro_list_cont .bit_seet {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.pro_list_cont .bit_seet .price {
+  display: inline-flex;
+  align-items: flex-end;
+  font-size: 24rpx;
+  color: #FF5F36;
+}
+.pro_list_cont .bit_seet .price text {
+  font-size: 40rpx;
+  font-weight: bold;
+  line-height: 40rpx;
+}
+.pro_list_cont .bit_seet .price .dd {
+  font-size: 24rpx;
+  color: #60C45D;
+}
+.pro_list_cont .bit_seet .btn_dl {
+  display: flex;
+  align-items: center;
+}
+.pro_list_cont .bit_seet .btn_dl .btn {
+  padding: 10rpx 16rpx;
+  border-radius: 100rpx;
+  margin-left: 10rpx;
+  font-size: 24rpx;
+}
+.pro_list_cont .bit_seet .btn_dl .btn.btn_ys_1 {
+  background: rgba(255, 95, 54, 0.1);
+  color: #FF5F36;
+}
+.pro_list_cont .bit_seet .btn_dl .btn.btn_ys_2 {
+  background: #60C45D;
+  color: #fff;
+}
+.pro_list_cont.null .pro_i .i {
+  opacity: 0.5;
+}
+.pro_list_cont.null .pro_i .i_over {
+  display: block;
+}
+.pro_list_cont.null .bit_cont {
+  opacity: 0.5;
+}
+.pro_list_cont.null .bit_cont .bit_deta .ys_time {
+  display: none;
+}

@@ -76,6 +76,7 @@ class Request {
     });
   }
   post(url, data, options = {}) {
+    common_vendor.index.__f__("log", "at utils/luch-request/core/Request.js:98", url, "url");
     return this.middleware({
       url,
       data,

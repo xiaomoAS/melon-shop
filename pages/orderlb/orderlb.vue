@@ -7,7 +7,7 @@
 			<view class="li">已完成</view>
 		</view>
 		<view class="order_search_cont">
-			<image class="i" src="@/static/image/ico_1.png" mode="widthFix"></image>
+			<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix"></image>
 			<input type="text" placeholder="搜索您的订单号">
 		</view>
 		<view class="order_infor_last">

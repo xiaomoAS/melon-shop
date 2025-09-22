@@ -24,40 +24,39 @@ if (!Math) {
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_assets._imports_0,
-    b: common_assets._imports_1$5,
-    c: common_assets._imports_2$5,
-    d: $data.lvdj === "pj"
+    a: common_assets._imports_1$3,
+    b: common_assets._imports_1$4,
+    c: $data.lvdj === "pj"
   }, $data.lvdj === "pj" ? {
-    e: common_assets._imports_2$4
+    d: common_assets._imports_2$2
   } : $data.lvdj === "pt" ? {
-    g: common_assets._imports_4$3
+    f: common_assets._imports_3$1
   } : $data.lvdj === "zs" ? {
-    i: common_assets._imports_5$3
+    h: common_assets._imports_4$1
   } : {}, {
-    f: $data.lvdj === "pt",
-    h: $data.lvdj === "zs",
-    j: common_assets._imports_6$2,
-    k: common_assets._imports_7$3,
-    l: common_assets._imports_8$2,
-    m: $data.lvdj === "pj",
-    n: common_assets._imports_9,
-    o: $data.lvdj === "pt",
-    p: common_assets._imports_10$1,
-    q: common_assets._imports_11,
-    r: $data.lvdj === "zs",
-    s: common_assets._imports_12,
-    t: $data.lvdj === "pj",
-    v: common_assets._imports_13,
-    w: $data.lvdj === "pt",
-    x: $data.lvdj === "pj" ? 1 : "",
-    y: $data.lvdj === "pt" ? 1 : "",
-    z: $data.lvdj === "zs" ? 1 : "",
-    A: common_assets._imports_14,
-    B: common_vendor.sr("Couponlast", "fe465e50-0"),
-    C: $data.dczt,
-    D: common_vendor.sr("Recharge", "fe465e50-1"),
-    E: $data.dczt
+    e: $data.lvdj === "pt",
+    g: $data.lvdj === "zs",
+    i: common_assets._imports_5,
+    j: common_assets._imports_6,
+    k: common_assets._imports_7,
+    l: $data.lvdj === "pj",
+    m: common_assets._imports_8,
+    n: $data.lvdj === "pt",
+    o: common_assets._imports_9,
+    p: common_assets._imports_10,
+    q: $data.lvdj === "zs",
+    r: common_assets._imports_11,
+    s: $data.lvdj === "pj",
+    t: common_assets._imports_12,
+    v: $data.lvdj === "pt",
+    w: $data.lvdj === "pj" ? 1 : "",
+    x: $data.lvdj === "pt" ? 1 : "",
+    y: $data.lvdj === "zs" ? 1 : "",
+    z: common_assets._imports_13,
+    A: common_vendor.sr("Couponlast", "e5092228-0"),
+    B: $data.dczt,
+    C: common_vendor.sr("Recharge", "e5092228-1"),
+    D: $data.dczt
   });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);

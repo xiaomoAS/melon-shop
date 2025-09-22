@@ -10,20 +10,16 @@ const _sfc_main = {
 };
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_assets._imports_0$2,
-    b: common_assets._imports_1$2,
-    c: $data.dlzt
+    a: common_assets._imports_0$1,
+    b: $data.dlzt
   }, $data.dlzt ? {} : {}, {
-    d: common_assets._imports_2$3,
-    e: common_assets._imports_3$2,
-    f: common_assets._imports_3$2,
-    g: common_assets._imports_4$2,
-    h: common_assets._imports_5$1,
-    i: common_assets._imports_6$1,
-    j: common_assets._imports_7$2,
-    k: _ctx.wxpay,
-    l: common_assets._imports_8$1,
-    m: _ctx.hypay
+    c: common_assets._imports_1,
+    d: common_assets._imports_2$1,
+    e: common_assets._imports_2$1,
+    f: common_assets._imports_3,
+    g: _ctx.wxpay,
+    h: common_assets._imports_4,
+    i: _ctx.hypay
   });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);

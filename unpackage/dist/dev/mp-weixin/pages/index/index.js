@@ -1,48 +1,83 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const common_assets = require("../../common/assets.js");
+const ProductItem = () => "../../components/product-item/ProductItem.js";
 getApp();
 const _sfc_main = {
   data() {
     return {
       baseUrl: this.$baseURL,
-      lbt: [],
+      carouselImages: [],
+      cateList: [],
+      // 所有类目
+      newPersonList: [],
       isShow: 0,
       joinCart: false,
-      prorow: [],
-      page: 0,
-      total: 0,
+      productList: [],
+      noMoreData: false,
+      page: 1,
+      pageSize: 5,
       records: 0,
-      loading: true,
       quantity: 1,
       reportFile: [],
       reportFileShow: false
     };
   },
-  onLoad(option) {
-    var that = this;
-    that.getAll();
-    that.proAll();
+  components: {
+    ProductItem
+  },
+  mounted(option) {
+    this.getCarouselImages();
+    this.getCates();
+    this.getNewPerson();
+    this.getProductList();
   },
   methods: {
-    getAll() {
-      var that = this;
-      let param = {};
-      this.$http.get("/index/carousel", param, {
-        custom: {
-          show: false
-        }
-      }).then((res) => {
-        that.lbt = res;
-      });
+    loadMoreData() {
+      if (this.noMoreData)
+        return;
+      this.page = this.page + 1;
+      this.getProductList();
     },
-    proAll() {
-      this.loading = true;
-      var that = this;
-      let param = {};
-      this.$http.get("/items/catItems", param, {}).then((res) => {
-        that.prorow = res.rows || [];
-      });
+    async getProductList() {
+      try {
+        const { rows } = await this.$http.post("/items/recommend", {
+          page: this.page,
+          pageSize: this.pageSize
+        });
+        if (!rows.length) {
+          this.noMoreData = true;
+          return;
+        }
+        this.productList = rows;
+      } catch (error) {
+        this.productList = [];
+      }
+    },
+    async getCarouselImages() {
+      try {
+        common_vendor.index.__f__("log", "at pages/index/index.vue:181", 11111);
+        this.carouselImages = await this.$http.post("/index/carousel", {});
+      } catch (error) {
+        this.carouselImages = [];
+      }
+    },
+    async getCates() {
+      try {
+        this.cateList = await this.$http.post("/index/cats", {});
+      } catch (error) {
+        this.cateList = [];
+      }
+    },
+    async getNewPerson() {
+      try {
+        const { rows } = await this.$http.post("/items/newperson", {
+          page: 1,
+          pageSize: 10
+        });
+        this.newPersonList = rows.slice(0, 3);
+      } catch (error) {
+        this.newPersonList = [];
+      }
     },
     decrease() {
       if (this.quantity > 1) {
@@ -51,66 +86,54 @@ const _sfc_main = {
     }
   }
 };
+if (!Array) {
+  const _component_ProductItem = common_vendor.resolveComponent("ProductItem");
+  _component_ProductItem();
+}
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
-  return {
-    a: common_assets._imports_0,
-    b: common_assets._imports_0$1,
-    c: common_vendor.f($data.lbt, (item, index, i0) => {
+  return common_vendor.e({
+    a: common_vendor.f($data.carouselImages, (item, index, i0) => {
       return {
-        a: item.ItemUrl,
+        a: item.url,
         b: index
       };
     }),
-    d: common_assets._imports_2,
-    e: common_assets._imports_3,
-    f: common_assets._imports_4,
-    g: common_assets._imports_5,
-    h: common_assets._imports_6,
-    i: common_assets._imports_7,
-    j: common_assets._imports_8,
-    k: common_assets._imports_1,
-    l: common_assets._imports_10,
-    m: common_assets._imports_1$1,
-    n: common_assets._imports_2$1,
-    o: common_vendor.f($data.prorow, (item, index, i0) => {
-      return common_vendor.e({
-        a: item.mainImgUrl,
-        b: common_vendor.t(item.itemName),
-        c: common_vendor.t(item.price)
-      }, $data.reportFile ? {
-        d: common_assets._imports_5$2,
-        e: common_vendor.o(($event) => $data.reportFileShow = !$data.reportFileShow, item.itemId),
-        f: common_assets._imports_2$3,
-        g: common_assets._imports_7$1,
-        h: $data.reportFileShow
-      } : {}, {
-        i: item.itemId
-      });
+    b: common_vendor.f($data.cateList, (item, k0, i0) => {
+      return {
+        a: item.logoUrl,
+        b: common_vendor.t(item.name),
+        c: item.id
+      };
     }),
-    p: common_assets._imports_3$1,
-    q: $data.reportFile,
-    r: common_assets._imports_4$1,
-    s: common_assets._imports_3$1,
-    t: common_vendor.o(($event) => $data.reportFileShow = !$data.reportFileShow),
-    v: common_assets._imports_4$1,
-    w: common_assets._imports_3$1,
-    x: common_assets._imports_2$2,
-    y: common_vendor.o(($event) => $data.joinCart = !$data.joinCart),
-    z: common_assets._imports_19,
-    A: common_assets._imports_8,
-    B: $data.quantity <= 1 ? 1 : "",
-    C: common_vendor.o((...args) => $options.decrease && $options.decrease(...args)),
-    D: common_assets._imports_20,
-    E: common_vendor.t($data.quantity),
-    F: common_vendor.o(($event) => $data.quantity++),
-    G: common_assets._imports_21,
-    H: common_assets._imports_5$1,
-    I: common_assets._imports_4$2,
-    J: common_assets._imports_6$1,
-    K: common_assets._imports_4$2,
-    L: common_assets._imports_2$2,
-    M: $data.joinCart
-  };
+    c: $data.newPersonList.length
+  }, $data.newPersonList.length ? {
+    d: common_vendor.f($data.newPersonList, (newItem, index, i0) => {
+      return {
+        a: newItem.imgUrl,
+        b: common_vendor.t(newItem.title),
+        c: common_vendor.t(newItem.realpayPrice),
+        d: index
+      };
+    })
+  } : {}, {
+    e: common_vendor.f($data.productList, (item, k0, i0) => {
+      return {
+        a: "7d753c92-0-" + i0,
+        b: common_vendor.p({
+          info: item
+        }),
+        c: item.productId,
+        d: !item.stock ? 1 : ""
+      };
+    }),
+    f: common_vendor.o(($event) => $data.joinCart = !$data.joinCart),
+    g: $data.quantity <= 1 ? 1 : "",
+    h: common_vendor.o((...args) => $options.decrease && $options.decrease(...args)),
+    i: common_vendor.t($data.quantity),
+    j: common_vendor.o(($event) => $data.quantity++),
+    k: $data.joinCart,
+    l: common_vendor.o((...args) => $options.loadMoreData && $options.loadMoreData(...args))
+  });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);
 wx.createPage(MiniProgramPage);

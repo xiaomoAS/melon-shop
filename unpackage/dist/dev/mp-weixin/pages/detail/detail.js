@@ -5,8 +5,7 @@ const _sfc_main = {};
 function _sfc_render(_ctx, _cache) {
   return {
     a: common_assets._imports_0$3,
-    b: common_assets._imports_1$3,
-    c: common_assets._imports_2$2
+    b: common_assets._imports_1$1
   };
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);

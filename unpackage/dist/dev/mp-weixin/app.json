@@ -8,6 +8,7 @@
     "pages/adres/adres",
     "pages/adresxz/adresxz",
     "pages/mycoupon/mycoupon",
+    "pages/user-login/login",
     "pages/my/my"
   ],
   "window": {

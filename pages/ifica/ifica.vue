@@ -2,7 +2,7 @@
 	<view>
 		<view class="ifica_search_head">
 			<view class="int_cont">
-				<image class="i" src="@/static/image/ico_1.png" mode="widthFix"></image>
+				<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix"></image>
 				<input type="text" placeholder="搜索您的订单号">
 			</view>
 		</view>
@@ -15,16 +15,16 @@
 			</view>
 			<view class="main_cont">
 			<view class="index_pro_contain">
-				<image class="pro_head_bg" src="@/static/image/index_case2_bg.png" mode="widthFix"></image>
+				<image class="pro_head_bg" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/608def905ee846eab80b698d5d29c6e5/index_case2_bg.png?Expires=2073875992&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Zd2Oz8m0uYQy8idN34qA4pxtSJc%3D" mode="widthFix"></image>
 				<view class="title_head">
-					<image class="logo" src="@/static/image/pro_logo.png" mode="widthFix"></image>
+					<image class="logo" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/b5a62a0a9f344046b6ecccd5d5f9184a/pro_logo.png?Expires=2073875894&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=UhwsRTz1JJlnDOlP0K4Tm0ABWGk%3D" mode="widthFix"></image>
 					<view class="dt">团购好货</view>
 					<view class="txt">三餐四季 尽在知花</view>
 				</view>
 				<view class="pro_list_cont" v-for="(item,index) in prorow" :key="item.itemId">
 					<view class="pro_i">
 						<image class="i" :src="item.mainImgUrl" mode="widthFix"></image> 
-						<image class="i_over" src="@/static/image/pro_over.png" mode="widthFix"></image> 
+						<image class="i_over" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/6fe849515c0a4aec8c00118a90480a67/pro_over.png?Expires=2073876962&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=OruFFlkcGDyUcpsNLbKRtVpdNWo%3D" mode="widthFix"></image> 
 					</view>
 					<view class="bit_cont">
 						<view class="name">{{ item.itemName }}</view>
@@ -56,8 +56,8 @@
 				</view>
 				<view class="pro_list_cont">
 					<view class="pro_i">
-						<image class="i" src="@/static/image/pro_i_1.png" mode="widthFix"></image> 
-						<image class="i_over" src="@/static/image/pro_over.png" mode="widthFix"></image> 
+						<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/ca9ad615ebb2406c8c43d0a88a7c1726/pro_i_1.png?Expires=2073876674&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=kTdBclTZdy3VJykCaO8LpJPdcEU%3D" mode="widthFix"></image> 
+						<image class="i_over" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/6fe849515c0a4aec8c00118a90480a67/pro_over.png?Expires=2073876962&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=OruFFlkcGDyUcpsNLbKRtVpdNWo%3D" mode="widthFix"></image> 
 					</view>
 					<view class="bit_cont">
 						<view class="name">广西高山沃柑超甜多水（中型果）</view>
@@ -88,8 +88,8 @@
 				</view>
 				<view class="pro_list_cont null">
 					<view class="pro_i">
-						<image class="i" src="@/static/image/pro_i_1.png" mode="widthFix"></image> 
-						<image class="i_over" src="@/static/image/pro_over.png" mode="widthFix"></image> 
+						<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/ca9ad615ebb2406c8c43d0a88a7c1726/pro_i_1.png?Expires=2073876674&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=kTdBclTZdy3VJykCaO8LpJPdcEU%3D" mode="widthFix"></image> 
+						<image class="i_over" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/6fe849515c0a4aec8c00118a90480a67/pro_over.png?Expires=2073876962&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=OruFFlkcGDyUcpsNLbKRtVpdNWo%3D" mode="widthFix"></image> 
 					</view>
 					<view class="bit_cont">
 						<view class="name">广西高山沃柑超甜多水（中型果）</view>

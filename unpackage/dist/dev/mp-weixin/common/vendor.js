@@ -1283,6 +1283,9 @@ function isReadonly(value) {
 function isShallow(value) {
   return !!(value && value["__v_isShallow"]);
 }
+function isProxy(value) {
+  return isReactive(value) || isReadonly(value);
+}
 function toRaw(observed) {
   const raw = observed && observed["__v_raw"];
   return raw ? toRaw(raw) : observed;
@@ -2618,15 +2621,11 @@ const getPublicInstance = (i) => {
     return getExposeProxy(i) || i.proxy;
   return getPublicInstance(i.parent);
 };
-function getComponentInternalInstance(i) {
-  return i;
-}
 const publicPropertiesMap = (
   // Move PURE marker to new line to workaround compiler discarding it
   // due to type annotation
   /* @__PURE__ */ extend(/* @__PURE__ */ Object.create(null), {
-    // fixed by xxxxxx
-    $: getComponentInternalInstance,
+    $: (i) => i,
     // fixed by xxxxxx vue-i18n 在 dev 模式，访问了 $el，故模拟一个假的
     // $el: i => i.vnode.el,
     $el: (i) => i.__$el || (i.__$el = {}),
@@ -3729,6 +3728,12 @@ const Static = Symbol.for("v-stc");
 function isVNode(value) {
   return value ? value.__v_isVNode === true : false;
 }
+const InternalObjectKey = `__vInternal`;
+function guardReactiveProps(props) {
+  if (!props)
+    return null;
+  return isProxy(props) || InternalObjectKey in props ? extend({}, props) : props;
+}
 const emptyAppContext = createAppContext();
 let uid = 0;
 function createComponentInstance(vnode, parent, suspense) {
@@ -4491,7 +4496,6 @@ function warnRef(ref2) {
 const queuePostRenderEffect = queuePostFlushCb;
 function mountComponent(initialVNode, options) {
   const instance = initialVNode.component = createComponentInstance(initialVNode, options.parentComponent, null);
-  instance.renderer = options.mpType ? options.mpType : "component";
   {
     instance.ctx.$onApplyOptions = onApplyOptions;
     instance.ctx.$children = [];
@@ -4830,8 +4834,7 @@ function injectLifecycleHook(name, hook, publicThis, instance) {
 }
 function initHooks$1(options, instance, publicThis) {
   const mpType = options.mpType || publicThis.$mpType;
-  if (!mpType || mpType === "component" || // instance.renderer 标识页面是否作为组件渲染
-  mpType === "page" && instance.renderer === "component") {
+  if (!mpType || mpType === "component") {
     return;
   }
   Object.keys(options).forEach((name) => {
@@ -4969,6 +4972,11 @@ function initApp(app) {
   }
 }
 const propsCaches = /* @__PURE__ */ Object.create(null);
+function renderProps(props) {
+  const { uid: uid2, __counter } = getCurrentInstance();
+  const propsId = (propsCaches[uid2] || (propsCaches[uid2] = [])).push(guardReactiveProps(props)) - 1;
+  return uid2 + "," + propsId + "," + __counter;
+}
 function pruneComponentPropsCache(uid2) {
   delete propsCaches[uid2];
 }
@@ -5143,6 +5151,7 @@ const o = (value, key) => vOn(value, key);
 const f = (source, renderItem) => vFor(source, renderItem);
 const e = (target, ...sources) => extend(target, ...sources);
 const t = (val) => toDisplayString(val);
+const p = (props) => renderProps(props);
 const sr = (ref2, id, opts) => setRef(ref2, id, opts);
 function createApp$1(rootComponent, rootProps = null) {
   rootComponent && (rootComponent.mpType = "app");
@@ -5463,10 +5472,10 @@ function handlePromise(promise) {
 function promisify$1(name, fn) {
   return (args = {}, ...rest) => {
     if (hasCallback(args)) {
-      return wrapperReturnValue(name, invokeApi(name, fn, extend({}, args), rest));
+      return wrapperReturnValue(name, invokeApi(name, fn, args, rest));
     }
     return wrapperReturnValue(name, handlePromise(new Promise((resolve2, reject) => {
-      invokeApi(name, fn, extend({}, args, { success: resolve2, fail: reject }), rest);
+      invokeApi(name, fn, extend(args, { success: resolve2, fail: reject }), rest);
     })));
   };
 }
@@ -5863,7 +5872,7 @@ function promisify(name, api) {
   }
   return function promiseApi(options = {}, ...rest) {
     if (isFunction(options.success) || isFunction(options.fail) || isFunction(options.complete)) {
-      return wrapperReturnValue(name, invokeApi(name, api, extend({}, options), rest));
+      return wrapperReturnValue(name, invokeApi(name, api, options, rest));
     }
     return wrapperReturnValue(name, handlePromise(new Promise((resolve2, reject) => {
       invokeApi(name, api, extend({}, options, {
@@ -6030,7 +6039,7 @@ function getOSInfo(system, platform) {
     osName = system.split(" ")[0] || platform;
     osVersion = system.split(" ")[1] || "";
   }
-  osName = osName.toLowerCase();
+  osName = osName.toLocaleLowerCase();
   switch (osName) {
     case "harmony":
     case "ohos":
@@ -6070,9 +6079,9 @@ function populateParameters(fromRes, toRes) {
     appVersion: "1.0.0",
     appVersionCode: "100",
     appLanguage: getAppLanguage(hostLanguage),
-    uniCompileVersion: "4.76",
-    uniCompilerVersion: "4.76",
-    uniRuntimeVersion: "4.76",
+    uniCompileVersion: "4.66",
+    uniCompilerVersion: "4.66",
+    uniRuntimeVersion: "4.66",
     uniPlatform: "mp-weixin",
     deviceBrand,
     deviceModel: model,
@@ -6109,7 +6118,7 @@ function getGetDeviceType(fromRes, model) {
       mac: "pc"
     };
     const deviceTypeMapsKeys = Object.keys(deviceTypeMaps);
-    const _model = model.toLowerCase();
+    const _model = model.toLocaleLowerCase();
     for (let index2 = 0; index2 < deviceTypeMapsKeys.length; index2++) {
       const _m = deviceTypeMapsKeys[index2];
       if (_model.indexOf(_m) !== -1) {
@@ -6123,7 +6132,7 @@ function getGetDeviceType(fromRes, model) {
 function getDeviceBrand(brand) {
   let deviceBrand = brand;
   if (deviceBrand) {
-    deviceBrand = deviceBrand.toLowerCase();
+    deviceBrand = deviceBrand.toLocaleLowerCase();
   }
   return deviceBrand;
 }
@@ -6221,9 +6230,9 @@ const getAppBaseInfo = {
       appLanguage: getAppLanguage(hostLanguage),
       isUniAppX: false,
       uniPlatform: "mp-weixin",
-      uniCompileVersion: "4.76",
-      uniCompilerVersion: "4.76",
-      uniRuntimeVersion: "4.76"
+      uniCompileVersion: "4.66",
+      uniCompilerVersion: "4.66",
+      uniRuntimeVersion: "4.66"
     };
     extend(toRes, parameters);
   }
@@ -6896,14 +6905,14 @@ const atFileRegex = /^\s*at\s+[\w/./-]+:\d+$/;
 function rewriteConsole() {
   function wrapConsole(type) {
     return function(...args) {
-      {
-        const originalArgs = [...args];
-        if (originalArgs.length) {
-          const maybeAtFile = originalArgs[originalArgs.length - 1];
-          if (typeof maybeAtFile === "string" && atFileRegex.test(maybeAtFile)) {
-            originalArgs.pop();
-          }
+      const originalArgs = [...args];
+      if (originalArgs.length) {
+        const maybeAtFile = originalArgs[originalArgs.length - 1];
+        if (typeof maybeAtFile === "string" && atFileRegex.test(maybeAtFile)) {
+          originalArgs.pop();
         }
+      }
+      {
         originalConsole[type](...originalArgs);
       }
       if (type === "error" && args.length === 1) {
@@ -6963,9 +6972,9 @@ function isConsoleWritable() {
   return isWritable;
 }
 function initRuntimeSocketService() {
-  const hosts = "192.168.71.9,127.0.0.1";
+  const hosts = "127.0.0.1,10.252.112.18";
   const port = "8090";
-  const id = "mp-weixin_AMfNyP";
+  const id = "mp-weixin_ayVkNw";
   const lazy = typeof swan !== "undefined";
   let restoreError = lazy ? () => {
   } : initOnError();
@@ -7917,6 +7926,8 @@ exports.e = e;
 exports.f = f;
 exports.index = index;
 exports.o = o;
+exports.onMounted = onMounted;
+exports.p = p;
 exports.resolveComponent = resolveComponent;
 exports.sr = sr;
 exports.t = t;

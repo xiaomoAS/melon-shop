@@ -121,21 +121,21 @@
             // "port":"0.0.0.0", //Vue2 8080；Vue3 3000
             // "port": 8080, //端口号（前端运行的端口号）
             "https" : false,
-            "disableHostCheck" : true, //固定写法（禁用 Host 检查）
-            "proxy" : {
-                //这里的 /api 标记了以 /api 开头的接口需要使用此代理，会将下方的 target 拼接到接口的最前面
-                "/api" : {
-                    "target" : "101.201.111.162", //后台接口域名（数据请求的接口网址）
+            "disableHostCheck" : true //固定写法（禁用 Host 检查）
+            // "proxy" : {
+            //     //这里的 /api 标记了以 /api 开头的接口需要使用此代理，会将下方的 target 拼接到接口的最前面
+            //     "/api" : {
+            //         "target" : "101.201.111.162", //后台接口域名（数据请求的接口网址）
 
-                    // "target" : "http://127.0.0.1:4523/m1/6785558-6497977-default", //后台接口域名（数据请求的接口网址）
-                    "changeOrigin" : true, //是否跨域
-                    "secure" : false, //是否支持 https 的协议代理
-                    "ws" : false, // 是否开启websocket
-                    "pathRewrite" : {
-                        "^/api" : "" //路径重写，将接口路径中以/api开头的部分替换掉（目前不替换）
-                    }
-                }
-            }
+            //         // "target" : "http://127.0.0.1:4523/m1/6785558-6497977-default", //后台接口域名（数据请求的接口网址）
+            //         "changeOrigin" : true, //是否跨域
+            //         "secure" : false, //是否支持 https 的协议代理
+            //         "ws" : false, // 是否开启websocket
+            //         "pathRewrite" : {
+            //             "^/api" : "" //路径重写，将接口路径中以/api开头的部分替换掉（目前不替换）
+            //         }
+            //     }
+            // }
         },
         "title" : "蔬菜商城"
     }
