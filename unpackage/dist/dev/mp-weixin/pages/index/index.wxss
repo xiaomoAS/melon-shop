@@ -57,6 +57,7 @@ page {
   background: #60C45D;
   font-size: 24rpx;
   color: #fff;
+  z-index: 2;
 }
 .index_baner {
   display: block;
@@ -443,26 +444,4 @@ page {
 }
 .pro_list_cont.null .bit_cont .bit_deta .ys_time {
   display: none;
-}
-.count_cont {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.count_cont .btn {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 34rpx;
-  height: 34rpx;
-}
-.count_cont .btn.disabled{
-	opacity: 0.5;
-    pointer-events: none;
-}
-.count_cont .int {
-  width: 70rpx;
-  height: 34rpx;
-  text-align: center;
-  border: none;
 }

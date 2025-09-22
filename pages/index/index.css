@@ -58,6 +58,7 @@ page {
   background: #60C45D;
   font-size: 24rpx;
   color: #fff;
+  z-index: 2;
 }
 .index_baner {
   display: block;

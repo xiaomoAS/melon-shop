@@ -153,7 +153,7 @@ export default {
       try {
         const info = await this.$http.post('/items/report', { productId: this.productId })
         this.url = info.url
-        this.reportType = info.type
+        this.reportType = info.reportType
       } catch (error) {
         this.carouselImages = []
       }

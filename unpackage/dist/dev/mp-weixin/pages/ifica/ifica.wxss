@@ -51,7 +51,7 @@
 .ifiac_filter_cont .l_filter_nav .li {
   position: relative;
   overflow: hidden;
-  padding: 14rpx 0;
+  padding: 14rpx 8rpx;
   text-align: center;
   border-top-left-radius: 10rpx;
   border-bottom-left-radius: 10rpx;

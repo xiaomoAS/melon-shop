@@ -2,6 +2,7 @@
 const common_vendor = require("../../common/vendor.js");
 const ProductItem = () => "../../components/product-item/ProductItem.js";
 const ShopCart = () => "../../components/shop-cart/ShopCart.js";
+const LoadMore = () => "../../components/load-more/index.js";
 getApp();
 const _sfc_main = {
   data() {
@@ -13,14 +14,21 @@ const _sfc_main = {
       newPersonList: [],
       isShow: 0,
       productList: [],
-      noMoreData: false,
       page: 1,
-      pageSize: 5
+      pageSize: 5,
+      totalCount: 0,
+      searchWords: ""
     };
   },
   components: {
     ProductItem,
-    ShopCart
+    ShopCart,
+    LoadMore
+  },
+  computed: {
+    noMoreData() {
+      return this.page * this.pageSize >= this.totalCount;
+    }
   },
   onShow() {
     this.getCarouselImages();
@@ -30,6 +38,13 @@ const _sfc_main = {
     this.refreshShopCart();
   },
   methods: {
+    toCatePage(id = null) {
+      common_vendor.wx$1.setStorageSync("cateId", id);
+      common_vendor.index.switchTab({ url: "/pages/ifica/ifica" });
+    },
+    toSearchPage() {
+      common_vendor.index.navigateTo({ url: `/pages/search-page/index?keywords=${this.searchWords}` });
+    },
     loadMoreData() {
       if (this.noMoreData)
         return;
@@ -38,21 +53,20 @@ const _sfc_main = {
     },
     async getProductList() {
       try {
-        const { rows } = await this.$http.post("/items/recommend", {
+        const { rows, total } = await this.$http.post("/items/recommend", {
           page: this.page,
           pageSize: this.pageSize
         });
-        if (!rows.length) {
-          this.noMoreData = true;
-        }
         this.productList = this.productList.concat(rows);
+        this.totalCount = total;
       } catch (error) {
         this.productList = [];
+        this.totalCount = 0;
       }
     },
     async getCarouselImages() {
       try {
-        common_vendor.index.__f__("log", "at pages/index/index.vue:114", 11111);
+        common_vendor.index.__f__("log", "at pages/index/index.vue:141", 11111);
         this.carouselImages = await this.$http.post("/index/carousel", {});
       } catch (error) {
         this.carouselImages = [];
@@ -84,27 +98,34 @@ const _sfc_main = {
 };
 if (!Array) {
   const _component_ProductItem = common_vendor.resolveComponent("ProductItem");
+  const _component_LoadMore = common_vendor.resolveComponent("LoadMore");
   const _component_ShopCart = common_vendor.resolveComponent("ShopCart");
-  (_component_ProductItem + _component_ShopCart)();
+  (_component_ProductItem + _component_LoadMore + _component_ShopCart)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_vendor.f($data.carouselImages, (item, index, i0) => {
+    a: common_vendor.o((...args) => $options.toSearchPage && $options.toSearchPage(...args)),
+    b: $data.searchWords,
+    c: common_vendor.o(($event) => $data.searchWords = $event.detail.value),
+    d: common_vendor.o((...args) => $options.toSearchPage && $options.toSearchPage(...args)),
+    e: common_vendor.f($data.carouselImages, (item, index, i0) => {
       return {
         a: item.url,
         b: index
       };
     }),
-    b: common_vendor.f($data.cateList, (item, k0, i0) => {
+    f: common_vendor.o(($event) => $options.toCatePage()),
+    g: common_vendor.f($data.cateList.slice(0, 4), (item, k0, i0) => {
       return {
         a: item.logoUrl,
         b: common_vendor.t(item.name),
-        c: item.id
+        c: item.id,
+        d: common_vendor.o(($event) => $options.toCatePage(item.id), item.id)
       };
     }),
-    c: $data.newPersonList.length
+    h: $data.newPersonList.length
   }, $data.newPersonList.length ? {
-    d: common_vendor.f($data.newPersonList, (newItem, index, i0) => {
+    i: common_vendor.f($data.newPersonList, (newItem, index, i0) => {
       return {
         a: newItem.imgUrl,
         b: common_vendor.t(newItem.title),
@@ -113,7 +134,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
       };
     })
   } : {}, {
-    e: common_vendor.f($data.productList, (item, k0, i0) => {
+    j: common_vendor.f($data.productList, (item, k0, i0) => {
       return {
         a: "7d753c92-0-" + i0,
         b: common_vendor.p({
@@ -123,8 +144,15 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         d: !item.stock ? 1 : ""
       };
     }),
-    f: common_vendor.sr("shopCartRef", "7d753c92-1"),
-    g: common_vendor.o((...args) => $options.loadMoreData && $options.loadMoreData(...args))
+    k: !$options.noMoreData
+  }, !$options.noMoreData ? {
+    l: common_vendor.o($options.loadMoreData),
+    m: common_vendor.p({
+      threshold: 50,
+      once: false
+    })
+  } : {}, {
+    n: common_vendor.sr("shopCartRef", "7d753c92-2")
   });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);

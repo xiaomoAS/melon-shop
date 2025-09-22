@@ -26,9 +26,13 @@
 			"path": "pages/adresxz/adresxz"
 		},
 		{
-			"path": "pages/mycoupon/mycoupon"
-		},{
-			"path": "pages/user-login/login"
+			"path": "pages/mycoupon/index"
+		},
+		{
+			"path": "pages/user-login/index"
+		},
+		{
+			"path": "pages/search-page/index"
 		},
 		{
 			"path": "pages/my/my",

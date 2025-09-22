@@ -1,73 +1,105 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
-const common_assets = require("../../common/assets.js");
+const ProductItem = () => "../../components/product-item/ProductItem.js";
+const LoadMore = () => "../../components/load-more/index.js";
 const _sfc_main = {
   data() {
     return {
-      reportFile: false,
-      prorow: [],
-      filnav: [],
-      page: 0,
-      total: 0,
-      records: 0,
-      loading: true,
-      reportFileShow: false
+      cateList: [],
+      productList: [],
+      page: 1,
+      pageSize: 5,
+      totalCount: 0,
+      activeCate: null
     };
   },
-  onShow(option) {
-    var that = this;
-    that.proAll();
-    that.filenav()();
+  computed: {
+    noMoreData() {
+      return this.page * this.pageSize >= this.totalCount;
+    }
+  },
+  components: {
+    ProductItem,
+    LoadMore
+  },
+  async onShow() {
+    this.productList = [];
+    this.page = 1;
+    const id = common_vendor.wx$1.getStorageSync("cateId");
+    await this.getCates();
+    this.activeCate = id || (this.cateList.length ? this.cateList[0].id : null);
+    this.getProductList();
   },
   methods: {
-    catItemsid(id) {
-      this.filenav(id);
+    cateClickHandler(id) {
+      this.productList = [];
+      this.page = 1;
+      this.activeCate = id;
+      this.getProductList();
     },
-    filenav(id) {
-      this.loading = true;
-      var that = this;
-      let param = { id };
-      this.$http.get("/index/cats", param, {}).then((res) => {
-        that.filnav = res;
-      });
+    async getCates() {
+      try {
+        this.cateList = await this.$http.post("/index/cats", {});
+      } catch (error) {
+        this.cateList = [];
+      }
     },
-    proAll() {
-      this.loading = true;
-      var that = this;
-      let param = {};
-      this.$http.get("/items/catItems", param, {}).then((res) => {
-        that.prorow = res.rows || [];
-      });
+    loadMoreData() {
+      if (this.noMoreData) {
+        common_vendor.index.__f__("log", "at pages/ifica/ifica.vue:91", "没有更多数据了");
+        return;
+      }
+      this.page = this.page + 1;
+      this.getProductList();
+    },
+    async getProductList() {
+      try {
+        const { rows, total } = await this.$http.post("/items/catItems", {
+          cateId: this.activeCate ? Number(this.activeCate) : null,
+          page: this.page,
+          pageSize: this.pageSize
+        });
+        this.productList.push(...rows);
+        this.totalCount = total;
+      } catch (error) {
+        this.productList = [];
+        this.totalCount = 0;
+      }
     }
   }
 };
+if (!Array) {
+  const _component_ProductItem = common_vendor.resolveComponent("ProductItem");
+  const _component_LoadMore = common_vendor.resolveComponent("LoadMore");
+  (_component_ProductItem + _component_LoadMore)();
+}
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
-    a: common_vendor.f($data.filnav, (item, index, i0) => {
+    a: common_vendor.f($data.cateList, (item, k0, i0) => {
       return {
-        a: common_vendor.t(item.Name),
-        b: item.Name,
+        a: common_vendor.t(item.name),
+        b: item.id === $data.activeCate ? 1 : "",
         c: item.id,
-        d: common_vendor.o(($event) => $options.catItemsid(item.id), item.Name)
+        d: common_vendor.o(($event) => $options.cateClickHandler(item.id), item.id)
       };
     }),
-    b: common_vendor.f($data.prorow, (item, index, i0) => {
+    b: common_vendor.f($data.productList, (item, index, i0) => {
       return {
-        a: item.mainImgUrl,
-        b: common_vendor.t(item.itemName),
-        c: common_vendor.t(item.ItemAttribute),
-        d: common_vendor.t(item.price),
-        e: common_vendor.o(($event) => $data.reportFileShow = !$data.reportFileShow, item.itemId),
-        f: item.itemId
+        a: "6beea982-0-" + i0,
+        b: common_vendor.p({
+          info: item
+        }),
+        c: index,
+        d: !item.stock ? 1 : ""
       };
     }),
-    c: common_vendor.o(($event) => $data.reportFileShow = !$data.reportFileShow),
-    d: $data.reportFile
-  }, $data.reportFile ? {
-    e: common_assets._imports_0,
-    f: common_assets._imports_1,
-    g: common_assets._imports_2,
-    h: $data.reportFileShow
+    c: !$options.noMoreData
+  }, !$options.noMoreData ? {
+    d: common_vendor.o($options.loadMoreData),
+    e: common_vendor.p({
+      threshold: 50,
+      once: false
+    })
   } : {});
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);

@@ -7,8 +7,9 @@
     "pages/detail/detail",
     "pages/adres/adres",
     "pages/adresxz/adresxz",
-    "pages/mycoupon/mycoupon",
-    "pages/user-login/login",
+    "pages/mycoupon/index",
+    "pages/user-login/index",
+    "pages/search-page/index",
     "pages/my/my"
   ],
   "window": {

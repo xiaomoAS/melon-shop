@@ -9,8 +9,9 @@ if (!Math) {
   "./pages/detail/detail.js";
   "./pages/adres/adres.js";
   "./pages/adresxz/adresxz.js";
-  "./pages/mycoupon/mycoupon.js";
-  "./pages/user-login/login.js";
+  "./pages/mycoupon/index.js";
+  "./pages/user-login/index.js";
+  "./pages/search-page/index.js";
   "./pages/my/my.js";
 }
 const _sfc_main$1 = {};

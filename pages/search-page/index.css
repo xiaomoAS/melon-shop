@@ -29,63 +29,12 @@
 .ifiac_filter_cont {
   border-top-right-radius: 20rpx;
   background: linear-gradient(#ceedcd, #fff 10%);
-  height: calc(100vh - 210rpx);
-  padding-left: 130rpx;
+  height: calc(100vh - 110rpx);
   position: relative;
   z-index: 2;
   margin-top: -20rpx;
 }
-.ifiac_filter_cont .l_filter_nav {
-  width: 130rpx;
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: calc(100vh - 110rpx);
-  overflow-y: scroll;
-  background: #F4F4F4;
-  padding: 20rpx 0 0;
-}
-.ifiac_filter_cont .l_filter_nav .li {
-  position: relative;
-  overflow: hidden;
-  padding: 14rpx 8rpx;
-  text-align: center;
-  border-top-left-radius: 10rpx;
-  border-bottom-left-radius: 10rpx;
-  margin-bottom: 10rpx;
-  font-size: 24rpx;
-  color: #999999;
-}
-.ifiac_filter_cont .l_filter_nav .li::after {
-  content: "";
-  display: block;
-  width: 6rpx;
-  height: 26rpx;
-  border-top-right-radius: 5rpx;
-  border-bottom-right-radius: 5rpx;
-  position: absolute;
-  left: -6rpx;
-  top: 50%;
-  transform: translateY(-50%);
-  transition: all 0.6s;
-  background: #61C55E;
-}
-.ifiac_filter_cont .l_filter_nav .li.active {
-  background: #fff;
-  color: #60C45D;
-  font-weight: bold;
-}
-.ifiac_filter_cont .l_filter_nav .li.active::after {
-  left: 0;
-}
-.ifiac_filter_cont .l_filter_nav .li:hover {
-  background: #fff;
-  color: #60C45D;
-  font-weight: bold;
-}
-.ifiac_filter_cont .l_filter_nav .li:hover::after {
-  left: 0;
-}
+
 .ifiac_filter_cont .main_cont {
   height: calc(100vh - 110rpx);
   overflow-y: scroll;
@@ -143,5 +92,4 @@
 .test_report_dc .report_img image {
   display: block;
   width: 100%;
-
 }

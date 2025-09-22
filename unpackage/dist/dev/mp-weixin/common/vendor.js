@@ -7932,4 +7932,5 @@ exports.ref = ref;
 exports.resolveComponent = resolveComponent;
 exports.sr = sr;
 exports.t = t;
+exports.wx$1 = wx$1;
 //# sourceMappingURL=../../.sourcemap/mp-weixin/common/vendor.js.map

@@ -28,7 +28,7 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
     b: common_assets._imports_1$4,
     c: $data.lvdj === "pj"
   }, $data.lvdj === "pj" ? {
-    d: common_assets._imports_2$2
+    d: common_assets._imports_2$1
   } : $data.lvdj === "pt" ? {
     f: common_assets._imports_3$1
   } : $data.lvdj === "zs" ? {

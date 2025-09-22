@@ -4,7 +4,7 @@ const common_assets = require("../../common/assets.js");
 const _sfc_main = {};
 function _sfc_render(_ctx, _cache) {
   return {
-    a: common_assets._imports_0$5,
+    a: common_assets._imports_0$4,
     b: common_vendor.o((...args) => _ctx.bindPickerChange && _ctx.bindPickerChange(...args)),
     c: common_vendor.o(() => {
     })

@@ -33,9 +33,9 @@
 						<view class="title">{{ item.title }}</view>
 						<view class="bits">￥{{ item.price }}/{{ item.specName }}</view>
 						<view class="count_cont">
-							<image class="btn less" :class="{disabled: item.buyercounts <= 1}" @click="decrease(item)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
-							<text class="int">{{ item.buyercounts }}</text>
-							<image class="btn plus" @click="item.buyercounts++" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
+							<image class="btn less" :class="{disabled: item.buyCounts <= 1}" @click="decrease(item)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
+							<text class="int">{{ item.buyCounts }}</text>
+							<image class="btn plus" @click="item.buyCounts++" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
 						</view>
 					</view>
 				</view>
@@ -102,7 +102,7 @@
 			selectedTotalPrice() {
 				return this.cartList
 					.filter(item => item.selected)
-					.reduce((total, item) => total + (item.price * item.buyercounts), 0)
+					.reduce((total, item) => total + (item.price * item.buyCounts), 0)
 					.toFixed(2)
 			}
 		},
@@ -128,8 +128,8 @@
         }
       },
       decrease(item) {
-				if (item.buyercounts > 1) {
-				  item.buyercounts--;
+				if (item.buyCounts > 1) {
+				  item.buyCounts--;
 				}
 			},
 			async clearCart() {

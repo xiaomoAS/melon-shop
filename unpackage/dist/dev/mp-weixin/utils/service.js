@@ -42,7 +42,7 @@ http.interceptors.response.use((response) => {
         return Promise.resolve(response.data.data);
       case 401:
         common_vendor.index.navigateTo({
-          url: "/pages/user-login/login"
+          url: "/pages/user-login/index"
         });
         return Promise.reject(response);
       default:

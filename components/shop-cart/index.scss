@@ -131,6 +131,28 @@
   right: 0;
   bottom: 0;
 }
+.count_cont {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.count_cont .btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34rpx;
+  height: 34rpx;
+}
+.count_cont .btn.disabled{
+	opacity: 0.5;
+    pointer-events: none; 
+}
+.count_cont .int {
+  font-size: 14px;
+  padding: 0 8rpx;
+  text-align: center;
+  border: none;
+}
 .join_cart_cont .total_price_cont {
   padding: 20rpx 0;
   border-bottom: 1rpx solid #F2F2F2;
@@ -274,7 +296,7 @@
     }
 
     &.active{
-      background: url('http://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/d8891d14bae54eb39713e8bded9bb9d1/sele_active.png?Expires=2073897536&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=vPx9VgeeSlORIHJw%2FeZYQqIInOE%3D') no-repeat center;
+      background: url('https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/d8891d14bae54eb39713e8bded9bb9d1/sele_active.png?Expires=2073897536&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=vPx9VgeeSlORIHJw%2FeZYQqIInOE%3D') no-repeat center;
       background-size:cover;
     }
   }
