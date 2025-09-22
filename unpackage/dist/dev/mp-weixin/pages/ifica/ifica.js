@@ -14,7 +14,7 @@ const _sfc_main = {
       reportFileShow: false
     };
   },
-  onLoad(option) {
+  onShow(option) {
     var that = this;
     that.proAll();
     that.filenav()();

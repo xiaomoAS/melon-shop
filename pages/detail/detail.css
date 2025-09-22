@@ -110,7 +110,7 @@ page {
   width: 80%;
   position: relative;
   height: 61rpx;
-  background: url(@/static/image/cart_btn_1.png) no-repeat center;
+  background: url('http://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/2979b3c75e804d2bb240a6d46ad74972/cart_btn_1.png?Expires=2073899264&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Qm2Hemc%2B1tmDsruDunEuW%2FyIT9g%3D') no-repeat center;
   background-size: cover;
   padding-left: 50rpx;
   display: flex;
@@ -160,7 +160,7 @@ page {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: url(@/static/image/cart_btn_2.png) no-repeat center;
+  background: url('http://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/c8920d4ac9674fff90272c5dc8312eea/cart_btn_2.png?Expires=2073899287&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gsDsSGelT15T3zzvrN8i0Eho4CY%3D') no-repeat center;
   background-size: cover;
   font-size: 26rpx;
   color: #FFFFFF;

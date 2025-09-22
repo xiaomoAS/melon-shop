@@ -101,39 +101,4 @@
 		z-index:10;
 		background: rgba(0,0,0,0.5);
 	}
-	.sele_rad{
-		display: flex;
-		align-items: center;
-		.ring{
-			display: flex;
-			align-items: center;
-			justify-content: center;
-			width:34rpx;
-			height:34rpx;
-			border-radius: 100%;
-			margin-right:10rpx;
-			background: #fff;
-			border:2rpx solid #F9DC52;
-			position: relative;
-			radio{
-				position: absolute;
-				top:0;
-				left:0;
-				width:100%;
-				height:100%;
-				opacity: 0;
-			}
-			
-		}
-		text{
-			font-size:28rpx;
-			color:#000000;
-		}
-		&.active{
-			.ring{
-				background: url(@/static/image/sele_active.png) no-repeat center;
-				background-size:cover;
-			}
-		}
-	}
 </style>

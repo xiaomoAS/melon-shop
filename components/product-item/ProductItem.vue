@@ -5,42 +5,61 @@
 			<image class="i_over" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/6fe849515c0a4aec8c00118a90480a67/pro_over.png?Expires=2073876962&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=OruFFlkcGDyUcpsNLbKRtVpdNWo%3D" mode="widthFix"></image> 
 		</view>
 		<view class="bit_cont">
-			<view class="name">广西高山沃柑超甜多水（中型果）</view>
-			<view class="det_txt">
-				高山种植 | 天然不洗果 | 个别带青苔 | 甜润爽喉 | 新鲜鲜甜
-			</view>
+			<view class="name">{{ info.title }}</view>
+			<view class="det_txt">{{ info.desc }}</view>
 			<view class="bit_deta">
 				<view class="tips_dl">
-					<view class="dd bg_1">送货上门</view>
-					<view class="dd bg_2">免费包邮</view>
-					<view class="dd bg_3">无公害果蔬</view>
+					<view v-for="(tag, index) in info.tagList" :key="index" class="dd bg_3">{{ tag }}</view>
 				</view>
 				<view class="ys_time">
 					<view class="dt">预售期</view>
-					<view class="dd">6月28日</view>
+					<view class="dd">{{ formatDate(Number(info.presaleStartTime), 'MM月DD日') }}</view>
 				</view>
 			</view>
 			<view class="bit_seet">
-				<view class="price">￥<text>29.99</text> 
-					<view class="dd">/斤/个/份</view> 
+				<view class="price">￥<text>{{ info.price }}</text> 
+					<view class="dd">/{{ info.specName }}</view> 
 				</view>
 				<view class="btn_dl">
-					<view class="btn btn_ys_1" @click="reportFileShow =! reportFileShow">检测报告</view>
-					<view class="btn btn_ys_2">加入购物车</view>
+					<ReportViewer :product-id="info.productId">
+						<view class="btn btn_ys_1">检测报告</view>
+					</ReportViewer>
+					<view class="btn btn_ys_2" @click="addCart(info)">加入购物车</view>
 				</view>
 			</view>
 		</view>
 	</view>
 </template>
 
-<script setup>
-	import { ref } from 'vue'
-	
-	const props = withDefaults(defineProps(), {
-		info: () => ({})
-	})
-	
-	console.log(props, 'props')
+<script>
+import { formatDate } from '../../utils/common';
+import ReportViewer from '../report-view/ReportViewer.vue';
+
+export default {
+	name: 'ProductItem',
+	components: {
+		ReportViewer
+	},
+	props: {
+		info: {
+			type: Object,
+			required: true,
+			default: () => ({})
+		}
+	},
+	methods: {
+		formatDate,
+		async addCart() {
+			try {
+				await this.$http.post('/shopcart/add', { ...this.info })
+				uni.showToast({ title: '添加成功' })
+				uni.$emit('refreshShopCart')
+			} catch (error) {
+				uni.showToast({ title: '添加失败', icon: 'error' })
+			}
+		}
+	}
+}
 </script>
 
 <style lang="scss">

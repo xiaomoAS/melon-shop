@@ -1,6 +1,6 @@
 import Request from '@/utils/luch-request/index.js'
 
-const baseURL = '//www.melon-bamboo.com';
+const baseURL = 'https://www.melon-bamboo.com';
 // if (process.env.NODE_ENV === 'development') {
 // 	// 开发环境
 // 	// var baseURL = 'http://127.0.0.1:4523/m1/6785558-6497977-default'; //域名(网站启动时的域名)，目前用这个 js（【注意】记住改manifest.josn 源码视图中的h5配置）
@@ -65,15 +65,14 @@ http.interceptors.response.use((response) => {
 		switch (response.data.code) {
 			case 200:
 				return Promise.resolve(response.data.data)
-				break
-			case 200:
+			case 401:
 				uni.navigateTo({
 					url: '/pages/user-login/login'
 				})
 				return Promise.reject(response)
 
 			default:
-				break
+				return Promise.reject(response)
 		}
 	}
 

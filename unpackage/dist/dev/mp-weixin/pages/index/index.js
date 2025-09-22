@@ -1,6 +1,7 @@
 "use strict";
 const common_vendor = require("../../common/vendor.js");
 const ProductItem = () => "../../components/product-item/ProductItem.js";
+const ShopCart = () => "../../components/shop-cart/ShopCart.js";
 getApp();
 const _sfc_main = {
   data() {
@@ -11,25 +12,22 @@ const _sfc_main = {
       // 所有类目
       newPersonList: [],
       isShow: 0,
-      joinCart: false,
       productList: [],
       noMoreData: false,
       page: 1,
-      pageSize: 5,
-      records: 0,
-      quantity: 1,
-      reportFile: [],
-      reportFileShow: false
+      pageSize: 5
     };
   },
   components: {
-    ProductItem
+    ProductItem,
+    ShopCart
   },
-  mounted(option) {
+  onShow() {
     this.getCarouselImages();
     this.getCates();
     this.getNewPerson();
     this.getProductList();
+    this.refreshShopCart();
   },
   methods: {
     loadMoreData() {
@@ -46,16 +44,15 @@ const _sfc_main = {
         });
         if (!rows.length) {
           this.noMoreData = true;
-          return;
         }
-        this.productList = rows;
+        this.productList = this.productList.concat(rows);
       } catch (error) {
         this.productList = [];
       }
     },
     async getCarouselImages() {
       try {
-        common_vendor.index.__f__("log", "at pages/index/index.vue:181", 11111);
+        common_vendor.index.__f__("log", "at pages/index/index.vue:114", 11111);
         this.carouselImages = await this.$http.post("/index/carousel", {});
       } catch (error) {
         this.carouselImages = [];
@@ -79,16 +76,16 @@ const _sfc_main = {
         this.newPersonList = [];
       }
     },
-    decrease() {
-      if (this.quantity > 1) {
-        this.quantity--;
-      }
+    // 强制刷新购物车数据
+    refreshShopCart() {
+      common_vendor.index.$emit("refreshShopCart");
     }
   }
 };
 if (!Array) {
   const _component_ProductItem = common_vendor.resolveComponent("ProductItem");
-  _component_ProductItem();
+  const _component_ShopCart = common_vendor.resolveComponent("ShopCart");
+  (_component_ProductItem + _component_ShopCart)();
 }
 function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
   return common_vendor.e({
@@ -126,13 +123,8 @@ function _sfc_render(_ctx, _cache, $props, $setup, $data, $options) {
         d: !item.stock ? 1 : ""
       };
     }),
-    f: common_vendor.o(($event) => $data.joinCart = !$data.joinCart),
-    g: $data.quantity <= 1 ? 1 : "",
-    h: common_vendor.o((...args) => $options.decrease && $options.decrease(...args)),
-    i: common_vendor.t($data.quantity),
-    j: common_vendor.o(($event) => $data.quantity++),
-    k: $data.joinCart,
-    l: common_vendor.o((...args) => $options.loadMoreData && $options.loadMoreData(...args))
+    f: common_vendor.sr("shopCartRef", "7d753c92-1"),
+    g: common_vendor.o((...args) => $options.loadMoreData && $options.loadMoreData(...args))
   });
 }
 const MiniProgramPage = /* @__PURE__ */ common_vendor._export_sfc(_sfc_main, [["render", _sfc_render]]);

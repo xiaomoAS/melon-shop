@@ -1,7 +1,7 @@
 "use strict";
 const common_vendor = require("../common/vendor.js");
 const utils_luchRequest_core_Request = require("./luch-request/core/Request.js");
-const baseURL = "//www.melon-bamboo.com";
+const baseURL = "https://www.melon-bamboo.com";
 const http = new utils_luchRequest_core_Request.Request();
 http.setConfig((config) => {
   config.baseURL = baseURL;
@@ -40,10 +40,12 @@ http.interceptors.response.use((response) => {
     switch (response.data.code) {
       case 200:
         return Promise.resolve(response.data.data);
-      case 200:
+      case 401:
         common_vendor.index.navigateTo({
           url: "/pages/user-login/login"
         });
+        return Promise.reject(response);
+      default:
         return Promise.reject(response);
     }
   }

@@ -1,6 +1,7 @@
 {
   "navigationStyle": "custom",
   "usingComponents": {
-    "product-item": "../../components/product-item/ProductItem"
+    "product-item": "../../components/product-item/ProductItem",
+    "shop-cart": "../../components/shop-cart/ShopCart"
   }
 }

@@ -54,77 +54,13 @@
 					<ProductItem :info="item" />
 				</view>
 			</view>
-			<view @click="joinCart =! joinCart" class="buycar_floor">
-				<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
-				<view class="txt">23</view>
-			</view>
-			
-			<view v-show="joinCart" class="join_cart_cont">
-				<view class="deta_header">
-					<view class="l_cont">
-						<label class="sele_rad">
-							<view class="ring"><radio value="" /></view>
-							<text>全选</text>
-						</label>
-						<view class="det_all">（共3件商品，总重量约128g）</view>
-					</view>
-					<view class="del_all"><image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/fe8f46b9761d4e7e8a57bec3f4e49200/ico_2.png?Expires=2073876106&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=ebfmzCkkDbDP7O2pjeFhK8pSobI%3D" mode="widthFix"></image>清空购物车</view>
-				</view>
-				<view class="pro_list">
-					<label class="sele_rad">
-						<view class="ring"><radio value="" /></view>
-					</label>
-					<view class="pro_detail_cont">
-						<view class="pro_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/985181d675f64280b76b5f37ffdd35dc/index_case1_1.png?Expires=2073876166&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=owGQQbcz%2BJyTI6fB6yUiAaSSOmM%3D" mode=""></image> </view>
-						<view class="detail_inf">
-							<view class="title">广西高山沃柑超甜多水（中型果）</view>
-							<view class="bits">￥82件/500g</view>
-							<view class="count_cont">
-								<image class="btn less" :class="{disabled:quantity <= 1}" @click="decrease" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
-								<text class="int">{{quantity}}</text>
-								<image class="btn plus" @click="quantity++" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
-							</view>
-						</view>
-					</view>
-				</view>
-				<view class="total_price_cont">
-					<view class="title_head">
-						<view class="tle">商品总价</view>
-						<view class="total">￥640.5</view>
-					</view>
-					<view class="dl">
-						<view class="dt">
-							<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/05a860ef9f874ed696e19c3374f7419c/order_ico_2.png?Expires=2073876488&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5edejPW2awsLyvfjOWNrI8yBClU%3D" mode="widthFix"></image> </view>
-							运费券
-						</view>
-						<view class="dd">-￥15.6 <image class="arr" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1c1b0a37f2274686890fdc70f9a7331f/arr_2.png?Expires=2073876560&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gTx%2F3%2BfjIlY9%2FKTXvmmYbv%2Fq5dE%3D" mode="widthFix"></image> </view>
-					</view>
-					<view class="dl">
-						<view class="dt">
-							<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/525a98181c884d0e854f14f241cde3d4/order_ico_3.png?Expires=2073876622&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lJjlb4qD0VewJtyVTV5656JOFo8%3D" mode="widthFix"></image> </view>
-							新人专享券
-						</view>
-						<view class="dd">-￥5.6 <image class="arr" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1c1b0a37f2274686890fdc70f9a7331f/arr_2.png?Expires=2073876560&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gTx%2F3%2BfjIlY9%2FKTXvmmYbv%2Fq5dE%3D" mode="widthFix"></image> </view>
-					</view>
-				</view>
-				<view class="bit_buy_cont">
-					<view class="l_cont">
-						<view class="buy_num">
-							<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
-							<text class="num">23</text>
-						</view>
-						<view class="xj">￥255</view>
-						<view class="yj">￥275</view>
-					</view>
-					<view class="buy_btn">加入购物车</view>
-				</view>
-			</view>
-			
+			<ShopCart ref="shopCartRef" />
 		</view>
 	</scroll-view>
 </template>
 <script>
 	import ProductItem from '@/components/product-item/ProductItem.vue'
+	import ShopCart from '@/components/shop-cart/ShopCart.vue'
 	const app = getApp()
 	export default {
 		data() {
@@ -134,25 +70,23 @@
 				cateList: [], // 所有类目
 				newPersonList: [],
 				isShow:0,
-				joinCart:false,
 				productList: [],
 				noMoreData: false,
 				page: 1,
 				pageSize: 5,
-				records: 0,
-				quantity:1,
-				reportFile:[],
-				reportFileShow:false,
 			}
 		},
 		components: {
 			ProductItem,
+			ShopCart
 		},
-		mounted(option) {
+		onShow() {
 			this.getCarouselImages();
 			this.getCates();
 			this.getNewPerson()
 			this.getProductList()
+			// 强制刷新购物车数据
+			this.refreshShopCart()
 		},
 		methods: {
 			loadMoreData() {
@@ -169,9 +103,8 @@
 					// 加载完了
 					if (!rows.length) {
 						this.noMoreData = true
-						return
 					} 
-					this.productList = rows
+					this.productList = this.productList.concat(rows)
 				} catch (error) {
 					this.productList = []
 				}
@@ -202,10 +135,10 @@
 					this.newPersonList = []
 				}
 			},
-			decrease() {
-				 if (this.quantity > 1) {
-				            this.quantity--;
-				}
+			// 强制刷新购物车数据
+			refreshShopCart() {
+				// 使用全局事件触发购物车刷新
+				uni.$emit('refreshShopCart')
 			}
 		},
 

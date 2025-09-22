@@ -7928,6 +7928,7 @@ exports.index = index;
 exports.o = o;
 exports.onMounted = onMounted;
 exports.p = p;
+exports.ref = ref;
 exports.resolveComponent = resolveComponent;
 exports.sr = sr;
 exports.t = t;

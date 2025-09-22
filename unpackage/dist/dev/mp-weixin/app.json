@@ -25,18 +25,26 @@
     "list": [
       {
         "pagePath": "pages/index/index",
+        "iconPath": "/static/img/foot_nav_1.png",
+        "selectedIconPath": "/static/img/foot_nav_1h.png",
         "text": "首页"
       },
       {
         "pagePath": "pages/ifica/ifica",
+        "iconPath": "/static/img/foot_nav_2.png",
+        "selectedIconPath": "/static/img/foot_nav_2h.png",
         "text": "分类"
       },
       {
         "pagePath": "pages/orderlb/orderlb",
+        "iconPath": "/static/img/foot_nav_3.png",
+        "selectedIconPath": "/static/img/foot_nav_3h.png",
         "text": "订单"
       },
       {
         "pagePath": "pages/my/my",
+        "iconPath": "/static/img/foot_nav_4.png",
+        "selectedIconPath": "/static/img/foot_nav_4h.png",
         "text": "我的"
       }
     ]

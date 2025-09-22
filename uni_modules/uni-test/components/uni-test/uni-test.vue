@@ -11,7 +11,7 @@
 				
 			};
 		},
-		onLoad() {
+		onShow() {
 			let fonts = []
 			let obj = {}
 			fonts.forEach(v=>{
