@@ -1,1 +1,0 @@
-{"version":3,"file":"adres.js","sources":["pages/adres/adres.vue?type=page"],"sourcesContent":["import MiniProgramPage from '/Users/jiangzupei1/Desktop/melon-shop/pages/adres/adres.vue'\nwx.createPage(MiniProgramPage)"],"names":[],"mappings":";;;;;;;;;;;AACA,GAAG,WAAW,eAAe;"}

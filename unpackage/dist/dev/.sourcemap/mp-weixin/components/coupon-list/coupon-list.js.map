@@ -1,1 +1,0 @@
-{"version":3,"file":"coupon-list.js","sources":["/Users/jiangzupei1/Desktop/melon-shop/components/coupon-list/coupon-list.vue?type=component"],"sourcesContent":["import Component from '/Users/jiangzupei1/Desktop/melon-shop/components/coupon-list/coupon-list.vue'\nwx.createComponent(Component)"],"names":["Component"],"mappings":";;AACA,GAAG,gBAAgBA,IAAS,SAAA;"}

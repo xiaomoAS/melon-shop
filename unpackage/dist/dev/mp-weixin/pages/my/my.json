@@ -1,8 +1,0 @@
-{
-  "navigationBarTitleText": "我的",
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "re-charge": "../../components/Recharge/Recharge",
-    "coupon-list": "../../components/coupon-list/coupon-list"
-  }
-}

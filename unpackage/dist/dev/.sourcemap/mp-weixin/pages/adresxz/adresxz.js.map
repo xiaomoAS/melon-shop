@@ -1,1 +1,0 @@
-{"version":3,"file":"adresxz.js","sources":["pages/adresxz/adresxz.vue?type=page"],"sourcesContent":["import MiniProgramPage from '/Users/jiangzupei1/Desktop/melon-shop/pages/adresxz/adresxz.vue'\nwx.createPage(MiniProgramPage)"],"names":[],"mappings":";;;;;;;;;;;;;AACA,GAAG,WAAW,eAAe;"}

@@ -1,8 +1,0 @@
-{
-  "navigationStyle": "custom",
-  "usingComponents": {
-    "product-item": "../../components/product-item/ProductItem",
-    "shop-cart": "../../components/shop-cart/ShopCart",
-    "load-more": "../../components/load-more/index"
-  }
-}

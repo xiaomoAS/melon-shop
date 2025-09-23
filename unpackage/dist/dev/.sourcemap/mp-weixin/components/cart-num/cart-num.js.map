@@ -1,1 +1,0 @@
-{"version":3,"file":"cart-num.js","sources":["D:/HBuilderX/plugins/uniapp-cli-vite/uniComponent:/RTovdW5pL-iUrOiPnOWVhuWfji9jb21wb25lbnRzL2NhcnQtbnVtL2NhcnQtbnVtLnZ1ZQ"],"sourcesContent":["import Component from 'E:/uni/蔬菜商城/components/cart-num/cart-num.vue'\nwx.createComponent(Component)"],"names":[],"mappings":";;;;;;;;;;;AACA,GAAG,gBAAgB,SAAS;"}

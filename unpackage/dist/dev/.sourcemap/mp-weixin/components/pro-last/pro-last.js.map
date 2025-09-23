@@ -1,1 +1,0 @@
-{"version":3,"file":"pro-last.js","sources":["D:/HBuilderX/plugins/uniapp-cli-vite/uniComponent:/RTovdW5pL-iUrOiPnOWVhuWfji9jb21wb25lbnRzL3Byby1sYXN0L3Byby1sYXN0LnZ1ZQ"],"sourcesContent":["import Component from 'E:/uni/蔬菜商城/components/pro-last/pro-last.vue'\nwx.createComponent(Component)"],"names":["Component"],"mappings":";;AACA,GAAG,gBAAgBA,IAAS,SAAA;"}
