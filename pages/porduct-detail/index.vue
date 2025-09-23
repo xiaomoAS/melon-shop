@@ -2,7 +2,7 @@
 	<view class="warpin">
 		<swiper class="detail_baner" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
 			<swiper-item>
-				<view class="swiper-item"><image src="@/static/image/detail_baner.png" mode="widthFix"></image> </view>
+				<view class="swiper-item"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/35b6dbbc60d34ad8a8a03a15937aa4f3/detail_baner.png?Expires=2073987305&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=HPTik%2Bvv3K5xRFnUDywF47pdBug%3D" mode="widthFix"></image> </view>
 			</swiper-item>
 		</swiper>
 		<view class="detail_inf_cont">
@@ -25,7 +25,7 @@
 			<view class="merch_detail">
 				<view class="merch_pulic_tle">商品详情</view>
 				<view class="deta_inf">
-					<image src="@/static/image/detail_img.png" mode="widthFix"></image>
+					<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/2bfdd90d61d24b0d909cb394cd37f40c/detail_img.png?Expires=2073987347&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=T7vtvOYB4Ok%2FDY0V0bV88QAdtzk%3D" mode="widthFix"></image>
 				</view>
 			</view>
 			<view class="foot_buy_cont">
@@ -47,9 +47,16 @@
 </template>
 
 <script>
+export default {
+	name: 'ProductDetail',
+	data() {
+		return {
+			
+		}
+	},
+}
 </script>
 
-<style lang="less">
-	@import url(/pages/detail/detail.css);
-	
+<style scoped lang="scss">
+	@import './index.scss';
 </style>

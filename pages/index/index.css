@@ -2,18 +2,12 @@ page {
   background: #F4F4F4;
 }
 .head_logo {
-  width: 100%;
-  height: var(--status-bar-height);
-  font-size: 40rpx;
-  color: #fff;
-  font-weight: bold;
   margin-bottom: 20rpx;
-  position: relative;
   z-index: 2;
-  padding: 0 20rpx;
-  /* #ifdef MP-WEIXIN */
-  margin-top: 120rpx;
-  /* #endif */
+}
+.head_logo image {
+  width: 120rpx;
+  height: 120rpx;
 }
 .index_head_bg {
   position: absolute;

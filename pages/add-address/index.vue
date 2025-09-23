@@ -18,7 +18,7 @@
 		</view>
 		<view class="adres_default_seet">
 			<view class="tle">设置为默认地址</view>
-			<switch :checked="isDefault"/>
+			<switch :checked="isDefault" @change="defaultChangeHandler"/>
 		</view>
 
 		<button class="bottom-button" @click="saveHandler">保存地址</button>
@@ -32,6 +32,7 @@ export default {
 	name: 'AddAddress',
 	data() {
 		return {
+			addressId: null,
 			receiver: null,
 			mobile: null,
 			detail: null,
@@ -42,8 +43,10 @@ export default {
 			addressText: '请选择省/市/区县'
 		}
 	},
-	async mounted() {
+	async onLoad(options) {
 		try {
+			this.addressId = options.id || null
+			this.initData()
 			// 初始化地址
 			await this.setArea(ADDRESS_LEVEL.PROVINCE)
 			const provinceId = this.addressList[0][0].id
@@ -60,6 +63,18 @@ export default {
 				const list = await this.$http.post('/address/areas', { level, parentId })
 				this.addressList[level - 1] = list
 				this.$set(this.addressList, level - 1, list)
+			} catch (error) {
+				console.log(error)
+			}
+		},
+		async initData() {
+			if (!this.addressId) return
+			try {
+				const data = await this.$http.post('/address/getAddress', { addressId: Number(this.addressId) })
+				this.receiver = data.receiver
+				this.mobile = data.mobile
+				this.detail = data.detail
+				this.isDefault = data.isDefault
 			} catch (error) {
 				console.log(error)
 			}
@@ -109,6 +124,9 @@ export default {
 			}
 			return '请选择省/市/区县'
 		},
+		defaultChangeHandler(event) {
+			this.isDefault = event.detail.value
+		},
 		validateData() {
 			if (!this.receiver) {
 				uni.showToast({ title: '请填写收货人', icon: 'error' })
@@ -129,10 +147,14 @@ export default {
 			return true
 		},
 		async saveHandler() {
+			console.log('isDefault', this.isDefault);
+			
 			const valid = this.validateData()
 			if (!valid) return
 			try {
-				await this.$http.post('/address/add', {
+				const apiName = this.addressId ? '/address/update' : '/address/add'
+				await this.$http.post(apiName, {
+					addressId: this.addressId,
 					receiver: this.receiver,
 					mobile: this.mobile,
 					province: this.selectList[0] ? this.selectList[0].name : null,

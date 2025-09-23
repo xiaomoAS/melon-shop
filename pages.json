@@ -3,7 +3,6 @@
 		{
 		"path": "pages/index/index",
       "style": {
-        //"navigationBarTitleText": "蔬菜商城"
         "navigationStyle":"custom"
       }
 		},
@@ -17,7 +16,7 @@
 			"path": "pages/orderlb/orderlb"
 		},
 		{
-			"path": "pages/detail/detail"
+			"path": "pages/product-detail/index"
 		},
 		{
 			"path": "pages/address-manage/index",
@@ -41,7 +40,7 @@
 			"path": "pages/search-page/index"
 		},
 		{
-			"path": "pages/my/my",
+			"path": "pages/personal/index",
 			"style": {
 				"navigationBarTitleText": "我的",
 				"navigationStyle":"custom"
@@ -73,7 +72,7 @@
 				"text": "订单"
 			},
 			{
-				"pagePath": "pages/my/my",
+				"pagePath": "pages/personal/index",
 				"iconPath": "/static/img/foot_nav_4.png",
 				"selectedIconPath": "/static/img/foot_nav_4h.png",
 				"text": "我的"

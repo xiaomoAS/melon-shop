@@ -21,7 +21,7 @@
 			<view class="pro_last">
 				<view class="list">
 					<view class="pro_i"><image src="@/static/image/index_case1_2.png" mode="widthFix"></image> </view>
-					<navigator url="/pages/detail/detail" class="detail_cont">
+					<navigator url="/pages/product-detail/index" class="detail_cont">
 						<view class="name">测试商品请勿下单23 褐色</view>
 						<view class="bis">褐色</view>
 						<view class="price_inf">
@@ -67,7 +67,7 @@
 			<view class="pro_last">
 				<view  class="list">
 					<view class="pro_i"><image src="@/static/image/index_case1_2.png" mode="widthFix"></image> </view>
-					<navigator url="/pages/detail/detail" class="detail_cont">
+					<navigator url="/pages/product-detail/index" class="detail_cont">
 						<view class="name">测试商品请勿下单23 褐色</view>
 						<view class="bis">褐色</view>
 						<view class="price_inf">

@@ -5,18 +5,14 @@
 			我的
 		</view>
 		<view class="user_inf_content">
-			<view class="ava_inf">
-				<view class="tips_txt">点击头像上传个人信息</view>
-				<view class="ava"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1f25a32b4b97447bac8d02f20f0a47b6/user_ava.png?Expires=2073952610&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=IQflZdBMbA4jh2W7oui1vmaxPuU%3D" mode=""></image> </view>
-			</view>
+			<UploadProfile @updateUserInfo="handleUpdateUserInfo">
+				<view class="ava_inf">
+					<view class="tips_txt">点击头像上传个人信息</view>
+					<view class="ava"><image :src="userInfo.headImgUrl || 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1f25a32b4b97447bac8d02f20f0a47b6/user_ava.png?Expires=2073952610&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=IQflZdBMbA4jh2W7oui1vmaxPuU%3D'" mode=""></image> </view>
+				</view>
+			</UploadProfile>
 			<view class="deta_inf">
-				<view class="name">陌上云霄
-					<view class="id">ID:156345</view>
-				</view>
-				<view class="tel">
-					<image class="tel_i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/c2169ec82d8f426b986a617029d81a39/user_i_1.png?Expires=2073952726&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=qL8MyDHj3wgPicCRVcM2gFlvwmM%3D" mode="widthFix"></image> 
-					：15506332222
-				</view>
+				<view class="name">{{ userInfo.nickName || '微信用户' }}</view>
 			</view>
 		</view>
 		<view class="user_member_cont" :class="{ lv_1: lvdj === 'pj',lv_2: lvdj === 'pt',lv_3: lvdj === 'zs'}">
@@ -57,18 +53,20 @@
 		<view class="user_adres_cont">
 			<view class="user_pulic_title">
 				<view class="tle">我的地址</view>
-				<navigator url="/pages/order/order" class="adres_seet">
+				<navigator url="/pages/address-manage/index" class="adres_seet">
 					<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/cbed39577d3e4c0f862232df5de30774/user_i_3.png?Expires=2073952571&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=iXZXfQ0WG%2FYvSILjOZHqLAyWJ%2FM%3D" mode="widthFix"></image>
 					地址管理
 				</navigator>
 			</view>
-			<view class="adres_deta_list">
+			<view v-if="defaultAddress" class="adres_deta_list">
 				<view class="title">
 					<view class="tip defa">默认</view>
-					<view class="tip home">家</view>
-					铁板鱿鱼  12200033322
+					{{ defaultAddress.receiver }}  {{ defaultAddress.mobile }}
 				</view>
-				<view class="txt">北京  朝阳区  团结湖路17号楼南门502</view>
+				<view class="txt">{{ defaultAddress.province }} {{ defaultAddress.city }} {{ defaultAddress.district }} {{ defaultAddress.detail }}</view>
+			</view>
+			<view v-else class="adres_deta_list">
+				<view class="txt">暂无默认收货地址，请先去地址管理页面添加默认收货地址</view>
 			</view>
 		</view>
 		<view class="user_coupon_cont">
@@ -77,15 +75,15 @@
 			</view>
 			<coupon-list ref="Couponlast"></coupon-list>
 		</view>
+		<!-- TODO: 文案 -->
 		<view class="user_bits_txt">
-			<view class="txt">如果您有问题，可以电话联系XXX,我们将高效解决！您还可以在我们未覆盖区域当团长，挣佣金！</view>
+			<view class="txt">如果您有问题，可以电话联系XXX,我们将高效解决！</view>
 			<view class="bit_dl">
 				<view class="dt">工作日：09:00-18:00</view>
-				<view class="dd">客栈热线 4008866232</view>
+				<view class="dd">客栈热线 xxxxxx</view>
 			</view>
 		</view>
-		<view class="user_dump_btn">我要当团长</view>
-		<!---->
+
 		<view class="pulic_dc_bg" v-show="dczt"></view>
 		<re-charge ref="Recharge" v-show="dczt"></re-charge>
 	</view>
@@ -93,20 +91,62 @@
 
 <script>
 	import Recharge from '@/components/Recharge/Recharge.vue'
+	import UploadProfile from '@/components/upload-profile/index.vue'
 	export default {
 		components: {
-			 're-charge': Recharge,
+			Recharge,
+			UploadProfile
 		},
 		data() {
 			return {
 				lvdj: 'zs',
-				dczt:false
+				dczt:false,
+				userInfo: {},
+				defaultAddress: null
 			}
+		},
+		methods: {
+			async getUserInfo() {
+				try {
+					this.userInfo = await this.$http.post('/wechat/user/getUserInfo', {})
+				} catch (error) {
+					this.userInfo = {}
+				}
+			},
+			async getAddressInfo() {
+				try {
+					const list = await this.$http.post('/address/list', {})
+					this.defaultAddress = list.find((item) => item.isDefault)
+				} catch (error) {
+					this.defaultAddress = null
+				}
+			},
+			async handleUpdateUserInfo(userInfo) {
+				try {
+					await this.$http.post('/wechat/user/patchUserInfo', {
+						nickName: userInfo.nickname,
+						headImgUrl: userInfo.avatar
+					})
+					uni.showToast({ title: '更新成功', icon: 'none' })
+					// 更新本地用户信息
+					if (userInfo.avatar) {
+						this.userInfo.headImgUrl = userInfo.avatar;
+					}
+					if (userInfo.nickname) {
+						this.userInfo.nickName = userInfo.nickname;
+					}
+				} catch (error) {
+					uni.showToast({ title: '更新失败', icon: 'none' })
+				}
+			}
+		},
+		onShow() {
+			this.getUserInfo()
+			this.getAddressInfo()
 		}
 	}
 </script>
 
-<style lang="less">
-	@import url(/pages/my/my.css);
-	
+<style scoped lang="scss">
+	@import './index.scss';
 </style>

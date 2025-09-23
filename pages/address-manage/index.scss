@@ -8,6 +8,12 @@ page {
 .adres_rad {
   display: flex;
   align-items: center;
+
+  .default-radio {
+    transform: scale(0.6);
+    transform-origin: left;
+    margin-right: -20rpx;
+  }
 }
 .adres_rad .ring {
   display: flex;

@@ -43,6 +43,7 @@ page {
   display: block;
   width: 100%;
   height: 100%;
+  border-radius: 50%;
 }
 .user_inf_content .ava_inf .tips_txt {
   position: absolute;
@@ -366,4 +367,14 @@ page {
   font-size: 30rpx;
   color: #FFFFFF;
   margin: 20rpx auto;
+}
+
+.pulic_dc_bg{
+  position: fixed;
+  top:0;
+  left:0;
+  width:100%;
+  height:100%;
+  z-index:10;
+  background: rgba(0,0,0,0.5);
 }

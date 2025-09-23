@@ -1,0 +1,123 @@
+.getnickbox {
+  padding: 40rpx 20rpx;
+  
+  .flex_align_center {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logoimg {
+    width: 50rpx;
+    height: 50rpx;
+  }
+  
+  .name {
+    margin-left: 20rpx;
+    
+    text {
+      margin-left: 10rpx;
+    }
+  }
+  
+  .m1 {
+    font-weight: 500;
+    margin-top: 30rpx;
+  }
+  
+  .m2 {
+    padding-bottom: 30rpx;
+    border-bottom: 1rpx solid #f2f2f2;
+    color: #999;
+    padding-top: 10rpx;
+    font-size: 24rpx;
+  }
+  
+  .xin1 {
+    border-bottom: 1rpx solid #f2f2f2;
+    margin-bottom: 30rpx;
+    
+    .buttoncss {
+			padding: 0 14rpx;
+      background-color: #fff;
+      border-radius: 0px;
+      border: 0rpx solid transparent;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      
+      &::after {
+        border: 0px solid rgba(0, 0, 0, 0.2);
+      }
+    }
+    
+    .toubox {
+      padding: 10rpx 0;
+      display: flex;
+      align-items: center;
+      
+      .t1 {
+        font-size: 28rpx;
+        margin-right: 30rpx;
+      }
+
+			.avatar-text-box {
+				display: flex;
+				align-items: center;
+			}
+
+			.avatar-text {
+				font-size: 28rpx;
+				margin-left: 8rpx;
+			}
+      
+      .avatarbox {
+        width: 100rpx;
+        height: 100rpx;
+        border-radius: 20rpx;
+        overflow: hidden;
+        
+        .avatarimg {
+          width: 100%;
+          height: 100%;
+          border-radius: 20rpx;
+        }
+      }
+    }
+  }
+  
+  .nick {
+    padding: 30rpx 14rpx;
+    border-bottom: 2rpx solid #f2f2f2;
+    display: flex;
+    align-items: center;
+    
+    .n1 {
+      font-size: 28rpx;
+      margin-right: 30rpx;
+      flex-shrink: 0;
+    }
+    
+    input {
+      flex: 1;
+      font-size: 28rpx;
+    }
+  }
+  
+  .fixedBtn {
+    margin-top: 30rpx;
+    
+    .btn {
+      width: 100%;
+      height: 80rpx;
+      background-color: #ff6b35;
+      color: #fff;
+      border-radius: 40rpx;
+      font-size: 32rpx;
+      border: none;
+      
+      &::after {
+        border: none;
+      }
+    }
+  }
+}

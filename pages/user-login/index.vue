@@ -2,7 +2,7 @@
 	<view class="login-container">
 		<view class="login-box">
 			<view class="logo">
-				<image src="/static/logo.png" mode="aspectFit"></image>
+				<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4cba2ff43c034c16aab096a3d322ee2e/orange-logo%20%281%29.png?Expires=2073975970&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=svCx34i6wBqlgJ1PYCcMbpAby3c%3D" mode="aspectFit"></image>
 			</view>
 			<view class="title">欢迎使用</view>
 			<view class="subtitle">请授权登录以获得更好的体验</view>
@@ -131,70 +131,6 @@ const sendLoginRequest = async (data) => {
 };
 </script>
 
-<style>
-.login-container {
-	min-height: 100vh;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-	padding: 40rpx;
-}
-
-.login-box {
-	background: white;
-	border-radius: 20rpx;
-	padding: 80rpx 60rpx;
-	text-align: center;
-	box-shadow: 0 10rpx 30rpx rgba(0, 0, 0, 0.1);
-	width: 100%;
-	max-width: 600rpx;
-}
-
-.logo {
-	margin-bottom: 40rpx;
-}
-
-.logo image {
-	width: 120rpx;
-	height: 120rpx;
-}
-
-.title {
-	font-size: 48rpx;
-	font-weight: bold;
-	color: #333;
-	margin-bottom: 20rpx;
-}
-
-.subtitle {
-	font-size: 28rpx;
-	color: #666;
-	margin-bottom: 60rpx;
-}
-
-.login-btn {
-	width: 100%;
-	height: 88rpx;
-	background: #07c160;
-	color: white;
-	border-radius: 44rpx;
-	font-size: 32rpx;
-	border: none;
-	margin-bottom: 40rpx;
-}
-
-.login-btn:active {
-	background: #06ad56;
-}
-
-.login-btn[disabled] {
-	background: #cccccc;
-}
-
-.error-msg {
-	color: #ff4757;
-	font-size: 28rpx;
-	margin-top: 20rpx;
-}
+<style scoped lang="scss">
+@import './index.scss';
 </style>
