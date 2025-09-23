@@ -21,7 +21,7 @@ page {
 }
 .detail_inf_cont .price_inf {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
 }
 .detail_inf_cont .price_inf .price {
   font-size: 40rpx;
@@ -29,6 +29,7 @@ page {
   color: #FF5F36;
 }
 .detail_inf_cont .price_inf .dw {
+  margin-bottom: 3px;
   font-size: 24rpx;
   color: #60C45D;
 }
@@ -36,6 +37,8 @@ page {
   position: absolute;
   bottom: 20rpx;
   right: 20rpx;
+  display: flex;
+  align-items: center;
   font-size: 22rpx;
   color: #666666;
 }
@@ -49,6 +52,11 @@ page {
   font-weight: bold;
   position: relative;
   margin-bottom: 20rpx;
+}
+.desc-text {
+  font-size: 30rpx;
+  color: #262626;
+  margin-bottom: 8rpx;
 }
 .merch_pulic_tle::after {
   content: "";

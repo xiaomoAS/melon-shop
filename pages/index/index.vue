@@ -35,7 +35,7 @@
 					</view>
 					<view v-if="newPersonList.length" class="pro_last">
 						<view v-for="(newItem, index) in newPersonList" :key="index" class="list_cont">
-							<view class="tis_i">
+							<view class="tis_i" @click="toDetailPage(newItem.productId)">
 								<image class="i" :src="newItem.imgUrl" mode="widthFix"></image> 
 								<view class="tip_txt">新客专享</view>
 							</view>
@@ -114,6 +114,10 @@
 			this.refreshShopCart()
 		},
 		methods: {
+			toDetailPage(id) {
+				if (!id) return
+				uni.navigateTo({ url: `/pages/product-detail/index?id=${id}` })
+			},
 			toCatePage(id = null) {
 				wx.setStorageSync('cateId', id)
 				uni.switchTab({ url: '/pages/ifica/ifica' })

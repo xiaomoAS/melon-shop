@@ -16,7 +16,10 @@
 			"path": "pages/orderlb/orderlb"
 		},
 		{
-			"path": "pages/product-detail/index"
+			"path": "pages/product-detail/index",
+			"style": {
+				"navigationBarTitleText": "商品详情"
+			}
 		},
 		{
 			"path": "pages/address-manage/index",
