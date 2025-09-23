@@ -20,10 +20,16 @@
 			"path": "pages/detail/detail"
 		},
 		{
-			"path": "pages/adres/adres"
+			"path": "pages/address-manage/index",
+			"style": {
+				"navigationBarTitleText": "管理收货地址"
+			}
 		},
 		{
-			"path": "pages/adresxz/adresxz"
+			"path": "pages/add-address/index",
+			"style": {
+				"navigationBarTitleText": "新增收货地址"
+			}
 		},
 		{
 			"path": "pages/mycoupon/index"

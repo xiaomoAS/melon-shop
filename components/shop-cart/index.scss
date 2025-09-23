@@ -203,13 +203,35 @@
   width: 23rpx;
   margin-left: 10rpx;
 }
-.join_cart_cont .bit_buy_cont {
+.bit_buy_cont {
   margin: 40rpx 0 20rpx;
   display: flex;
   align-items: center;
   padding-left: 40rpx;
+
+  &.bottom {
+    position: fixed;
+    box-sizing: border-box;
+    width: calc(100% - 40rpx);
+    bottom: 20rpx;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 2;
+  }
 }
-.join_cart_cont .bit_buy_cont .l_cont {
+.add-cart-box {
+  display: flex;
+  align-items: center;
+  font-size: 30rpx;
+  color: #60C45D;
+  margin-left: auto;
+  margin-right: 16rpx;
+
+  .icon {
+    margin-right: 8rpx;
+  }
+}
+.bit_buy_cont .l_cont {
   width: 80%;
   position: relative;
   height: 61rpx;
@@ -219,7 +241,7 @@
   display: flex;
   align-items: center;
 }
-.join_cart_cont .bit_buy_cont .l_cont .buy_num {
+.bit_buy_cont .l_cont .buy_num {
   position: absolute;
   left: -40rpx;
   bottom: 0;
@@ -229,14 +251,14 @@
   width: 80rpx;
   height: 80rpx;
 }
-.join_cart_cont .bit_buy_cont .l_cont .buy_num image {
+.bit_buy_cont .l_cont .buy_num image {
   display: block;
   width: 100%;
   height: 100%;
   border-radius: 100%;
   box-shadow: 0px 5rpx 18rpx #60C45D8A;
 }
-.join_cart_cont .bit_buy_cont .l_cont .buy_num .num {
+.bit_buy_cont .l_cont .buy_num .num {
   position: absolute;
   right: 0;
   top: -10rpx;
@@ -246,18 +268,18 @@
   border-radius: 100rpx;
   background: #FF5F36;
 }
-.join_cart_cont .bit_buy_cont .l_cont .xj {
+.bit_buy_cont .l_cont .xj {
   font-size: 36rpx;
   color: #FF0000;
   font-weight: bold;
   margin-right: 10rpx;
 }
-.join_cart_cont .bit_buy_cont .l_cont .yj {
+.bit_buy_cont .l_cont .yj {
   font-size: 26rpx;
   color: #ACACAC;
   text-decoration: line-through;
 }
-.join_cart_cont .bit_buy_cont .buy_btn {
+.bit_buy_cont .buy_btn {
   width: 35%;
   height: 60rpx;
   display: flex;

@@ -1,8 +1,25 @@
 <template>
   <view>
-    <view @click="showCartDetail = !showCartDetail" class="buycar_floor">
+    <view v-if="cartType === CART_TYPE.NORMAL" @click="showCartDetail = !showCartDetail" class="buycar_floor">
 			<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
 			<view class="txt">{{ total }}</view>
+		</view>
+
+		<view v-else-if="cartType === CART_TYPE.BOTTOM && !showCartDetail" class="bit_buy_cont bottom" @click="showCartDetail = !showCartDetail">
+			<view class="l_cont">
+				<view class="buy_num">
+					<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
+					<text class="num">{{ total }}</text>
+				</view>
+				<view class="xj">￥{{ priceInfo.realpayPrice || 0  }}</view>
+				<view class="yj" v-if="priceInfo.newPersonPrice || priceInfo.shipPrice">￥{{ priceInfo.totalPrice }}</view>
+				
+				<view v-if="info" class="add-cart-box" @click="addCartHandler">
+					<uni-icons class="icon" color="#60C45D" type="cart-filled" size="14"></uni-icons>
+					<view>加购</view>
+				</view>
+			</view>
+			<view class="buy_btn" :class="{ disabled: selectedCount === 0 }">立即购买</view>
 		</view>
 		
 		<!-- 遮罩层 -->
@@ -64,10 +81,15 @@
 				<view class="l_cont">
 					<view class="buy_num">
 						<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
-						<text class="num">{{ selectedCount }}</text>
+						<text class="num">{{ total }}</text>
 					</view>
-					<view class="xj">￥{{ 0 }}</view>
+					<view class="xj">￥{{ priceInfo.realpayPrice || 0 }}</view>
 					<view class="yj" v-if="priceInfo.newPersonPrice || priceInfo.shipPrice">￥{{ priceInfo.totalPrice }}</view>
+
+					<view v-if="info" class="add-cart-box" @click="addCartHandler">
+						<uni-icons class="icon" color="#60C45D" type="cart-filled" size="14"></uni-icons>
+						<view>加购</view>
+					</view>
 				</view>
 				<view class="buy_btn" :class="{ disabled: selectedCount === 0 }">立即购买</view>
 			</view>
@@ -76,105 +98,134 @@
 </template>
 
 <script>
-  export default {
-    data() {
-      return {
-        showCartDetail: false,
-				cartList: [],
-				total: 0,
-				priceInfo: {}
+import { CART_TYPE } from './constants'
+export default {
+	name: 'ShopCart',
+  data() {
+    return {
+      showCartDetail: false,
+			cartList: [],
+			total: 0,
+			priceInfo: {},
+			CART_TYPE
+    }
+  },
+  mounted() {
+    this.getCartList()
+    // 监听全局刷新事件
+    uni.$on('refreshShopCart', this.getCartList)
+  },
+	props: {
+		cartType: {
+			type: Number,
+			default: CART_TYPE.NORMAL
+		},
+		// 商品信息
+		info: {
+			type: Object,
+			default: null,
+			required: false,
+		}
+	},
+	computed: {
+		selectList() {
+			return this.cartList.filter((item) => item.selected)
+		},
+		isAllSelected() {
+			return this.cartList.length > 0 && this.cartList.every(item => item.selected)
+		},
+		selectedCount() {
+			return this.cartList.filter(item => item.selected).length
+		},
+	},
+  beforeDestroy() {
+    // 移除事件监听
+    uni.$off('refreshShopCart', this.getCartList)
+  },
+  methods: {
+		async addCartHandler() {
+			try {
+				if (!this.info) return
+				await this.$http.post('/shopcart/add', { ...this.info })
+				uni.showToast({ title: '添加成功' })
+				uni.$emit('refreshShopCart')
+			} catch (error) {
+				uni.showToast({ title: '添加失败', icon: 'error' })
+			}
+		},
+    closeCartDetail() {
+      this.showCartDetail = false
+    },
+    async getCartList() {
+      try {
+        this.cartList = await this.$http.post('/shopcart/list', {}) || []
+				this.cartList = this.cartList.map(item => ({
+					...item,
+					selected: false // 默认不选中
+				}))
+				this.total = this.cartList ? this.cartList.length : 0
+			} catch (error) {
+				this.cartList = []
+				this.total = 0
       }
     },
-    mounted() {
-      this.getCartList()
-      // 监听全局刷新事件
-      uni.$on('refreshShopCart', this.getCartList)
-    },
-		computed: {
-			selectList() {
-				return this.cartList.filter((item) => item.selected)
-			},
-			isAllSelected() {
-				return this.cartList.length > 0 && this.cartList.every(item => item.selected)
-			},
-			selectedCount() {
-				return this.cartList.filter(item => item.selected).length
-			},
-		},
-    beforeDestroy() {
-      // 移除事件监听
-      uni.$off('refreshShopCart', this.getCartList)
-    },
-    methods: {
-      closeCartDetail() {
-        this.showCartDetail = false
-      },
-      async getCartList() {
-        try {
-          this.cartList = await this.$http.post('/shopcart/list', {}) || []
-					this.cartList = this.cartList.map(item => ({
-						...item,
-						selected: false // 默认不选中
-					}))
-					this.total = this.cartList ? this.cartList.length : 0
-				} catch (error) {
-					this.cartList = []
-					this.total = 0
-        }
-      },
-			async updatePrice() {
-				try {
-					const selectCateIds = this.selectList.map(item => item.productId)
-					this.priceInfo = await this.$http.post('/shopcat/calculate', { checkedProductIdList: selectCateIds || [] })
-				} catch (error) {
+		async updatePrice() {
+			try {
+				const selectCateIds = this.selectList.map(item => item.productId)
+				if (!selectCateIds.length) {
 					this.priceInfo = {}
+					return
 				}
-			},
-      async decrease(item) {
-				if (item.buyCounts <= 1) return
-				try {
-				  item.buyCounts--
-					await this.$http.post('/shopcart/delete', { ...item })
-					if (item.selected) {
-						this.updatePrice()
-					}
-				} catch (error) {
-					uni.showToast({ title: '减少失败', icon: 'error' })
-				}
-			},
-			async increase(item) {
-				item.buyCounts++
-				try {
-					await this.$http.post('/shopcart/add', { ...item })
-					if (item.selected) {
-						this.updatePrice()
-					}
-				} catch (error) {
-					uni.showToast({ title: '添加失败', icon: 'error' })
-				}
-			},
-			async clearCart() {
-				try {
-					await Promise.all(this.cartList.map((item) => this.$http.post('/shopcart/delete', { ...item })))
-					uni.showToast({ title: '清除成功' })
-					this.getCartList()
-				} catch (error) {
-					uni.showToast({ title: '清除失败', icon: 'error' })
-				}
-			},
-			toggleSelectAll() {
-				const newState = !this.isAllSelected
-				this.cartList.forEach(item => {
-					this.$set(item, 'selected', newState)
-				})
-				this.updatePrice()
-			},
-			toggleSelectItem(item) {
-				this.$set(item, 'selected', !item.selected)
-				this.updatePrice()
+				this.priceInfo = await this.$http.post('/shopcart/calculate', { checkedProductIdList: selectCateIds || [] })
+			} catch (error) {
+				this.priceInfo = {}
 			}
-    },
-  }
+		},
+    async decrease(item) {
+			if (item.buyCounts <= 1) return
+			try {
+			  item.buyCounts--
+				await this.$http.post('/shopcart/delete', { ...item })
+				if (item.selected) {
+					this.updatePrice()
+				}
+			} catch (error) {
+				uni.showToast({ title: '减少失败', icon: 'error' })
+			}
+		},
+		async increase(item) {
+			item.buyCounts++
+			try {
+				await this.$http.post('/shopcart/add', { ...item })
+				if (item.selected) {
+					this.updatePrice()
+				}
+			} catch (error) {
+				uni.showToast({ title: '添加失败', icon: 'error' })
+			}
+		},
+		async clearCart() {
+			try {
+				await this.$http.post('/shopcart/delete', { clear: true })
+				uni.showToast({ title: '清除成功' })
+				this.getCartList()
+			} catch (error) {
+				uni.showToast({ title: '清除失败', icon: 'error' })
+			}
+		},
+		toggleSelectAll() {
+			const newState = !this.isAllSelected
+			this.cartList.forEach(item => {
+				this.$set(item, 'selected', newState)
+			})
+			this.updatePrice()
+		},
+		toggleSelectItem(item) {
+			this.$set(item, 'selected', !item.selected)
+			this.updatePrice()
+		}
+  },
+}
 </script>
 
 <style lang="scss" scoped>

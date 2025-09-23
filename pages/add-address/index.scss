@@ -68,3 +68,26 @@ page {
   color: #000000;
   font-weight: bold;
 }
+
+.address-select__trigger {
+  width: fit-content;
+  margin-left: auto;
+  font-size: 28rpx;
+  color: #999;
+  font-weight: 500;
+}
+
+.bottom-button {
+  position: fixed;
+  bottom: 20rpx;
+  left: 5%;
+  width: 90%;
+  height: 80rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 100rpx;
+  background: #61C55E;
+  font-size: 30rpx;
+  color: #fff;
+}

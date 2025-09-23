@@ -71,7 +71,7 @@
 import { REPORT_TYPE } from './constants'
 
 export default {
-  name: 'ReportView',
+  name: 'ReportViewer',
   props: {
     title: {
       type: String,

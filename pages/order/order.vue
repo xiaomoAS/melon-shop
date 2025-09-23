@@ -1,11 +1,11 @@
 <template>
 	<view class="contain">
 		<view class="order_baner">
-			<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/54f5a8bc158e4dcfb6cf4187ab8b3711/order_baner.png?Expires=2073876026&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lAFR587No%2B7paT%2F4bUr4YNED5zk%3Dimage/order_baner.png" mode="widthFix"></image>
+			<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/54f5a8bc158e4dcfb6cf4187ab8b3711/order_baner.png?Expires=2073876026&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lAFR587No%2B7paT%2F4bUr4YNED5zk%3D" mode="widthFix"></image>
 		</view>
-		<navigator url="/pages/adres/adres" class="order_adres_cont">
+		<navigator url="/pages/address-manage/index" class="order_adres_cont">
 			<view class="l_cont">
-				<view class="dt"><image src="@/static/image/order_ico_1.png" mode="widthFix"></image> </view>
+				<view class="dt"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/448679a90eb74a30b8f4ce9a87ee4f2e/order_ico_1.png?Expires=2073953745&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=bG4RpdbkOM4DCD6QpKH4Hthxq6g%3D" mode="widthFix"></image> </view>
 				<view class="dd">
 					<view class="add_txt" v-if="dlzt">添加收货地址</view>
 					<view class="add_deta" v-else >
@@ -14,7 +14,7 @@
 					</view>
 				</view>
 			</view>
-			<image class="arr" src="@/static/image/arr_1.png" mode="widthFix"></image>
+			<image class="arr" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/36862d6137584d809a266fd4eddced20/arr_1.png?Expires=2073953778&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=TVUd0tFwBlx8rj4rZbRwDg%2Fzigg%3D" mode="widthFix"></image>
 		</navigator>
 		<view class="order_product_contain">
 			<view class="title_head">
@@ -23,7 +23,7 @@
 			</view>
 			<view class="pro_last">
 				<view class="pro_list">
-					<view class="pro_i"><image src="@/static/image/order_pro_1.png"></image> </view>
+					<view class="pro_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/a1fcb3cb56664a279ffbdd2613c5140d/order_pro_1.png?Expires=2073953809&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=bgM4jDcAnCc%2FMj9xEPRSvtIQcTE%3D"></image> </view>
 					<view class="deta_cont">
 						<view class="name">新鲜小橙子团购</view>
 						<view class="specs">规格：约500g/份</view>
@@ -32,7 +32,7 @@
 					</view>
 				</view>
 				<view class="pro_list">
-					<view class="pro_i"><image src="@/static/image/order_pro_1.png"></image> </view>
+					<view class="pro_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/a1fcb3cb56664a279ffbdd2613c5140d/order_pro_1.png?Expires=2073953809&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=bgM4jDcAnCc%2FMj9xEPRSvtIQcTE%3D"></image> </view>
 					<view class="deta_cont">
 						<view class="name">新鲜小橙子团购</view>
 						<view class="specs">规格：约500g/份</view>
@@ -96,7 +96,7 @@
 			<view class="title">支付方式</view>
 			<view class="pay_list">
 				<view class="l_cont">
-					<view class="i"><image src="@/static/image/order_ico_4.png" mode="widthFix"></image> </view>
+					<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/7bf717a5de2f4d6d96385b79d7208d9c/order_ico_4.png?Expires=2073953856&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=hqNrVt4wn%2FQH1AUGdu2DZVnuxtI%3D" mode="widthFix"></image> </view>
 					<view class="cont">
 						<view class="tle">微信支付</view>
 					</view>
@@ -107,7 +107,7 @@
 			</view>
 			<view class="pay_list">
 				<view class="l_cont">
-					<view class="i"><image src="@/static/image/order_ico_5.png" mode="widthFix"></image> </view>
+					<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f96029eafb244211b53a05a59f376bef/order_ico_5.png?Expires=2073953887&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=LjRrr5ecgpw0kNHxoDxr98iR%2FV4%3D" mode="widthFix"></image> </view>
 					<view class="cont">
 						<view class="tle">会员支付</view>
 						<view class="txt">当前会员等级：黄金会员</view>

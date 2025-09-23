@@ -33,7 +33,7 @@
 
 <script>
 import { formatDate } from '../../utils/common';
-import ReportViewer from '../report-view/ReportViewer.vue';
+import ReportViewer from '../report-view/index.vue';
 
 export default {
 	name: 'ProductItem',

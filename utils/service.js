@@ -70,8 +70,8 @@ http.interceptors.response.use((response) => {
 					url: '/pages/user-login/index'
 				})
 				return Promise.reject(response)
-
 			default:
+				uni.showToast({ title: response.data.msg, icon: 'none' })
 				return Promise.reject(response)
 		}
 	}

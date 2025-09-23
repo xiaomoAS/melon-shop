@@ -40,7 +40,7 @@
 </template>
 
 <script>
-import ProductItem from '@/components/product-item/ProductItem.vue'
+import ProductItem from '@/components/product-item/index.vue'
 import LoadMore from '@/components/load-more/index.vue'
 
 export default{

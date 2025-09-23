@@ -72,8 +72,8 @@
 	</view>
 </template>
 <script>
-	import ProductItem from '@/components/product-item/ProductItem.vue'
-	import ShopCart from '@/components/shop-cart/ShopCart.vue'
+	import ProductItem from '@/components/product-item/index.vue'
+	import ShopCart from '@/components/shop-cart/index.vue'
 	import LoadMore from '@/components/load-more/index.vue'
 	const app = getApp()
 	export default {
