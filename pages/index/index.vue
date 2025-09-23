@@ -102,7 +102,9 @@
 			},
 		},
 		onShow() {
-			this.getCarouselImages();
+			this.page = 1
+			this.productList = []
+			this.getCarouselImages()
 			this.getCates();
 			this.getNewPerson()
 			this.getProductList()

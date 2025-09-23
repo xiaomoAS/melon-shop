@@ -35,29 +35,29 @@
 						<view class="count_cont">
 							<image class="btn less" :class="{disabled: item.buyCounts <= 1}" @click="decrease(item)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
 							<text class="int">{{ item.buyCounts }}</text>
-							<image class="btn plus" @click="item.buyCounts++" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
+							<image class="btn plus" @click="increase(item)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
 						</view>
 					</view>
 				</view>
 			</view>
 			<view class="total_price_cont">
 				<view class="title_head">
-					<view class="tle">商品总价</view>
-					<view class="total">￥640.5</view>
+					<view class="tle">选中商品总价</view>
+					<view class="total">￥{{ priceInfo.totalPrice || 0 }}</view>
 				</view>
-				<view class="dl">
+				<view v-if="priceInfo.shipPrice" class="dl">
 					<view class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/05a860ef9f874ed696e19c3374f7419c/order_ico_2.png?Expires=2073876488&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5edejPW2awsLyvfjOWNrI8yBClU%3D" mode="widthFix"></image> </view>
 						运费券
 					</view>
-					<view class="dd">-￥15.6 <image class="arr" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1c1b0a37f2274686890fdc70f9a7331f/arr_2.png?Expires=2073876560&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gTx%2F3%2BfjIlY9%2FKTXvmmYbv%2Fq5dE%3D" mode="widthFix"></image> </view>
+					<view class="dd">-￥{{ priceInfo.shipPrice }}</view>
 				</view>
-				<view class="dl">
+				<view v-if="priceInfo.newPersonPrice" class="dl">
 					<view class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/525a98181c884d0e854f14f241cde3d4/order_ico_3.png?Expires=2073876622&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lJjlb4qD0VewJtyVTV5656JOFo8%3D" mode="widthFix"></image> </view>
 						新人专享券
 					</view>
-					<view class="dd">-￥5.6 <image class="arr" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1c1b0a37f2274686890fdc70f9a7331f/arr_2.png?Expires=2073876560&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gTx%2F3%2BfjIlY9%2FKTXvmmYbv%2Fq5dE%3D" mode="widthFix"></image> </view>
+					<view class="dd">-￥{{ priceInfo.newPersonPrice }}</view>
 				</view>
 			</view>
 			<view class="bit_buy_cont">
@@ -66,8 +66,8 @@
 						<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
 						<text class="num">{{ selectedCount }}</text>
 					</view>
-					<view class="xj">￥{{ selectedTotalPrice }}</view>
-					<view class="yj" v-if="selectedCount > 0">￥{{ (parseFloat(selectedTotalPrice) + 20).toFixed(2) }}</view>
+					<view class="xj">￥{{ 0 }}</view>
+					<view class="yj" v-if="priceInfo.newPersonPrice || priceInfo.shipPrice">￥{{ priceInfo.totalPrice }}</view>
 				</view>
 				<view class="buy_btn" :class="{ disabled: selectedCount === 0 }">立即购买</view>
 			</view>
@@ -81,7 +81,8 @@
       return {
         showCartDetail: false,
 				cartList: [],
-				total: 0
+				total: 0,
+				priceInfo: {}
       }
     },
     mounted() {
@@ -99,12 +100,6 @@
 			selectedCount() {
 				return this.cartList.filter(item => item.selected).length
 			},
-			selectedTotalPrice() {
-				return this.cartList
-					.filter(item => item.selected)
-					.reduce((total, item) => total + (item.price * item.buyCounts), 0)
-					.toFixed(2)
-			}
 		},
     beforeDestroy() {
       // 移除事件监听
@@ -117,19 +112,45 @@
       async getCartList() {
         try {
           this.cartList = await this.$http.post('/shopcart/list', {}) || []
-     this.cartList = this.cartList.map(item => ({
-      ...item,
-      selected: false // 默认不选中
-     }))
-     this.total = this.cartList ? this.cartList.length : 0
-        } catch (error) {
-          this.cartList = []
-     this.total = 0
+					this.cartList = this.cartList.map(item => ({
+						...item,
+						selected: false // 默认不选中
+					}))
+					this.total = this.cartList ? this.cartList.length : 0
+				} catch (error) {
+					this.cartList = []
+					this.total = 0
         }
       },
-      decrease(item) {
-				if (item.buyCounts > 1) {
-				  item.buyCounts--;
+			async updatePrice() {
+				try {
+					const selectCateIds = this.selectList.map(item => item.productId)
+					this.priceInfo = await this.$http.post('/shopcat/calculate', { checkedProductIdList: selectCateIds || [] })
+				} catch (error) {
+					this.priceInfo = {}
+				}
+			},
+      async decrease(item) {
+				if (item.buyCounts <= 1) return
+				try {
+				  item.buyCounts--
+					await this.$http.post('/shopcart/delete', { ...item })
+					if (item.selected) {
+						this.updatePrice()
+					}
+				} catch (error) {
+					uni.showToast({ title: '减少失败', icon: 'error' })
+				}
+			},
+			async increase(item) {
+				item.buyCounts++
+				try {
+					await this.$http.post('/shopcart/add', { ...item })
+					if (item.selected) {
+						this.updatePrice()
+					}
+				} catch (error) {
+					uni.showToast({ title: '添加失败', icon: 'error' })
 				}
 			},
 			async clearCart() {
@@ -146,9 +167,11 @@
 				this.cartList.forEach(item => {
 					this.$set(item, 'selected', newState)
 				})
+				this.updatePrice()
 			},
 			toggleSelectItem(item) {
 				this.$set(item, 'selected', !item.selected)
+				this.updatePrice()
 			}
     },
   }

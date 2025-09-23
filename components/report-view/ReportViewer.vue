@@ -93,10 +93,14 @@ export default {
   },
   methods: {
     // 显示预览
-    showPreview() {
+    async showPreview() {
       if (!this.productId) return
-      this.getReportDetail()
-      this.visible = true
+      await this.getReportDetail()
+      if (this.reportType === REPORT_TYPE.IMAGE) {
+        this.visible = true
+      } else if (this.reportType === REPORT_TYPE.PDF) {
+        this.downloadFile()
+      }
     },
     
     // 隐藏预览
@@ -181,8 +185,9 @@ export default {
               icon: 'success'
             })
             
-            // 保存到相册（仅图片）
-            if (this.reportType === 1) {
+            // 根据文件类型进行保存
+            if (this.reportType === REPORT_TYPE.IMAGE) {
+              // 保存图片到相册
               uni.saveImageToPhotosAlbum({
                 filePath: res.tempFilePath,
                 success: () => {
@@ -191,13 +196,24 @@ export default {
                     icon: 'success'
                   })
                 },
-                fail: () => {
+                fail: (err) => {
+                  console.error('保存图片失败:', err)
                   uni.showToast({
-                    title: '保存失败',
+                    title: '保存失败，请检查相册权限',
                     icon: 'none'
                   })
                 }
               })
+            } else if (this.reportType === REPORT_TYPE.PDF) {
+              // 处理PDF文件
+              uni.openDocument({
+								filePath: res.tempFilePath,
+								showMenu: true, // 右上角菜单，可以进行分享保存pdf
+								success: function(file) {
+									console.log("文件打开成功", file)
+								}
+							})
+              // this.handlePdfSave(res.tempFilePath)
             }
           } else {
             uni.showToast({
@@ -216,7 +232,7 @@ export default {
           this.downloading = false
         }
       })
-    }
+    },
   }
 }
 </script>
