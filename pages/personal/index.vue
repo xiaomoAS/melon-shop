@@ -1,6 +1,6 @@
 <template>
 	<view class="contain">
-		<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/916cae2f99af4241acf65617a6a07bd9/index_head_bg.png?Expires=2073875593&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=6l%2B1kM%2BmbcTT4vmhVbD6zlktjVo%3D" class="index_head_bg" mode="widthFix"></image>
+		<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/7c852fc463c344348df49a3e3a006d71/index_head_bg%20%282%29%20%281%29.png?Expires=2074056139&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5zEIf4pNQpbjKLSFv9Ns3kzcWMc%3D" class="index_head_bg" mode="widthFix"></image>
 		<view class="user_head_bg">
 			我的
 		</view>
@@ -73,7 +73,7 @@
 			<view class="user_pulic_title">
 				<view class="tle">我的优惠券</view>
 			</view>
-			<coupon-list ref="Couponlast"></coupon-list>
+			<CouponList></CouponList>
 		</view>
 		<!-- TODO: 文案 -->
 		<view class="user_bits_txt">
@@ -85,24 +85,27 @@
 		</view>
 
 		<view class="pulic_dc_bg" v-show="dczt"></view>
-		<re-charge ref="Recharge" v-show="dczt"></re-charge>
+		<!-- <re-charge ref="Recharge" v-show="dczt"></re-charge> -->
 	</view>
 </template>
 
 <script>
-	import Recharge from '@/components/Recharge/Recharge.vue'
+	// import Recharge from '@/components/Recharge/Recharge.vue'
 	import UploadProfile from '@/components/upload-profile/index.vue'
+	import CouponList from '@/components/coupon-list/index.vue'
+
 	export default {
 		components: {
-			Recharge,
-			UploadProfile
+			// Recharge,
+			UploadProfile,
+			CouponList
 		},
 		data() {
 			return {
 				lvdj: 'zs',
 				dczt:false,
 				userInfo: {},
-				defaultAddress: null
+				defaultAddress: null,
 			}
 		},
 		methods: {
@@ -138,7 +141,8 @@
 				} catch (error) {
 					uni.showToast({ title: '更新失败', icon: 'none' })
 				}
-			}
+			},
+			
 		},
 		onShow() {
 			this.getUserInfo()

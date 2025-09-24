@@ -20,7 +20,7 @@
 			</view>
 			<view class="pro_last">
 				<view class="list">
-					<view class="pro_i"><image src="@/static/image/index_case1_2.png" mode="widthFix"></image> </view>
+					<view class="pro_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/204d3d96231349298d64fd8bc225bf0a/index_case1_2.png?Expires=2074059755&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=KOk2NNsu%2BaSUpyPUrTzkrc00TPE%3D" mode="widthFix"></image> </view>
 					<navigator url="/pages/product-detail/index" class="detail_cont">
 						<view class="name">测试商品请勿下单23 褐色</view>
 						<view class="bis">褐色</view>
@@ -66,7 +66,7 @@
 			</view>
 			<view class="pro_last">
 				<view  class="list">
-					<view class="pro_i"><image src="@/static/image/index_case1_2.png" mode="widthFix"></image> </view>
+					<view class="pro_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/204d3d96231349298d64fd8bc225bf0a/index_case1_2.png?Expires=2074059755&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=KOk2NNsu%2BaSUpyPUrTzkrc00TPE%3D" mode="widthFix"></image> </view>
 					<navigator url="/pages/product-detail/index" class="detail_cont">
 						<view class="name">测试商品请勿下单23 褐色</view>
 						<view class="bis">褐色</view>

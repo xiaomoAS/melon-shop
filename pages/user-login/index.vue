@@ -122,7 +122,7 @@ const sendLoginRequest = async (data) => {
 				});
 			}, 1500);
 		} else {
-			throw new Error(res.data?.message || '登录失败');
+			throw new Error(res.data.message || '登录失败');
 		}
 	} catch (error) {
 		console.error('后端登录失败:', error);

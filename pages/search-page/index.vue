@@ -4,6 +4,7 @@
 			<view class="int_cont">
 				<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix" @click="searchHandlder"></image>
 				<input v-model="keywords" type="text" placeholder="搜索您的商品">
+				<view class="btn" @click="searchHandlder">搜索</view>
 			</view>
 		</view>
 		<view class="ifiac_filter_cont">
@@ -13,7 +14,8 @@
 					<view class="title_head">
 						<image class="logo" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/b5a62a0a9f344046b6ecccd5d5f9184a/pro_logo.png?Expires=2073875894&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=UhwsRTz1JJlnDOlP0K4Tm0ABWGk%3D" mode="widthFix"></image>
 						<view class="dt">团购好货</view>
-						<view class="txt">三餐四季 尽在知花</view>
+						<view v-if="productIdList" class="txt">该券可用商品</view>
+						<view v-else class="txt">搜索商品结果</view>
 					</view>
 					<view class="pro_list_cont" v-for="item in productList" :key="item.productId" :class="{ 'null': !item.stock }">
 						<ProductItem :info="item" />
@@ -46,6 +48,7 @@ export default{
 			pageSize: 5,
 			totalCount: 0,
 			keywords: '',
+			productIdList: undefined
 		}
 	},
 	components: {
@@ -58,13 +61,17 @@ export default{
 		},
 	},
 	async onLoad(options) {
-		this.keywords = options.keywords
-		this.searchHandlder()
+		if (options.productIdList) {
+			this.productIdList =  options.productIdList.split(',')
+		}
+		this.keywords = options.keywords || ''
+		this.getProductList()
 	},
 	methods: {
 		searchHandlder() {
 			this.productList = []
 			this.page = 1 // 重置页码
+			this.productIdList = undefined
 			this.getProductList()
 		},
 		loadMoreData() {
@@ -81,6 +88,7 @@ export default{
 			try {
 				const { rows, total } = await this.$http.post('/items/search', {
 					keywords: this.keywords,
+					productIdList: this.productIdList,
 					page: this.page,
 					pageSize: this.pageSize,
 				})

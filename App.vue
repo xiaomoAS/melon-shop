@@ -1,7 +1,5 @@
 <script>
-	import Couponlast from '@/components/coupon-list/coupon-list.vue'
 	export default {
-		components: {Couponlast},
 		onLaunch: function() {
 		},
 		onShow: function() {
