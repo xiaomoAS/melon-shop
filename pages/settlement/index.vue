@@ -132,6 +132,8 @@
 </template>
 
 <script>
+import { MEMBER_LEVEL } from '@/constants/common.js'
+
 export default {
 	data() {
 		return {
@@ -144,7 +146,9 @@ export default {
 			productIdList: [],
 			priceInfo: {},
 			isExpanded: false, // 控制商品列表展开/收起状态
-			maxShowCount: 2 // 初始最多显示的商品数量
+			maxShowCount: 2, // 初始最多显示的商品数量
+			memberInfo: {},
+			MEMBER_LEVEL,
 		}
 	},
 	computed: {
@@ -194,6 +198,14 @@ export default {
 				this.getPriceInfo()
 			}
 			this.getDetail()
+			this.getMemberInfo()
+		},
+		async getMemberInfo() {
+			try {
+				this.memberInfo = await this.$http.post('/user/member/getUserMember', {})
+			} catch (error) {
+				this.memberInfo = {}
+			}
 		},
 		async getPriceInfo() {
 			try {

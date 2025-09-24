@@ -97,6 +97,7 @@
 	// import Recharge from '@/components/Recharge/Recharge.vue'
 	import UploadProfile from '@/components/upload-profile/index.vue'
 	import CouponList from '@/components/coupon-list/index.vue'
+	import { MEMBER_LEVEL } from '@/constants/common.js'
 
 	export default {
 		components: {
@@ -110,6 +111,8 @@
 				dczt:false,
 				userInfo: {},
 				defaultAddress: null,
+				MEMBER_LEVEL,
+				memberInfo: {},
 			}
 		},
 		methods: {
@@ -118,6 +121,13 @@
 					this.userInfo = await this.$http.post('/wechat/user/getUserInfo', {})
 				} catch (error) {
 					this.userInfo = {}
+				}
+			},
+			async getMemberInfo() {
+				try {
+					this.memberInfo = await this.$http.post('/user/member/getUserMember', {})
+				} catch (error) {
+					this.memberInfo = {}
 				}
 			},
 			async getAddressInfo() {
@@ -154,6 +164,7 @@
 		onShow() {
 			this.getUserInfo()
 			this.getAddressInfo()
+			this.getMemberInfo()
 		}
 	}
 </script>
