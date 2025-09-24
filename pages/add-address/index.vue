@@ -129,19 +129,19 @@ export default {
 		},
 		validateData() {
 			if (!this.receiver) {
-				uni.showToast({ title: '请填写收货人', icon: 'error' })
+				uni.showToast({ title: '请填写收货人', icon: 'none' })
 				return false
 			}
 			if (!this.mobile) {
-				uni.showToast({ title: '请填写联系电话', icon: 'error' })
+				uni.showToast({ title: '请填写联系电话', icon: 'none' })
 				return false
 			}
 			if (!this.selectList || !this.selectList.length) {
-				uni.showToast({ title: '请选择收货地址', icon: 'error' })
+				uni.showToast({ title: '请选择收货地址', icon: 'none' })
 				return false
 			}
 			if (!this.detail) {
-				uni.showToast({ title: '请填写详细地址', icon: 'error' })
+				uni.showToast({ title: '请填写详细地址', icon: 'none' })
 				return false
 			}
 			return true

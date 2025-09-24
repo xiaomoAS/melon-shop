@@ -150,7 +150,7 @@ export default {
 				uni.showToast({ title: '添加成功' })
 				uni.$emit('refreshShopCart')
 			} catch (error) {
-				uni.showToast({ title: '添加失败', icon: 'error' })
+				uni.showToast({ title: '添加失败', icon: 'none' })
 			}
 		},
     closeCartDetail() {
@@ -190,7 +190,7 @@ export default {
 					this.updatePrice()
 				}
 			} catch (error) {
-				uni.showToast({ title: '减少失败', icon: 'error' })
+				uni.showToast({ title: '减少失败', icon: 'none' })
 			}
 		},
 		async increase(item) {
@@ -201,7 +201,7 @@ export default {
 					this.updatePrice()
 				}
 			} catch (error) {
-				uni.showToast({ title: '添加失败', icon: 'error' })
+				uni.showToast({ title: '添加失败', icon: 'none' })
 			}
 		},
 		async clearCart() {
@@ -210,7 +210,7 @@ export default {
 				uni.showToast({ title: '清除成功' })
 				this.getCartList()
 			} catch (error) {
-				uni.showToast({ title: '清除失败', icon: 'error' })
+				uni.showToast({ title: '清除失败', icon: 'none' })
 			}
 		},
 		toggleSelectAll() {

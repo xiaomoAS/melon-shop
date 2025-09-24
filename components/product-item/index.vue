@@ -55,7 +55,7 @@ export default {
 				uni.showToast({ title: '添加成功' })
 				uni.$emit('refreshShopCart')
 			} catch (error) {
-				uni.showToast({ title: '添加失败', icon: 'error' })
+				uni.showToast({ title: '添加失败', icon: 'none' })
 			}
 		}
 	}
