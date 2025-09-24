@@ -109,47 +109,69 @@ page {
   position: relative;
 }
 .user_member_cont.lv_1 {
-  background: linear-gradient(#ABC0FF, #E4D4FE, #EDEDF9, #EDEDF9);
+  background: linear-gradient(#fcd896, #fcd1ab, #fdf2c6, #f8ecc0);
 }
 .user_member_cont.lv_1 .lv_tips {
+  background: linear-gradient(to right, #FFD700, #FFA500, #FFE4B5, #FFE4B5);
+  color: #B8860B;
+}
+.user_member_cont.lv_1 .lv_txt {
+  color: #DAA520;
+}
+.user_member_cont.lv_1 .lv_exp_cont .exp_head .exp {
+  color: #DAA520;
+}
+.user_member_cont.lv_1 .lv_exp_cont .exp_head .exp text {
+  color: #FF8C00;
+}
+.user_member_cont.lv_1 .lv_exp_cont .exp_head .up_btn {
+  color: #FF8C00;
+}
+.user_member_cont.lv_1 .lv_exp_cont .exp_line .ing {
+  background: linear-gradient(to left, #FFA500, #FFD700, #FFD700);
+}
+.user_member_cont.lv_2 {
+  background: linear-gradient(#ABC0FF, #E4D4FE, #EDEDF9, #EDEDF9);
+}
+.user_member_cont.lv_2 .lv_tips {
   background: linear-gradient(to right, #ABC0FF, #E4D4FE, #E4E4F8, #E4E4F8);
   color: #4333C1;
 }
-.user_member_cont.lv_1 .lv_txt {
+.user_member_cont.lv_2 .lv_txt {
   color: #A6A2E7;
 }
-.user_member_cont.lv_1 .lv_exp_cont .exp_head .exp {
+.user_member_cont.lv_2 .lv_exp_cont .exp_head .exp {
   color: #A6A2E7;
 }
-.user_member_cont.lv_1 .lv_exp_cont .exp_head .exp text {
+.user_member_cont.lv_2 .lv_exp_cont .exp_head .exp text {
   color: #463BE5;
 }
-.user_member_cont.lv_1 .lv_exp_cont .exp_head .up_btn {
+.user_member_cont.lv_2 .lv_exp_cont .exp_head .up_btn {
   color: #463BE5;
 }
-.user_member_cont.lv_1 .lv_exp_cont .exp_line .ing {
+.user_member_cont.lv_2 .lv_exp_cont .exp_line .ing {
   background: linear-gradient(to left, #9788F1, #3F35E4, #3F35E4);
 }
-.user_member_cont.lv_2 {
+.user_member_cont.lv_0 {
   background: linear-gradient(#B3BED1, #DAE1EF, #B9C3D7);
 }
-.user_member_cont.lv_2 .lv_tips {
+.user_member_cont.lv_0 .lv_tips {
   background: #AAB4C5;
   color: #141B26;
 }
-.user_member_cont.lv_2 .lv_txt {
+.user_member_cont.lv_0 .lv_txt {
   color: #64666E;
 }
-.user_member_cont.lv_2 .lv_exp_cont .exp_head .exp {
+.user_member_cont.lv_0 .lv_exp_cont .exp_head .exp {
   color: #42454B;
 }
-.user_member_cont.lv_2 .lv_exp_cont .exp_head .exp text {
+.user_member_cont.lv_0 .lv_exp_cont .exp_head .exp text {
   color: #42454B;
 }
-.user_member_cont.lv_2 .lv_exp_cont .exp_head .up_btn {
+.user_member_cont.lv_0 .lv_exp_cont .exp_head .up_btn {
   color: #42454B;
 }
-.user_member_cont.lv_2 .lv_exp_cont .exp_line .ing {
+.user_member_cont.lv_0 .lv_exp_cont .exp_line .ing {
   background: linear-gradient(to left, #6F727C, #18191D, #18191D);
 }
 .user_member_cont.lv_3 {
@@ -168,8 +190,17 @@ page {
 .user_member_cont.lv_3 .lv_exp_cont .exp_head .exp text {
   color: #0066FF;
 }
+.user_member_cont.lv_3 .lv_exp_cont .exp_head .up_btn {
+  color: #0066FF;
+}
 .user_member_cont.lv_3 .lv_exp_cont .exp_line .ing {
   background: linear-gradient(to left, #0082F2, #0066FF);
+}
+.user_member_cont .lv0_tips_ico {
+  position: absolute;
+  right: 40rpx;
+  width: 200rpx;
+  top: -50rpx;
 }
 .user_member_cont .lv1_tips_ico {
   position: absolute;
@@ -197,6 +228,7 @@ page {
   font-size: 24rpx;
 }
 .user_member_cont .lv_inf {
+  display: flex;
   align-items: center;
   padding: 20rpx 0;
 }
@@ -209,9 +241,38 @@ page {
   margin-right: 10rpx;
 }
 .user_member_cont .lv_inf .plus {
-  width: 90rpx;
+	width: 90rpx;
+	height: 32rpx;
+	background: #4A90E2;
+	transform: skew(-15deg);
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	font-size: 20rpx;
+	font-weight: bold;
+	color: #FFFFFF;
+	text-align: center;
+	line-height: 32rpx;
+  border-radius: 8rpx;
+}
+
+/* 不同等级的plus颜色适配 */
+.user_member_cont.lv_1 .lv_inf .plus {
+	background: linear-gradient(92.65deg, #FFD700 2.59%, #FFA500 96.74%, #FF8C00 97.41%); /* 黄金渐变 */
+	color: white;
+}
+
+.user_member_cont.lv_2 .lv_inf .plus {
+	background: linear-gradient(92.65deg, #9788F1 2.59%, #3F35E4 96.74%, #3F35E4 97.41%); /* 铂金色 */
+	color: white;
+}
+
+.user_member_cont.lv_3 .lv_inf .plus {
+	background: linear-gradient(92.65deg, #87CEEB 2.59%, #4A90E2 96.74%, #1E90FF 97.41%); /* 钻石蓝渐变 */
+	color: white;
 }
 .user_member_cont .lv_txt {
+  min-height: 14px;
   margin-bottom: 20rpx;
   font-size: 24rpx;
 }
@@ -229,8 +290,11 @@ page {
   margin-right: 5rpx;
 }
 .user_member_cont .lv_exp_cont .exp_head .up_btn {
+  display: flex;
   align-items: center;
-  font-size: 22rpx;
+  font-size: 28rpx;
+  line-height: 28rpx;
+  vertical-align: middle;
 }
 .user_member_cont .lv_exp_cont .exp_head .up_btn .arr {
   width: 9rpx;
@@ -242,7 +306,7 @@ page {
   position: relative;
   overflow: hidden;
   height: 8rpx;
-  background: rgba(255, 255, 255, 0.32);
+  background: #FFFFFF;
 }
 .user_member_cont .lv_exp_cont .exp_line .ing {
   height: 8rpx;
@@ -383,4 +447,31 @@ page {
   height:100%;
   z-index:10;
   background: rgba(0,0,0,0.5);
+}
+
+/* 不同等级的文字样式适配 */
+.user_member_cont .lv_inf .txt {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	height: 40rpx;
+	font-size: 30rpx;
+	font-weight: bold;
+	text-align: center;
+}
+
+.user_member_cont.lv_0 .lv_inf .txt {
+	color: #4A4A4A;
+}
+
+.user_member_cont.lv_1 .lv_inf .txt {
+	color: #8B4513;
+}
+
+.user_member_cont.lv_2 .lv_inf .txt {
+	color: #4B0082;
+}
+
+.user_member_cont.lv_3 .lv_inf .txt {
+	color: #FFFFFF;
 }

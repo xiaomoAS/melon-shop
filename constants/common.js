@@ -1,6 +1,6 @@
 export const MEMBER_LEVEL = {
-  NORMAL: 0, // 普通
-  GOLD: 1, // 黄金
-  PLATINUM: 2, // 铂金
-  DIAMOND: 3, // 钻石
+  NORMAL: 1, // 普通
+  GOLD: 2, // 黄金
+  PLATINUM: 3, // 铂金
+  DIAMOND: 4, // 钻石
 }

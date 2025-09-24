@@ -1,7 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="order_baner">
-			<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/54f5a8bc158e4dcfb6cf4187ab8b3711/order_baner.png?Expires=2073876026&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lAFR587No%2B7paT%2F4bUr4YNED5zk%3D" mode="widthFix"></image>
+			<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/d419c2daf131498484ff07beb7e1d06e/banner%20%281%29.png?Expires=2074071887&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=47k6WS%2FO6HxHFI3i%2B%2FsunBvm53k%3D" mode="widthFix"></image>
 		</view>
 		<navigator url="/pages/address-manage/index" class="order_adres_cont">
 			<view class="l_cont">
