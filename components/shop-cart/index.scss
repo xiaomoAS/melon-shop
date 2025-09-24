@@ -289,6 +289,14 @@
   background-size: cover;
   font-size: 26rpx;
   color: #FFFFFF;
+
+  &.disabled {
+    opacity: 0.5;
+    filter: grayscale(100%);
+    color: #262626 !important;
+    pointer-events: none;
+    cursor: not-allowed;
+  }
 }
 
 .sele_rad{

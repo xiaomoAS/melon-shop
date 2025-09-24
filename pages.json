@@ -10,7 +10,7 @@
 			"path": "pages/ifica/ifica"
 		},
 		{
-			"path": "pages/order/order"
+			"path": "pages/settlement/index"
 		},
 		{
 			"path": "pages/orderlb/orderlb"

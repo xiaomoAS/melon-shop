@@ -7,10 +7,10 @@
 			<view class="l_cont">
 				<view class="dt"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/448679a90eb74a30b8f4ce9a87ee4f2e/order_ico_1.png?Expires=2073953745&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=bG4RpdbkOM4DCD6QpKH4Hthxq6g%3D" mode="widthFix"></image> </view>
 				<view class="dd">
-					<view class="add_txt" v-if="dlzt">添加收货地址</view>
+					<view class="add_txt" v-if="!userAddress">添加默认收货地址</view>
 					<view class="add_deta" v-else >
-						<view class="name"><text>铁板鱿鱼</text>12200033322</view>
-						<view class="tel">北京  朝阳区  团结湖路17号楼南门502</view>
+						<view class="name"><text>{{ userAddress.receiver }}</text>{{ userAddress.mobile }}</view>
+						<view class="tel">{{ userAddress.province }} {{ userAddress.city }} {{ userAddress.district }} {{ userAddress.detail }}</view>
 					</view>
 				</view>
 			</view>
@@ -18,30 +18,29 @@
 		</navigator>
 		<view class="order_product_contain">
 			<view class="title_head">
-				<view class="tle">社区团购商品</view>
-				<view class="num">订单号 86445540021123312</view>
+				<view class="tle">购买商品</view>
+				<view v-if="orderId" class="num">订单号 {{ orderId }}</view>
 			</view>
 			<view class="pro_last">
-				<view class="pro_list">
-					<view class="pro_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/a1fcb3cb56664a279ffbdd2613c5140d/order_pro_1.png?Expires=2073953809&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=bgM4jDcAnCc%2FMj9xEPRSvtIQcTE%3D"></image> </view>
+				<view v-for="product in displayProductList" :key="product.productId" class="pro_list">
+					<view class="pro_i"><image :src="product.imgUrl"></image> </view>
 					<view class="deta_cont">
-						<view class="name">新鲜小橙子团购</view>
-						<view class="specs">规格：约500g/份</view>
-						<view class="num">x2</view>
-						<view class="price">￥19.90</view>
-					</view>
-				</view>
-				<view class="pro_list">
-					<view class="pro_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/a1fcb3cb56664a279ffbdd2613c5140d/order_pro_1.png?Expires=2073953809&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=bgM4jDcAnCc%2FMj9xEPRSvtIQcTE%3D"></image> </view>
-					<view class="deta_cont">
-						<view class="name">新鲜小橙子团购</view>
-						<view class="specs">规格：约500g/份</view>
-						<view class="num">x2</view>
-						<view class="price">￥19.90</view>
+						<view class="name">{{ product.title }}</view>
+						<view class="specs">{{ product.desc }}</view>
+						<view class="num">x{{ product.buyCounts }}</view>
+						<view class="price">￥{{ product.totalPrice }}</view>
 					</view>
 				</view>
 			</view>
-			<view class="bit_more">展开(共<text>11</text>件) <image class="arr" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1c1b0a37f2274686890fdc70f9a7331f/arr_2.png?Expires=2073876560&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gTx%2F3%2BfjIlY9%2FKTXvmmYbv%2Fq5dE%3D" mode="widthFix"></image> </view>
+			<view v-if="shouldShowToggleButton" class="bit_more" @click="toggleExpand">
+				{{ toggleButtonText }}
+				<image
+					class="arr"
+					:class="{ 'rotated': isExpanded }"
+					src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1c1b0a37f2274686890fdc70f9a7331f/arr_2.png?Expires=2073876560&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=gTx%2F3%2BfjIlY9%2FKTXvmmYbv%2Fq5dE%3D"
+					mode="widthFix"
+				></image>
+			</view>
 		</view>
 		<view class="order_coupon_cont">
 			<view class="title_head">
@@ -74,15 +73,15 @@
 		<view class="order_total_cont">
 			<view class="tle_total">
 				<view class="tle">商品总价</view>
-				<view class="dd">￥11.99</view>
+				<view class="dd">￥{{ priceInfo.totalPrice }}</view>
 			</view>
 			<view class="dl">
 				<view class="dt">商品种类</view>
-				<view class="dd">X1</view>
+				<view class="dd">x{{ productList.length }}</view>
 			</view>
 			<view class="dl">
 				<view class="dt">商品数量</view>
-				<view class="dd">X1</view>
+				<view class="dd">x{{ allCount }}</view>
 			</view>
 			<view class="dl">
 				<view class="dt">运费</view>
@@ -124,7 +123,7 @@
 		<view class="order_foot_cont">
 			<view class="cont">
 				<view class="l_cont">
-					总价: <text>￥29.99</text>
+					总价: <text>￥{{ priceInfo.totalPrice }}</text>
 				</view>
 				<view class="btn">提交订单</view>
 			</view>
@@ -133,16 +132,112 @@
 </template>
 
 <script>
-	export default {
-				data() {
-					return {
-						dlzt: true
-					}
-				}
+export default {
+	data() {
+		return {
+			baseProductList: [], // 基础商品信息，用于查详细信息
+			orderId: null,
+			couponList: [],
+			productList: [],
+			userAddress: null,
+			pageOptions: null,
+			productIdList: [],
+			priceInfo: {},
+			isExpanded: false, // 控制商品列表展开/收起状态
+			maxShowCount: 2 // 初始最多显示的商品数量
+		}
+	},
+	computed: {
+		// 根据展开状态控制显示的商品列表
+		displayProductList() {
+			if (this.isExpanded || this.productList.length <= this.maxShowCount) {
+				return this.productList
 			}
+			return this.productList.slice(0, this.maxShowCount)
+		},
+		// 是否需要显示展开/收起按钮
+		shouldShowToggleButton() {
+			return this.productList.length > this.maxShowCount
+		},
+		// 展开按钮的文本
+		toggleButtonText() {
+			if (this.isExpanded) {
+				return `收起`
+			}
+			return `展开(共${this.productList.length}件)`
+		},
+		allCount() {
+			return this.productList.reduce((total, product) => total + product.buyCounts, 0)
+		}
+	},
+	async onLoad(options) {
+		console.log('options', Object.prototype.toString.call(options).split(' ')[1].split(']')[0], '===', options);
+		this.productIdList = options.productIdList ? options.productIdList.split(',').map((id) => Number(id)) : []
+		this.orderId = options.orderId || null
+		// 初始化数据
+		await this.initPageData();
+		// 保存页面参数到data中，供onShow使用
+		this.pageOptions = options;
+	},
+	async onShow() {
+		// 页面显示时，如果有保存的参数，重新加载数据
+		if (this.pageOptions) {
+			console.log('onShow - 使用保存的参数重新加载数据');
+			await this.initPageData();
+		}
+	},
+	methods: {
+		// 统一的数据初始化方法
+		async initPageData() {
+			if (this.productIdList && this.productIdList.length > 0) {
+				await this.getBaseProductInfo()
+				this.getPriceInfo()
+			}
+			this.getDetail()
+		},
+		async getPriceInfo() {
+			try {
+				this.priceInfo = await this.$http.post('/shopcart/calculate', {
+					checkedProductIdList: this.productIdList
+				})
+			} catch (error) {
+				this.priceInfo = {}
+			}
+		},
+		async getBaseProductInfo() {
+			try {
+				// 先筛选出购物车内选中的商品信息
+				const cartList = await this.$http.post('/shopcart/list', {})
+				this.baseProductList = cartList.filter((item) => this.productIdList.includes(Number(item.productId)))
+			} catch (error) {
+				this.baseProductList = []
+			}
+		},
+		async getDetail() {
+			try {
+				if (this.orderId) {
+					// 订单列表-待付款 进来
+				} else if (this.baseProductList.length) {
+					// 购物车进来
+					const { couponList, productList, userAddress } =await this.$http.post('/order/trade', {
+						tradeProductRequestList: this.baseProductList
+					})
+					this.couponList = couponList
+					this.productList = productList
+					this.userAddress = userAddress
+				}
+			} catch (error) {
+				
+			}
+		},
+		// 切换展开/收起状态
+		toggleExpand() {
+			this.isExpanded = !this.isExpanded
+		}
+	},
+}
 </script>
 
-<style lang="less">
-	@import url(/pages/order/order.css);
-	
+<style scoped lang="scss">
+	@import './index.scss';
 </style>

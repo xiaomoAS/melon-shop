@@ -19,7 +19,7 @@
 					<view>加购</view>
 				</view>
 			</view>
-			<view class="buy_btn" :class="{ disabled: selectedCount === 0 }">立即购买</view>
+			<view class="buy_btn" :class="{ disabled: selectedCount === 0 }" @click="settleHandler">立即购买</view>
 		</view>
 		
 		<!-- 遮罩层 -->
@@ -91,7 +91,7 @@
 						<view>加购</view>
 					</view>
 				</view>
-				<view class="buy_btn" :class="{ disabled: selectedCount === 0 }">立即购买</view>
+				<view class="buy_btn" :class="{ disabled: selectedCount === 0 }" @click="settleHandler">立即购买</view>
 			</view>
 		</view>
   </view>
@@ -153,6 +153,10 @@ export default {
 				uni.showToast({ title: '添加失败', icon: 'none' })
 			}
 		},
+		settleHandler() {
+			const selectProductList = this.selectList.map(item => item.productId)
+			uni.navigateTo({ url: `/pages/settlement/index?productIdList=${selectProductList}` })
+		},
     closeCartDetail() {
       this.showCartDetail = false
     },
@@ -171,12 +175,12 @@ export default {
     },
 		async updatePrice() {
 			try {
-				const selectCateIds = this.selectList.map(item => item.productId)
-				if (!selectCateIds.length) {
+				const selectProductList = this.selectList.map(item => item.productId)
+				if (!selectProductList.length) {
 					this.priceInfo = {}
 					return
 				}
-				this.priceInfo = await this.$http.post('/shopcart/calculate', { checkedProductIdList: selectCateIds || [] })
+				this.priceInfo = await this.$http.post('/shopcart/calculate', { checkedProductIdList: selectProductList || [] })
 			} catch (error) {
 				this.priceInfo = {}
 			}

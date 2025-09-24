@@ -175,8 +175,12 @@ page {
   color: #8A8A8A;
 }
 .order_product_contain .bit_more .arr {
-  width: 19rpx;
-  margin: 0 15rpx;
+	width: 19rpx;
+	margin: 0 15rpx;
+	transition: transform 0.3s ease;
+}
+.order_product_contain .bit_more .arr.rotated {
+	transform: rotate(180deg);
 }
 .order_coupon_cont {
   padding: 20rpx;

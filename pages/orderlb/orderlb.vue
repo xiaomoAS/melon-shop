@@ -53,7 +53,7 @@
 			<view class="bit_seet_cont">
 				<view class="btn">联系客服</view>
 				<view class="btn">检测报告</view>
-				<view class="btn sub">提交订单</view>
+				<view class="btn sub" @click="handleSettle">提交订单</view>
 			</view>
 		</view>
 		<view class="order_infor_last"  v-for="(item,index) in prolast" :key="item.itemId">
@@ -124,7 +124,9 @@
 			
 		},
 		methods: {
-			
+			handleSettle() {
+				uni.navigateTo({url: `/pages/settlement/index?orderId=1`})
+			},
 			proorder() {
 				this.loading = true;
 				var that = this;
