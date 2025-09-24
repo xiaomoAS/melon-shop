@@ -36,6 +36,13 @@ export default {
 	components: {
 		LoadMore
 	},
+	props: {
+		couponType: {
+			type: Number,
+			default: undefined,
+			required: false
+		}
+	},
 	data() {
 		return {
 			COUPON_TYPE,
@@ -93,6 +100,7 @@ export default {
 		async getCouponList() {
 			try {
 				const { rows = [], total = 0 } = await this.$http.post('/user/coupon/list', {
+					couponType: this.couponType,
 					page: this.page,
 					pageSize: this.pageSize,
 				})
@@ -116,6 +124,18 @@ export default {
 			this.page = this.page + 1
 			this.getCouponList()
 		},
+	},
+	// 适配所有优惠券列表，切换优惠券类型时
+	watch: {
+		couponType: {
+			handler(newVal, oldVal) {
+				if (newVal && newVal !== oldVal) {
+					this.page = 1
+					this.couponList = []
+					this.getCouponList()
+				}
+			}
+		}
 	},
 	mounted() {
 		this.getCouponList()

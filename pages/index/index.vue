@@ -174,6 +174,7 @@
 			refreshShopCart() {
 				// 使用全局事件触发购物车刷新
 				uni.$emit('refreshShopCart')
+				uni.$emit('closeShopCart')
 			}
 		},
 

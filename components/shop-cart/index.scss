@@ -204,10 +204,11 @@
   margin-left: 10rpx;
 }
 .bit_buy_cont {
-  margin: 40rpx 0 20rpx;
+  padding: 20rpx 0 20rpx;
   display: flex;
   align-items: center;
   padding-left: 40rpx;
+  border-radius: 20rpx;
 
   &.bottom {
     position: fixed;
@@ -217,6 +218,7 @@
     left: 50%;
     transform: translateX(-50%);
     z-index: 2;
+    background-color: #FFFFFF;
   }
 }
 .add-cart-box {

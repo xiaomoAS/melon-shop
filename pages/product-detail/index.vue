@@ -32,7 +32,7 @@
 				</view>
 			</view>
 			
-			<ShopCart :cart-type="CART_TYPE.BOTTOM" :info="detail"/>
+			<ShopCart :cart-type="CART_TYPE.BOTTOM" :info="{ ...detail, imgUrl: detail.mainImgUrl }"/>
 		</view>
 		
 	</view>

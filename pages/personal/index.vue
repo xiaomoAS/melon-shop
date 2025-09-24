@@ -72,6 +72,10 @@
 		<view class="user_coupon_cont">
 			<view class="user_pulic_title">
 				<view class="tle">我的优惠券</view>
+				<view class="all-button" @click="toMyCoupon">
+					<text>全部</text>
+					<uni-icons type="right" size="12"></uni-icons>
+				</view>
 			</view>
 			<CouponList></CouponList>
 		</view>
@@ -123,6 +127,9 @@
 				} catch (error) {
 					this.defaultAddress = null
 				}
+			},
+			toMyCoupon() {
+				uni.navigateTo({ url: '/pages/my-coupon/index' })
 			},
 			async handleUpdateUserInfo(userInfo) {
 				try {

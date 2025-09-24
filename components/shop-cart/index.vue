@@ -23,7 +23,7 @@
 		</view>
 		
 		<!-- 遮罩层 -->
-		<view v-show="showCartDetail" class="mask" @click="closeCartDetail"></view>
+		<view v-show="showCartDetail" class="mask" @click="closeShopCart"></view>
 		
 		<view v-show="showCartDetail" class="join_cart_cont">
 			<view class="deta_header">
@@ -113,7 +113,8 @@ export default {
   mounted() {
     this.getCartList()
     // 监听全局刷新事件
-    uni.$on('refreshShopCart', this.getCartList)
+    uni.$on('refreshShopCart', this.refreshShopCart)
+    uni.$on('closeShopCart', this.closeShopCart)
   },
 	props: {
 		cartType: {
@@ -140,9 +141,14 @@ export default {
 	},
   beforeDestroy() {
     // 移除事件监听
-    uni.$off('refreshShopCart', this.getCartList)
+    uni.$off('refreshShopCart', this.refreshShopCart)
+    uni.$off('closeShopCart', this.closeShopCart)
   },
   methods: {
+		async refreshShopCart() {
+			await this.getCartList()
+			this.updatePrice()
+		},
 		async addCartHandler() {
 			try {
 				if (!this.info) return
@@ -157,7 +163,7 @@ export default {
 			const selectProductList = this.selectList.map(item => item.productId)
 			uni.navigateTo({ url: `/pages/settlement/index?productIdList=${selectProductList}` })
 		},
-    closeCartDetail() {
+    closeShopCart() {
       this.showCartDetail = false
     },
     async getCartList() {

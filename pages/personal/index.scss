@@ -256,7 +256,13 @@ page {
   display: flex;
   align-items: center;
   justify-content: space-between;
+  font-size: 26rpx;
   margin-bottom: 20rpx;
+
+  .all-button {
+    display: flex;
+    align-items: center;
+  }
 }
 .user_pulic_title .tle {
   font-size: 30rpx;

@@ -34,7 +34,10 @@
 			}
 		},
 		{
-			"path": "pages/mycoupon/index"
+			"path": "pages/my-coupon/index",
+			"style": {
+				"navigationBarTitleText": "优惠券"
+			}
 		},
 		{
 			"path": "pages/user-login/index"
