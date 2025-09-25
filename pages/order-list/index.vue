@@ -28,7 +28,7 @@
 			</view>
 			<view class="pro_last">
 				<view  class="list">
-					<view v-for="(product, index) in getDisplayProducts(order)" :key="product.productId" class="detail_cont">
+					<view v-for="product in getDisplayProducts(order)" :key="product.productId" class="detail_cont">
 						<navigator :url="`/pages/product-detail/index?id=${product.productId}`">
 							<view class="detail__content-box">
 								<view class="detail__left-box">
@@ -37,7 +37,7 @@
 										<view class="name">{{ product.productName }}</view>
 										<view class="text">{{ product.desc }}</view>
 										<view v-if="product.tag">
-											<view v-for="tag in product.tag" class="bis">{{ tag }}</view>
+											<view v-for="tag in product.tag" :key="tag" class="bis">{{ tag }}</view>
 										</view>
 									</view>
 								</view>
@@ -146,8 +146,12 @@ export default {
 			try {
 				await this.$http.post('/order/cancel', { orderId: order.id })
 				uni.showToast({ title: '取消成功', icon: 'none' })
-				this.page = 1
-				this.getOrderList()
+				// 延迟刷新
+				const timer = setTimeout(() => {
+					this.page = 1
+					this.getOrderList()
+					clearTimeout(timer)
+				}, 1000);
 			} catch (error) {
 				console.log(error)
 			}

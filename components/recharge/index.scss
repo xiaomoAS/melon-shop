@@ -71,6 +71,10 @@
 	margin: 0 12rpx;
 }
 
+.member-discount {
+	margin-left: 8rpx;
+}
+
 .balance {
 	font-size: 24rpx;
 	color: #FFFFFF;
@@ -111,7 +115,13 @@
 	font-size: 25rpx;
 	color: #000000;
 	font-weight: bold;
-	margin-bottom: 20rpx;
+	margin-bottom: 10rpx;
+}
+.cumulative-price {
+	font-size: 20rpx;
+	color: #8F8F8F;
+	font-weight: bold;
+	margin-bottom: 16rpx;
 }
 
 .list .price text {
@@ -135,8 +145,13 @@
 	color: #000000;
 }
 
-.list.active .price {
-	color: #794802;
+.list.active {
+	.price {
+		color: #794802;
+	}
+	.cumulative-price {
+		color: #794802;
+	}
 }
 
 .list.active .bits {

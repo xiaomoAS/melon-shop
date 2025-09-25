@@ -333,7 +333,11 @@ export default {
 					uni.showToast({ title: '支付失败' , icon: 'none'})
 					wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_PAY)
 				}
-				uni.switchTab({ url: '/pages/order-list/index' })
+				// 等待显示提示
+				const timer = setTimeout(() => {
+					uni.switchTab({ url: '/pages/order-list/index' })
+					clearTimeout(timer)
+				}, 500);
 			} catch (error) {
 				console.log(error)
 			}

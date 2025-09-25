@@ -30,13 +30,14 @@
 								{{ memberConfig.title }}
 							</view>
 						</view>
+						<view class="balance">当前会员折扣：<text>{{ memberInfo.discount * 10 }}折</text></view>
 						<view class="balance">会员余额: <text>{{ memberInfo.remainPrice }}元</text></view>
 					</view>
 					
 					<!-- 会员套餐选择 -->
 					<view class="member_last_cont">
 						<view 
-							v-for="item in memberPackages" 
+							v-for="item in showMemberPackages" 
 							class="list" 
 							:class="{ active: selectedPackage === item.level }"
 							:key="item.level"
@@ -44,6 +45,7 @@
 						>
 							<view class="tle">{{ item.title }}</view>
 							<view class="price">￥ <text>{{ item.price }}</text></view>
+							<view class="cumulative-price">（已累计￥ {{ memberInfo.currentValue }}）</view>
 							<view class="bits">{{ item.discount }}</view>
 						</view>
 					</view>
@@ -109,6 +111,9 @@ export default {
 		memberConfig() {
 			if (!this.memberInfo || !this.memberInfo.level) return null
 			return memberConfigs[this.memberInfo.level]
+		},
+		showMemberPackages() {
+			return this.memberPackages.filter(item => item.level > this.memberInfo.level)
 		}
 	},
 	methods: {
@@ -141,7 +146,7 @@ export default {
 		// 选择套餐
 		selectPackage(item) {
 			this.selectedPackage = item.level
-			this.customAmount = item.price
+			this.customAmount = Math.ceil(((item.price || 0) - (this.memberInfo.currentValue || 0)) * 100) / 100
 		},
 		
 		// 处理自定义金额输入
@@ -165,7 +170,7 @@ export default {
 			this.$nextTick(() => {
 				this.customAmount = value
 				// 匹配套餐
-				const packageItem = this.memberPackages.findLast((item) => Number(value) >= item.price)
+				const packageItem = this.showMemberPackages.findLast((item) => (Number(value) + (this.memberInfo.currentValue || 0)) >= item.price)
 				this.selectedPackage = packageItem ? packageItem.level : -1
 			})
 		},
