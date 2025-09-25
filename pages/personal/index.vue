@@ -31,11 +31,14 @@
 			</view>
 			<view class="lv_exp_cont">
 				<view class="exp_head">
-					<view class="exp"><text>{{ memberInfo.currentValue || 0 }}</text>经验值</view>
-					<view class="up_btn" v-show="memberInfo.level === MEMBER_LEVEL.NORMAL">
-						<view v-if="memberInfo.level === MEMBER_LEVEL.NORMAL">开通会员</view>
-						<view v-else>充值</view>
-						<uni-icons class="btn-icon" type="right" size="12" :color="memberConfig.mainColor"></uni-icons>
+					<view class="exp"><text class="text">{{ memberInfo.currentValue || 0 }}</text>经验值</view>
+					<view class="exp_head_left">
+						<view class="text">账户余额：{{ memberInfo.remainPrice }}</view>
+						<view class="up_btn" @click="chargeHandler">
+							<view v-if="memberInfo.level === MEMBER_LEVEL.NORMAL">开通会员</view>
+							<view v-else>充值</view>
+							<uni-icons class="btn-icon" type="right" size="12" :color="memberConfig.mainColor"></uni-icons>
+						</view>
 					</view>
 				</view>
 				<view class="exp_line">
@@ -82,13 +85,12 @@
 			</view>
 		</view>
 
-		<view class="pulic_dc_bg" v-show="dczt"></view>
-		<!-- <re-charge ref="Recharge" v-show="dczt"></re-charge> -->
+		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
 </template>
 
 <script>
-	// import Recharge from '@/components/Recharge/Recharge.vue'
+	import Recharge from '@/components/recharge/index.vue'
 	import UploadProfile from '@/components/upload-profile/index.vue'
 	import CouponList from '@/components/coupon-list/index.vue'
 	import { MEMBER_LEVEL } from '@/constants/common.js'
@@ -96,13 +98,12 @@
 
 	export default {
 		components: {
-			// Recharge,
+			Recharge,
 			UploadProfile,
 			CouponList
 		},
 		data() {
 			return {
-				dczt:false,
 				userInfo: {},
 				defaultAddress: null,
 				MEMBER_LEVEL,
@@ -128,6 +129,9 @@
 			}
 		},
 		methods: {
+			chargeHandler() {
+				this.$refs.rechargeRef.open()
+			},
 			async getUserInfo() {
 				try {
 					this.userInfo = await this.$http.post('/wechat/user/getUserInfo', {})

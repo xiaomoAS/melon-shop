@@ -18,3 +18,8 @@ export const PAY_METHOD = {
   WE_CHAT: 1, // 微信
   MEMBER_CARD: 2, // 充值卡
 }
+
+// 请求来源
+export const SOURCE = {
+  CART: 1, // 购物车
+}

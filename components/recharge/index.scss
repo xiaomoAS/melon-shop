@@ -1,0 +1,223 @@
+.recharge_content {
+	width: 100%;
+	padding: 20rpx;
+}
+
+.user_inf_cont {
+	margin-bottom: 20rpx;
+	background: #61C55E;
+	border-radius: 10rpx;
+	padding: 20rpx;
+}
+
+.user_inf_head {
+	display: flex;
+	align-items: center;
+	margin-bottom: 20rpx;
+}
+
+.ava {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 69rpx;
+	height: 69rpx;
+	border-radius: 100%;
+	overflow: hidden;
+}
+
+.ava image {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+.inf_cont {
+	width: calc(100% - 69rpx);
+	padding-left: 10rpx;
+}
+
+.name {
+	font-size: 26rpx;
+	color: #FFFFFF;
+	margin-bottom: 10rpx;
+}
+
+.id {
+	display: inline-block;
+	padding: 5rpx 12rpx;
+	border-radius: 100rpx;
+	background: #fff;
+	font-size: 22rpx;
+	color: #61C55E;
+}
+
+.member_bit_inf {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+}
+
+.lv {
+	display: flex;
+	align-items: center;
+	font-size: 24rpx;
+	color: #FFFFFF;
+}
+
+.lv .i {
+	display: block;
+	width: 30rpx;
+	margin: 0 12rpx;
+}
+
+.balance {
+	font-size: 24rpx;
+	color: #FFFFFF;
+}
+
+.balance text {
+	color: #FF5745;
+}
+
+.member_last_cont {
+	display: flex;
+	flex-wrap: wrap;
+	margin-bottom: 20rpx;
+}
+
+.list {
+	width: 32%;
+	margin-right: 2%;
+	margin-bottom: 20rpx;
+	padding: 20rpx 0;
+	border-radius: 10rpx;
+	background: #F7F7F7;
+	text-align: center;
+	transition: all 0.3s ease;
+}
+
+.list:nth-child(3n) {
+	margin-right: 0;
+}
+
+.list .tle {
+	font-size: 28rpx;
+	color: #5F5F5F;
+	margin-bottom: 20rpx;
+}
+
+.list .price {
+	font-size: 25rpx;
+	color: #000000;
+	font-weight: bold;
+	margin-bottom: 20rpx;
+}
+
+.list .price text {
+	font-size: 42rpx;
+}
+
+.list .bits {
+	display: inline-block;
+	padding: 5rpx 14rpx;
+	border-radius: 5rpx;
+	background: #EDEDED;
+	font-size: 22rpx;
+	color: #5F5F5F;
+}
+
+.list.active {
+	background: linear-gradient(#FCE0B9, #FFEFD6);
+}
+
+.list.active .tle {
+	color: #000000;
+}
+
+.list.active .price {
+	color: #794802;
+}
+
+.list.active .bits {
+	background: #F4D5AF;
+	color: #794802;
+}
+
+.tips_guide {
+	display: flex;
+	align-items: center;
+	padding: 10rpx 20rpx;
+	border-radius: 10rpx;
+	background: #FCE1BA33;
+	font-size: 28rpx;
+	color: #794802;
+}
+
+.tips_guide .i {
+	width: 42rpx;
+	margin-right: 10rpx;
+}
+
+/* 自定义充值金额区域样式 */
+.custom_amount_section {
+	margin-bottom: 30rpx;
+}
+
+.section_title {
+	font-size: 32rpx;
+	color: #333333;
+	font-weight: bold;
+	margin-bottom: 20rpx;
+}
+
+.amount_input_container {
+	display: flex;
+	align-items: center;
+	padding: 30rpx 20rpx;
+	background: #FFFFFF;
+	border: 2rpx solid #E5E5E5;
+	border-radius: 10rpx;
+	box-shadow: 0 2rpx 8rpx rgba(0, 0, 0, 0.1);
+}
+
+.currency_symbol {
+	font-size: 36rpx;
+	color: #333333;
+	margin-right: 10rpx;
+	font-weight: bold;
+}
+
+.amount_input {
+	flex: 1;
+	font-size: 32rpx;
+	color: #333333;
+	border: none;
+	outline: none;
+}
+
+.amount_input::placeholder {
+	color: #CCCCCC;
+	font-size: 28rpx;
+}
+
+/* 会员免费送货提示样式 */
+.delivery_tips {
+	display: flex;
+	align-items: center;
+	padding: 15rpx 20rpx;
+	background: #FFF8E1;
+	border-radius: 10rpx;
+	margin-bottom: 20rpx;
+}
+
+.tips_icon {
+	width: 32rpx;
+	height: 32rpx;
+	margin-right: 10rpx;
+}
+
+.delivery_tips text {
+	font-size: 24rpx;
+	color: #8B6914;
+}

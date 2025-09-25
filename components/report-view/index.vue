@@ -1,5 +1,5 @@
 <template>
-  <view class="report-view">
+  <view class="report-view" :class="customClass">
     <!-- 触发按钮插槽 -->
     <view @click="showPreview" class="trigger-slot">
       <slot></slot>
@@ -74,6 +74,10 @@ export default {
   name: 'ReportViewer',
   props: {
     title: {
+      type: String,
+      default: ''
+    },
+    customClass: {
       type: String,
       default: ''
     },

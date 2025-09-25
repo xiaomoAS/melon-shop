@@ -48,7 +48,7 @@
 				<view class="dd">有{{ couponList.length }}张可用</view>
 			</view>
 			<view class="det_cont">
-				<view v-for="coupon in couponList" :key="coupon.couponId" class="dl">
+				<view v-for="(coupon, couponIndex) in couponList" :key="coupon.couponId" class="dl">
 					<view v-if="COUPON_TYPE.FREIGHT === coupon.coupon.type" class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/05a860ef9f874ed696e19c3374f7419c/order_ico_2.png?Expires=2073876488&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5edejPW2awsLyvfjOWNrI8yBClU%3D" mode="widthFix"></image> </view>
 						运费券
@@ -59,7 +59,7 @@
 					</view>
 					<view  class="dd">
 						<view v-if="coupon.coupon">-￥{{ COUPON_TYPE.NEW_DISCOUNT === coupon.coupon.type ? coupon.coupon.newPersonPrice || 0 : coupon.coupon.waybillPriceLimit || 0 }}</view>
-						<checkbox :checked="coupon.selected" color="#61C55E" borderColor="#A0A0A0" activeBackgroundColor="#61C55E" activeBorderColor="#61C55E"  style="transform:scale(0.7)" />
+						<checkbox :checked="coupon.selected" color="#61C55E" borderColor="#A0A0A0" activeBackgroundColor="#61C55E" activeBorderColor="#61C55E"  style="transform:scale(0.7)" @click="couponSelectChange(coupon, couponIndex)"/>
 					</view>
 				</view>
 			</view>
@@ -79,9 +79,13 @@
 			</view>
 			<view class="dl">
 				<view class="dt">运费</view>
-				<view class="dd">
-					<view class="yj">￥8.00</view>
-					<view class="xj">￥0.00</view>
+				<!-- 运费有优惠的样式 -->
+				<view v-if="freightCouponSelect" class="dd">
+					<view class="yj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
+					<view class="xj">￥{{ realFreight }}</view>
+				</view>
+				<view v-else class="dd">
+					<view class="xj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
 				</view>
 			</view>
 		</view>
@@ -105,11 +109,12 @@
 						<view class="cont">
 							<view class="tle">会员支付</view>
 							<view v-if="memberInfo.level" class="txt">当前会员等级：{{ MEMBER_LEVEL_NAME[memberInfo.level] }}</view>
-							<view class="txt">账户余额：<text>￥1,250.00</text> </view>
+							<view v-if="memberInfo.discount" class="txt">折扣：{{ memberInfo.discount * 10 }}折</view>
+							<view class="txt">账户余额：<text>￥{{ memberInfo.remainPrice || 0.00 }}</text> </view>
 						</view>
 					</view>
 					<view class="r_cont">
-						<view class="charge_btn">充值</view>
+						<view class="charge_btn" @click="chargeHandler">充值</view>
 						<radio :value="PAY_METHOD.MEMBER_CARD" class="pay-radio" :checked="payMethod === PAY_METHOD.MEMBER_CARD"/>
 					</view>
 				</view>
@@ -121,17 +126,21 @@
 		<view class="order_foot_cont">
 			<view class="cont">
 				<view class="l_cont">
-					总价: <text>￥{{ priceInfo.totalPrice }}</text>
+					总价: <text>￥{{ realTotalPrice }}</text>
 				</view>
 				<view class="btn" @click="submitHandler">提交订单</view>
 			</view>
 		</view>
+
+		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
 </template>
 
 <script>
-import { MEMBER_LEVEL, MEMBER_LEVEL_NAME, PAY_METHOD } from '@/constants/common.js'
+import { MEMBER_LEVEL, MEMBER_LEVEL_NAME, PAY_METHOD, SOURCE } from '@/constants/common.js'
 import { COUPON_TYPE } from '@/components/coupon-list/constants.js'
+import { ORDER_STATUS } from '@/pages/order-list/constants.js'
+import Recharge from '@/components/recharge/index.vue'
 
 export default {
 	data() {
@@ -154,6 +163,9 @@ export default {
 			PAY_METHOD
 		}
 	},
+	components: {
+		Recharge
+	},
 	computed: {
 		// 根据展开状态控制显示的商品列表
 		displayProductList() {
@@ -175,10 +187,49 @@ export default {
 		},
 		allCount() {
 			return this.productList.reduce((total, product) => total + product.buyCounts, 0)
-		}
+		},
+		realFreight() {
+			const price = (this.priceInfo.shipTotalPrice || 0) - (this.priceInfo.shipPrice || 0)
+			if (!price || price <= 0) return 0
+			return Math.round(price * 100) / 100
+		},
+		// 实际总价
+		realTotalPrice() {
+			let total = this.priceInfo.totalPrice
+			if (this.freightCouponSelect) {
+				// 运费券金额 大于 总运费，最多优惠总运费金额
+				if (this.realFreight <= 0) {
+					total -= (this.priceInfo.shipTotalPrice || 0)
+				} else {
+					// 运费券金额 小于 总运费，优惠运费券金额	
+					total -= (this.priceInfo.shipPrice || 0)
+				}
+			}
+			// 新人优惠券直接减
+			if (this.newCouponSelect) {
+				total -= (this.priceInfo.newPersonPrice || 0)
+			}
+			// 选择会员充值卡，会员折扣
+			if (this.payMethod === PAY_METHOD.MEMBER_CARD && this.memberInfo.level !== MEMBER_LEVEL.NORMAL) {
+				const discount = (this.memberInfo.discount || 1)
+				total *= discount
+			}
+			return Math.round(total * 100) / 100
+		},
+		// 运费券是否选中
+		freightCouponSelect() {
+			const coupon = this.couponList.find((coupon) => COUPON_TYPE.FREIGHT === coupon.coupon.type)
+			if (!coupon) return false
+			return coupon.selected
+		},
+		// 新人优惠券是否选中
+		newCouponSelect() {
+			const coupon = this.couponList.find((coupon) => COUPON_TYPE.NEW_DISCOUNT === coupon.coupon.type)
+			if (!coupon) return false
+			return coupon.selected
+		},
 	},
 	async onLoad(options) {
-		console.log('options', Object.prototype.toString.call(options).split(' ')[1].split(']')[0], '===', options);
 		this.productIdList = options.productIdList ? options.productIdList.split(',').map((id) => Number(id)) : []
 		this.orderId = options.orderId || null
 		// 初始化数据
@@ -194,6 +245,13 @@ export default {
 		}
 	},
 	methods: {
+		couponSelectChange(coupon, couponIndex) {
+			this.$set(this.couponList[couponIndex], 'selected', !coupon.selected)
+		},
+		chargeHandler() {
+			console.log(this.$refs.rechargeRef)
+			this.$refs.rechargeRef.open()
+		},
 		// 统一的数据初始化方法
 		async initPageData() {
 			if (this.productIdList && this.productIdList.length > 0) {
@@ -257,6 +315,7 @@ export default {
 					return
 				}
 				const param = {
+					requestSource: this.orderId ? undefined : SOURCE.CART, // 仅购物车结算传
 					productList: this.productList.map((item) => ({
 						productId: item.productId,
 						specId: item.specId,
@@ -266,7 +325,15 @@ export default {
 					payMethod: this.payMethod,
 					couponIdList: this.couponList.filter((item) => item.selected).map((item) => item.couponId)
 				}
-				await this.$http.post('/order/create', param)
+				const { paySuccess = false} = await this.$http.post('/order/create', param)
+				if (paySuccess) {
+					uni.showToast({ title: '支付成功' , icon: 'none'})
+					wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_SEND)
+				} else {
+					uni.showToast({ title: '支付失败' , icon: 'none'})
+					wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_PAY)
+				}
+				uni.switchTab({ url: '/pages/order-list/index' })
 			} catch (error) {
 				console.log(error)
 			}

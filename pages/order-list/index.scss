@@ -5,17 +5,21 @@ page {
   margin: 20rpx auto;
   border-radius: 100rpx;
   background: #fff;
+  white-space: nowrap;
+}
+.order_head_navi .tab-container {
   display: flex;
   align-items: center;
-  justify-content: center;
 }
 .order_head_navi .li {
-  width: 100%;
+  flex-shrink: 0;
+  min-width: 120rpx;
   position: relative;
   text-align: center;
   font-size: 28rpx;
   color: #999999;
-  padding: 20rpx 0;
+  padding: 20rpx 30rpx;
+  white-space: nowrap;
 }
 .order_head_navi .li.active {
   color: #61C55E;
@@ -40,6 +44,19 @@ page {
   border-radius: 100rpx;
   position: relative;
   margin-bottom: 20rpx;
+
+  .btn {
+    position: absolute;
+    right: 20rpx;
+    top: 50%;
+    transform: translateY(-50%);
+    padding: 10rpx 18rpx;
+    border-radius: 100rpx;
+    background: #60C45D;
+    font-size: 24rpx;
+    color: #fff;
+    z-index: 2;
+  }
 }
 .order_search_cont .i {
   position: absolute;
@@ -118,17 +135,23 @@ page {
   border-top: 6rpx solid #389E35;
   border-right: 6rpx solid transparent;
 }
-.order_infor_last .order_title .time_zt .tips.zt_1 {
+.order_infor_last .order_title .time_zt .tips.process {
   background: #FFC000;
 }
-.order_infor_last .order_title .time_zt .tips.zt_1::after {
+.order_infor_last .order_title .time_zt .tips.process::after {
   border-top: 6rpx solid #9E8735;
 }
-.order_infor_last .order_title .time_zt .tips.zt_2 {
+.order_infor_last .order_title .time_zt .tips.completed {
   background: #00A2FF;
 }
-.order_infor_last .order_title .time_zt .tips.zt_2::after {
+.order_infor_last .order_title .time_zt .tips.completed::after {
   border-top: 6rpx solid #2C4CA8;
+}
+.order_infor_last .order_title .time_zt .tips.canceled {
+  background: #8F8F8F;
+}
+.order_infor_last .order_title .time_zt .tips.canceled::after {
+  border-top: 6rpx solid #8F8F8F;
 }
 .order_infor_last .pro_last {
   padding: 20rpx 0;
@@ -137,6 +160,7 @@ page {
 .order_infor_last .pro_last .list {
   display: flex;
   align-items: center;
+  flex-direction: column;
   margin-bottom: 20rpx;
 }
 .order_infor_last .pro_last .list:last-child {
@@ -145,6 +169,7 @@ page {
 .order_infor_last .pro_last .list .pro_i {
   width: 110rpx;
   height: 110rpx;
+  margin-right: 8rpx;
   border-radius: 10rpx;
 }
 .order_infor_last .pro_last .list .pro_i image {
@@ -152,10 +177,46 @@ page {
   width: 100%;
   height: 100%;
 }
+.detail__content-box {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.detail__left-box {
+  width: 100%;
+  display: flex;
+}
+
+.order-report {
+  margin-left: auto;
+  margin-top: 8rpx;
+}
+
 .order_infor_last .pro_last .list .detail_cont {
-  width: calc(100% - 110rpx);
-  padding-left: 20rpx;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 20rpx 0;
   position: relative;
+
+  &:not(:last-child) {
+    border-bottom: 1px solid #F1F1F1;
+  }
+
+  .btn {
+    padding: 10rpx 14rpx;
+    border-radius: 10rpx;
+    font-size: 24rpx;
+    color: #000000;
+    background: #EFF9EE;
+  }
+
+  .text {
+    font-size: 26rpx;
+    color: #8F8F8F;
+    word-break: break-all;
+  }
 }
 .order_infor_last .pro_last .list .detail_cont .name {
   font-size: 28rpx;
@@ -169,12 +230,9 @@ page {
   background: rgba(96, 196, 93, 0.1);
   font-size: 20rpx;
   color: #60C45D;
+  margin-right: 8rpx;
 }
 .order_infor_last .pro_last .list .detail_cont .price_inf {
-  position: absolute;
-  right: 0;
-  top: 50%;
-  transform: translateY(-50%);
   text-align: right;
 }
 .order_infor_last .pro_last .list .detail_cont .price_inf .price {
@@ -248,4 +306,37 @@ page {
 .order_infor_last .bit_seet_cont .btn.sub {
   background: #61C55E;
   color: #fff;
+}
+
+/* 展开/收起按钮样式 */
+.expand-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20rpx;
+  margin-top: 10rpx;
+  background: #F8F8F8;
+  border-radius: 8rpx;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  
+  text {
+    font-size: 26rpx;
+    color: #61C55E;
+  }
+  
+  .arrow {
+    margin-left: 10rpx;
+    font-size: 20rpx;
+    color: #61C55E;
+    transition: transform 0.3s ease;
+    
+    &.expanded {
+      transform: rotate(180deg);
+    }
+  }
+  
+  &:active {
+    background: #EEEEEE;
+  }
 }

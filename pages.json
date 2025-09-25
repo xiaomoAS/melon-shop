@@ -13,7 +13,7 @@
 			"path": "pages/settlement/index"
 		},
 		{
-			"path": "pages/orderlb/orderlb"
+			"path": "pages/order-list/index"
 		},
 		{
 			"path": "pages/product-detail/index",
@@ -72,7 +72,7 @@
 				"text": "分类"
 			},
 			{
-				"pagePath": "pages/orderlb/orderlb",
+				"pagePath": "pages/order-list/index",
 				"iconPath": "/static/img/foot_nav_3.png",
 				"selectedIconPath": "/static/img/foot_nav_3h.png",
 				"text": "订单"

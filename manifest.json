@@ -122,7 +122,8 @@
             // "port":"0.0.0.0", //Vue2 8080；Vue3 3000
             // "port": 8080, //端口号（前端运行的端口号）
             "https" : false,
-            "disableHostCheck" : true //固定写法（禁用 Host 检查）
+            "disableHostCheck" : true, //固定写法（禁用 Host 检查）
+            "port" : 8888
         },
         // "proxy" : {
         //     //这里的 /api 标记了以 /api 开头的接口需要使用此代理，会将下方的 target 拼接到接口的最前面

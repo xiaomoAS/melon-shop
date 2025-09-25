@@ -10,7 +10,7 @@
 			<view class="bit_cont">
 				<view class="adres_default">
 					<label class="adres_rad" @click="setDefault(item)">
-						<radio class="default-radio" :checked="item.isDefault" ></radio>
+						<radio class="default-radio" :checked="item.isDefault === 1" ></radio>
 						<text>设为默认收货地址</text>
 					</label>
 				</view>

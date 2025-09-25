@@ -60,7 +60,7 @@
 			<view class="total_price_cont">
 				<view class="title_head">
 					<view class="tle">选中商品总价</view>
-					<view class="total">￥{{ priceInfo.totalPrice || 0 }}</view>
+					<view class="total">￥{{ priceInfo.totalPrice || 0 }}（运费：{{ priceInfo.shipTotalPrice || 0 }}）</view>
 				</view>
 				<view v-if="priceInfo.shipPrice" class="dl">
 					<view class="dt">

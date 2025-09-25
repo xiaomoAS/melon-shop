@@ -112,7 +112,7 @@ page {
   background: linear-gradient(#fcd896, #fcd1ab, #fdf2c6, #f8ecc0);
 }
 .user_member_cont.lv_1 .lv_tips {
-  background: linear-gradient(to right, #FFD700, #FFA500, #FFE4B5, #FFE4B5);
+  background: linear-gradient(to right, #FFD700, #ffd483, #FFE4B5, #FFE4B5);
   color: #B8860B;
 }
 .user_member_cont.lv_1 .lv_txt {
@@ -121,7 +121,7 @@ page {
 .user_member_cont.lv_1 .lv_exp_cont .exp_head .exp {
   color: #DAA520;
 }
-.user_member_cont.lv_1 .lv_exp_cont .exp_head .exp text {
+.user_member_cont.lv_1 .lv_exp_cont .exp_head .text {
   color: #FF8C00;
 }
 .user_member_cont.lv_1 .lv_exp_cont .exp_head .up_btn {
@@ -143,7 +143,7 @@ page {
 .user_member_cont.lv_2 .lv_exp_cont .exp_head .exp {
   color: #A6A2E7;
 }
-.user_member_cont.lv_2 .lv_exp_cont .exp_head .exp text {
+.user_member_cont.lv_2 .lv_exp_cont .exp_head .text {
   color: #463BE5;
 }
 .user_member_cont.lv_2 .lv_exp_cont .exp_head .up_btn {
@@ -165,7 +165,7 @@ page {
 .user_member_cont.lv_0 .lv_exp_cont .exp_head .exp {
   color: #42454B;
 }
-.user_member_cont.lv_0 .lv_exp_cont .exp_head .exp text {
+.user_member_cont.lv_0 .lv_exp_cont .exp_head .text {
   color: #42454B;
 }
 .user_member_cont.lv_0 .lv_exp_cont .exp_head .up_btn {
@@ -187,7 +187,7 @@ page {
 .user_member_cont.lv_3 .lv_exp_cont .exp_head .exp {
   color: #628EDF;
 }
-.user_member_cont.lv_3 .lv_exp_cont .exp_head .exp text {
+.user_member_cont.lv_3 .lv_exp_cont .exp_head .text {
   color: #0066FF;
 }
 .user_member_cont.lv_3 .lv_exp_cont .exp_head .up_btn {
@@ -276,6 +276,16 @@ page {
   margin-bottom: 20rpx;
   font-size: 24rpx;
 }
+.user_member_cont .exp_head_left {
+  display: flex;
+  align-items: center;
+
+  .text {
+    font-weight: normal!important;
+    font-size: 26rpx!important;
+    margin-right: 16rpx!important;
+  }
+}
 .user_member_cont .lv_exp_cont .exp_head {
   display: flex;
   align-items: center;
@@ -285,8 +295,9 @@ page {
 .user_member_cont .lv_exp_cont .exp_head .exp {
   font-size: 22rpx;
 }
-.user_member_cont .lv_exp_cont .exp_head .exp text {
+.user_member_cont .lv_exp_cont .exp_head .text {
   font-weight: bold;
+  font-size: 24rpx;
   margin-right: 5rpx;
 }
 .user_member_cont .lv_exp_cont .exp_head .up_btn {
