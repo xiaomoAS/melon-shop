@@ -218,7 +218,8 @@ export default {
 			try {
 				await this.$http.post('/shopcart/delete', { clear: true })
 				uni.showToast({ title: '清除成功' })
-				this.getCartList()
+				await this.getCartList()
+				this.updatePrice()
 			} catch (error) {
 				uni.showToast({ title: '清除失败', icon: 'none' })
 			}
