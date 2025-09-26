@@ -17,6 +17,9 @@
 						<view v-if="productIdList" class="txt">该券可用商品</view>
 						<view v-else class="txt">搜索商品结果</view>
 					</view>
+
+					<view class="no-content">暂无相关商品～</view>
+
 					<view class="pro_list_cont" v-for="item in productList" :key="item.productId" :class="{ 'null': !item.stock }">
 						<ProductItem :info="item" />
 					</view>
@@ -80,7 +83,7 @@ export default{
 				console.log('没有更多数据了')
 				return
 			}
-			// // 增加页码并加载下一页
+			// 增加页码并加载下一页
 			this.page = this.page + 1
 			this.getProductList()
 		},
@@ -103,7 +106,6 @@ export default{
 }
 </script>
 
-<style scoped>
-	@import './index.css';
-	@import url(/pages/index/prolast.css);
+<style scoped lang="scss">
+	@import './index.scss';
 </style>

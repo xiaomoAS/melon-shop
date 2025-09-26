@@ -3,8 +3,9 @@
 		<view>
 			<view class="ifica_search_head">
 				<view class="int_cont">
-					<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix"></image>
-					<input type="text" placeholder="搜索您的商品">
+					<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix" @click="toSearchPage"></image>
+					<input v-model="searchWords" type="text" placeholder="搜索您的商品">
+					<view class="btn" @click="toSearchPage">搜索</view>
 				</view>
 			</view>
 			<view class="ifiac_filter_cont">
@@ -52,6 +53,7 @@ export default{
 			pageSize: 5,
 			totalCount: 0,
 			activeCate: null,
+			searchWords: '',
 		}
 	},
 	computed: {
@@ -72,6 +74,9 @@ export default{
 		this.getProductList()
 	},
 	methods: {
+		toSearchPage() {
+			uni.navigateTo({ url: `/pages/search-page/index?keywords=${this.searchWords}` })
+		},
 		cateClickHandler(id) {
 			this.productList = []
 			this.page = 1 // 重置页码
@@ -113,7 +118,6 @@ export default{
 }
 </script>
 
-<style lang="less">
-	@import './index.css';
-	@import url(/pages/index/prolast.css);
+<style lang="scss" scoped>
+	@import './index.scss';
 </style>

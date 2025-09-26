@@ -1,5 +1,5 @@
 {
-    "name" : "蔬菜商城",
+    "name" : "瓜田里的猹",
     "appid" : "__UNI__6A2F798",
     "description" : "",
     "versionName" : "1.0.0",
@@ -138,7 +138,7 @@
         //         }
         //     }
         // }
-        "title" : "蔬菜商城"
+        "title" : "瓜田里的猹"
     }
 }
 //pathRewrite: {'^/api': '/'} 重写之后url为 http://127.0.0.1:8100（域名）/xxxx

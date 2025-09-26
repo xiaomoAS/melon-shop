@@ -186,7 +186,6 @@
 	}
 </script>
 
-<style>
-	@import url(/pages/index/index.css);
-	@import url(/pages/index/prolast.css);
+<style scoped lang="scss">
+	@import './index.scss';
 </style>

@@ -7,13 +7,22 @@
       }
 		},
 		{
-			"path": "pages/product-list/index"
+			"path": "pages/product-list/index",
+			"style": {
+				"navigationBarTitleText": "分类"
+			}
 		},
 		{
-			"path": "pages/settlement/index"
+			"path": "pages/settlement/index",
+			"style": {
+				"navigationBarTitleText": "结算页"
+			}
 		},
 		{
-			"path": "pages/order-list/index"
+			"path": "pages/order-list/index",
+			"style": {
+				"navigationBarTitleText": "订单列表"
+			}
 		},
 		{
 			"path": "pages/product-detail/index",
@@ -40,10 +49,16 @@
 			}
 		},
 		{
-			"path": "pages/user-login/index"
+			"path": "pages/user-login/index",
+			"style": {
+				"navigationBarTitleText": "登陆"
+			}
 		},
 		{
-			"path": "pages/search-page/index"
+			"path": "pages/search-page/index",
+			"style": {
+				"navigationBarTitleText": "搜索结果"
+			}
 		},
 		{
 			"path": "pages/personal/index",
@@ -90,7 +105,7 @@
 		// #ifdef H5
 		"navigationStyle":"custom", //设置成 custom 即可解决微信 H5 双标题的问题
 		// #endif 
-		"navigationBarTitleText": "蔬菜商城",
+		"navigationBarTitleText": "瓜田里的猹",
 		"navigationBarTextStyle":"black",
 		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#fff",
