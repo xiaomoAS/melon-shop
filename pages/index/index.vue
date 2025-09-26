@@ -79,7 +79,7 @@
 				</view>
 			</LoadMore>
 		</view>
-		<ShopCart ref="shopCartRef" />
+		<ShopCart />
 	</view>
 </template>
 <script>

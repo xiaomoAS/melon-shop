@@ -97,8 +97,12 @@ export default {
 			if (item.coupon.type === COUPON_TYPE.NEW_DISCOUNT) return '新用户优惠券'
 			if (item.coupon.type === COUPON_TYPE.FREIGHT) return '包邮券'
 		},
-		async getCouponList() {
+		async getCouponList(clear = false) {
 			try {
+				if (clear) {
+					this.page = 1
+					this.couponList = []
+				}
 				const { rows = [], total = 0 } = await this.$http.post('/user/coupon/list', {
 					couponType: this.couponType,
 					page: this.page,
@@ -130,9 +134,7 @@ export default {
 		couponType: {
 			handler(newVal, oldVal) {
 				if (newVal && newVal !== oldVal) {
-					this.page = 1
-					this.couponList = []
-					this.getCouponList()
+					this.getCouponList(true)
 				}
 			}
 		}

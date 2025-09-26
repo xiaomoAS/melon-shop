@@ -74,7 +74,7 @@
 					<uni-icons type="right" size="12"></uni-icons>
 				</view>
 			</view>
-			<CouponList></CouponList>
+			<CouponList ref="couponListRef"></CouponList>
 		</view>
 		<!-- TODO: 文案 -->
 		<view class="user_bits_txt">
@@ -181,6 +181,9 @@
 			this.getUserInfo()
 			this.getAddressInfo()
 			this.getMemberInfo()
+			this.$nextTick(() => {
+				this.$refs.couponListRef && this.$refs.couponListRef.getCouponList(true)
+			})
 		}
 	}
 </script>

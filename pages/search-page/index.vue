@@ -18,7 +18,7 @@
 						<view v-else class="txt">搜索商品结果</view>
 					</view>
 
-					<view class="no-content">暂无相关商品～</view>
+					<view v-if="!productList.length" class="no-content">暂无相关商品～</view>
 
 					<view class="pro_list_cont" v-for="item in productList" :key="item.productId" :class="{ 'null': !item.stock }">
 						<ProductItem :info="item" />
@@ -36,12 +36,15 @@
 				</view>
 			</view>
 		</view>
+
+		<ShopCart />
 	</view>
 </template>
 
 <script>
 import ProductItem from '@/components/product-item/index.vue'
 import LoadMore from '@/components/load-more/index.vue'
+import ShopCart from '@/components/shop-cart/index.vue'
 
 export default{
 	data(){
@@ -56,7 +59,8 @@ export default{
 	},
 	components: {
 		ProductItem,
-		LoadMore
+		LoadMore,
+		ShopCart
 	},
 	computed: {
 		noMoreData() {

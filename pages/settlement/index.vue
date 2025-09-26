@@ -195,6 +195,7 @@ export default {
 		},
 		// 实际总价
 		realTotalPrice() {
+			if (!this.priceInfo.totalPrice) return 0
 			let total = this.priceInfo.totalPrice
 			if (this.freightCouponSelect) {
 				// 运费券金额 大于 总运费，最多优惠总运费金额
