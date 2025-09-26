@@ -28,7 +28,7 @@
 						<view class="name">{{ product.title }}</view>
 						<view class="specs">{{ product.desc }}</view>
 						<view class="num">x{{ product.buyCounts }}</view>
-						<view class="price">￥{{ product.totalPrice }}</view>
+						<view class="price">￥{{ product.price }}</view>
 					</view>
 				</view>
 			</view>
@@ -47,7 +47,7 @@
 				<view class="dt">优惠券</view>
 				<view class="dd">有{{ couponList.length }}张可用</view>
 			</view>
-			<view class="det_cont">
+			<view v-if="couponList.length" class="det_cont">
 				<view v-for="(coupon, couponIndex) in couponList" :key="coupon.couponId" class="dl">
 					<view v-if="COUPON_TYPE.FREIGHT === coupon.coupon.type" class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/05a860ef9f874ed696e19c3374f7419c/order_ico_2.png?Expires=2073876488&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5edejPW2awsLyvfjOWNrI8yBClU%3D" mode="widthFix"></image> </view>

@@ -152,19 +152,14 @@ export default {
 		// 处理自定义金额输入
 		handleAmountInput(e) {
 			let value = e.detail.value
-			// 只允许输入数字和小数点
-			value = value.replace(/[^\d.]/g, '')
-			// 确保只有一个小数点
-			const parts = value.split('.')
-			if (parts.length > 2) {
-				value = parts[0] + '.' + parts.slice(1).join('')
+			// 只允许输入数字
+			value = value.replace(/[^\d]/g, '')
+			// 防止以0开头（除了单独的0）
+			if (value.length > 1 && value.startsWith('0')) {
+				value = value.substring(1)
 			}
-			// 限制小数点后最多两位
-			if (parts.length === 2 && parts[1].length > 2) {
-				value = parts[0] + '.' + parts[1].substring(0, 2)
-			}
-			// 防止以小数点和0开头
-			if (value.startsWith('.') || value.startsWith('0')) {
+			// 确保是正整数，空值或0都清空
+			if (value === '0' || value === '') {
 				value = ''
 			}
 			this.$nextTick(() => {

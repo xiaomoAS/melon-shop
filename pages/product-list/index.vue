@@ -114,6 +114,6 @@ export default{
 </script>
 
 <style lang="less">
-	@import url(/pages/ifica/ifica.css);
+	@import './index.css';
 	@import url(/pages/index/prolast.css);
 </style>

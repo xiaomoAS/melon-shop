@@ -193,7 +193,6 @@ page {
   align-items: center;
   justify-content: space-between;
   padding: 20rpx 0;
-  border-bottom: 3rpx solid #F1F1F1;
 }
 .order_coupon_cont .title_head .dt {
   font-size: 28rpx;
@@ -205,6 +204,7 @@ page {
 }
 .order_coupon_cont .det_cont {
   padding: 20rpx 0;
+  border-top: 3rpx solid #F1F1F1;
 }
 .order_coupon_cont .det_cont .dl {
   display: flex;

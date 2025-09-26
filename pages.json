@@ -7,7 +7,7 @@
       }
 		},
 		{
-			"path": "pages/ifica/ifica"
+			"path": "pages/product-list/index"
 		},
 		{
 			"path": "pages/settlement/index"
@@ -66,7 +66,7 @@
 				"text": "首页"
 			},
 			{
-				"pagePath": "pages/ifica/ifica",
+				"pagePath": "pages/product-list/index",
 				"iconPath": "/static/img/foot_nav_2.png",
 				"selectedIconPath": "/static/img/foot_nav_2h.png",
 				"text": "分类"

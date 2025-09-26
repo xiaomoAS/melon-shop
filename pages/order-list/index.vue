@@ -36,15 +36,14 @@
 									<view class="">
 										<view class="name">{{ product.productName }}</view>
 										<view class="text">{{ product.desc }}</view>
-										<view v-if="product.tag">
-											<view v-for="tag in product.tag" :key="tag" class="bis">{{ tag }}</view>
+										<view v-if="product.tagList">
+											<view v-for="tag in product.tagList" :key="tag" class="bis">{{ tag }}</view>
 										</view>
 									</view>
 								</view>
 								
 								<view class="price_inf">
-									<!-- TODO -->
-									<view class="price"><text>￥</text>xxxxx</view>
+									<view class="price"><text>￥</text>{{ product.price }}</view>
 									<view class="num">×{{ product.buyCounts }}</view>
 								</view>
 							</view>

@@ -11,11 +11,14 @@
 					<input v-model="searchWords" type="text" placeholder="搜索您喜欢的商品">
 					<view class="btn" @click="toSearchPage">搜索</view>
 				</view>
-				<swiper class="index_baner" :autoplay="true" :interval="3000" :duration="1000">
+				<!-- 轮播图 -->
+				<swiper v-if="carouselImages.length" class="index_baner" :autoplay="true" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in carouselImages" :key="index">
 						<view class="swiper-item"><image :src="item.url" name="{{item.name}}" id="{{item.id}}" mode="aspectFill"></image> </view>
 					</swiper-item>
 				</swiper>
+
+				<!-- 类目 -->
 				<view class="index_navi_cont">
 					<view class="list" @click="toCatePage()">
 						<view class="tis_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/3db470eba37b45109b31a31bc4862b42/quanbushangpin.png?Expires=2073903146&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=DTAVQSjY5F6da5ibaWHkzyipNus%3D" mode="widthFix"></image> </view>
@@ -27,28 +30,34 @@
 						<view class="txt">{{ item.name }}</view>
 					</view>
 				</view>
-				<view class="index_new_vip">
-					<image class="tips" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/29b37b79ca524070b69881a8a0be4d84/tip_1.png?Expires=2073875832&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yea3i%2FfwVPnD91oEwgNeiUyJ4x8%3D" mode="widthFix"></image>
+
+				<!-- 新人专享 -->
+				<view v-if="newPersonList.length" class="index_new_vip">
+					<image class="tips" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/29b37b79ca524070b69881a8a0be4d84/tip_1.png?Expires=2073875832&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yea3i%2FfwVPnD91oEwgNeiUyJ4x8%3D" mode="widthFix" @click="toCatePage()"></image>
 					<view class="head_title">
 						<view class="tle">新人<text>专享</text> </view>
 						<view class="txt">开启品质生活</view>
 					</view>
-					<view v-if="newPersonList.length" class="pro_last">
+					<view class="pro_last">
 						<view v-for="(newItem, index) in newPersonList" :key="index" class="list_cont">
-							<view class="tis_i" @click="toDetailPage(newItem.productId)">
-								<image class="i" :src="newItem.imgUrl" mode="widthFix"></image> 
-								<view class="tip_txt">新客专享</view>
-							</view>
-							<view class="pro_name">{{ newItem.title }}</view>
-							<view class="pro_price">
-								<view class="dt">新人价</view>
-								<view class="dd">￥{{ newItem.realpayPrice }}</view>
-							</view>
+							<navigator :url="`/pages/product-detail/index?id=${newItem.productId}`">
+								<view class="tis_i">
+									<image class="i" :src="newItem.imgUrl" mode="widthFix"></image> 
+									<view class="tip_txt">新客专享</view>
+								</view>
+								<view class="pro_name">{{ newItem.title }}</view>
+								<view class="pro_price">
+									<view class="dt">新人价</view>
+									<view class="dd">￥{{ newItem.realpayPrice }}</view>
+								</view>
+							</navigator>
 						</view>
 					</view>
 				</view>
 			</view>
 		</view>
+
+		<!-- 推荐商品 -->
 		<view class="index_pro_contain">
 			<image class="pro_head_bg" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/608def905ee846eab80b698d5d29c6e5/index_case2_bg.png?Expires=2073875992&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Zd2Oz8m0uYQy8idN34qA4pxtSJc%3D" mode="widthFix"></image>
 			<view class="title_head">
@@ -114,13 +123,9 @@
 			this.refreshShopCart()
 		},
 		methods: {
-			toDetailPage(id) {
-				if (!id) return
-				uni.navigateTo({ url: `/pages/product-detail/index?id=${id}` })
-			},
 			toCatePage(id = null) {
 				wx.setStorageSync('cateId', id)
-				uni.switchTab({ url: '/pages/ifica/ifica' })
+				uni.switchTab({ url: '/pages/product-list/index' })
 			},
 			toSearchPage() {
 				uni.navigateTo({ url: `/pages/search-page/index?keywords=${this.searchWords}` })
