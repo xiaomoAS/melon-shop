@@ -59,7 +59,8 @@
 					</view>
 					<view  class="dd">
 						<view v-if="coupon.coupon">-￥{{ COUPON_TYPE.NEW_DISCOUNT === coupon.coupon.type ? coupon.coupon.newPersonPrice || 0 : coupon.coupon.waybillPriceLimit || 0 }}</view>
-						<checkbox :checked="coupon.selected" color="#61C55E" borderColor="#A0A0A0" activeBackgroundColor="#61C55E" activeBorderColor="#61C55E"  style="transform:scale(0.7)" @click="couponSelectChange(coupon, couponIndex)"/>
+						<!-- 订单跳转结算情况不能重新选择优惠券 -->
+						<checkbox v-show="!this.orderId" :checked="coupon.selected" color="#61C55E" borderColor="#A0A0A0" activeBackgroundColor="#61C55E" activeBorderColor="#61C55E"  style="transform:scale(0.7)" @click="couponSelectChange(coupon, couponIndex)"/>
 					</view>
 				</view>
 			</view>
@@ -257,9 +258,9 @@ export default {
 		async initPageData() {
 			if (this.productIdList && this.productIdList.length > 0) {
 				await this.getBaseProductInfo()
-				this.getPriceInfo()
 			}
-			this.getDetail()
+			await this.getDetail()
+			this.getPriceInfo(this.productIdList.length ? this.productIdList : this.productList.map((item) => item.productId))
 			this.getMemberInfo()
 		},
 		payMethodChange(e) {
@@ -272,10 +273,11 @@ export default {
 				this.memberInfo = {}
 			}
 		},
-		async getPriceInfo() {
+		async getPriceInfo(list) {
 			try {
+				if(!list || !list.length) return
 				this.priceInfo = await this.$http.post('/shopcart/calculate', {
-					checkedProductIdList: this.productIdList
+					checkedProductIdList: list
 				})
 			} catch (error) {
 				this.priceInfo = {}
@@ -294,9 +296,13 @@ export default {
 			try {
 				if (this.orderId) {
 					// 订单列表-待付款 进来
+					const { couponList = [], productList = [], userAddress } = await this.$http.post('/order/secondPay', { orderId: this.orderId })
+					this.couponList = couponList.map((item) => ({ ...item, selected: true }))
+					this.productList = productList
+					this.userAddress = userAddress
 				} else if (this.baseProductList.length) {
 					// 购物车进来
-					const { couponList = [], productList = [], userAddress } =await this.$http.post('/order/trade', {
+					const { couponList = [], productList = [], userAddress } = await this.$http.post('/order/trade', {
 						tradeProductRequestList: this.baseProductList
 					})
 					this.couponList = couponList.map((item) => ({ ...item, selected: true }))

@@ -136,12 +136,10 @@ export default {
 				if (newVal && newVal !== oldVal) {
 					this.getCouponList(true)
 				}
-			}
-		}
+			},
+			immediate: true
+		},
 	},
-	mounted() {
-		this.getCouponList()
-	}
 }
 </script>
 

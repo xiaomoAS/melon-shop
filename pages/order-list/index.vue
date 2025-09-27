@@ -84,7 +84,7 @@
 			</view>
 			<view class="bit_seet_cont">
 				<view v-if="order.orderStatus === ORDER_STATUS.WAIT_PAY" class="btn" @click="cancelOrder(order)">取消订单</view>
-				<view v-if="order.orderStatus === ORDER_STATUS.WAIT_PAY" class="btn sub">继续支付</view>
+				<view v-if="order.orderStatus === ORDER_STATUS.WAIT_PAY" class="btn sub" @click="toSettlePage(order)">继续支付</view>
 			</view>
 		</view>
 
@@ -154,6 +154,9 @@ export default {
 			} catch (error) {
 				console.log(error)
 			}
+		},
+		toSettlePage(order) {
+			uni.navigateTo({ url: `/pages/settlement/index?orderId=${order.id}` })
 		},
 		switchTab(tabValue) {
 			this.currentTab = tabValue;
