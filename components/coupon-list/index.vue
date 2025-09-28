@@ -14,7 +14,7 @@
 		</view>
 
 		<LoadMore 
-			v-if="!noMoreData"
+			v-if="couponList.length && !noMoreData"
 			@visible="loadMoreData" 
 			:threshold="50"
 			:once="false"

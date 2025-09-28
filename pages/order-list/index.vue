@@ -62,7 +62,11 @@
 				</view>
 			</view>
 			<view class="total_inf">
-				<view class="dd">共 <text>{{ order.productList.length }}</text> 件商品 {{ order.orderStatus === ORDER_STATUS.WAIT_PAY ? '应付' : '实付' }}: <text>¥ {{ order.realPayAmount }}</text></view>
+				<view class="dd">
+					共 <text>{{ order.productList.length }}</text> 件商品
+					原价: <text>¥{{ order.totalAmount }} </text>
+					{{ order.orderStatus === ORDER_STATUS.WAIT_PAY ? '应付' : '实付' }}: <text>¥{{ order.realPayAmount }}</text>
+				</view>
 			</view>
 			<view class="deliv_exp">
 				<!-- TODO -->
@@ -89,7 +93,7 @@
 		</view>
 
 		<LoadMore 
-			v-if="!noMoreData"
+			v-if="orderList.length && !noMoreData"
 			@visible="loadMoreData" 
 			:threshold="50"
 			:once="false"

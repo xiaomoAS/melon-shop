@@ -65,11 +65,11 @@
 				<view class="dt">团购好货</view>
 				<view class="txt">三餐四季 尽在知花</view>
 			</view>
-			<view class="pro_list_cont" v-for="item in productList" :key="item.productId" :class="{ 'null': !item.stock }">
+			<view class="pro_list_cont" v-for="item in productList" :key="item.productId">
 				<ProductItem :info="item" />
 			</view>
 			<LoadMore 
-				v-if="!noMoreData"
+				v-if="productList.length && !noMoreData"
 				@visible="loadMoreData" 
 				:threshold="50"
 				:once="false"
@@ -86,7 +86,7 @@
 	import ProductItem from '@/components/product-item/index.vue'
 	import ShopCart from '@/components/shop-cart/index.vue'
 	import LoadMore from '@/components/load-more/index.vue'
-	const app = getApp()
+
 	export default {
 		data() {
 			return {

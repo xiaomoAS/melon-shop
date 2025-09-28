@@ -25,7 +25,7 @@
 				</view>
 				
 				<LoadMore 
-					v-if="!noMoreData"
+					v-if="productList.length && !noMoreData"
 					@visible="loadMoreData" 
 					:threshold="50"
 					:once="false"
@@ -84,6 +84,7 @@ export default{
 			this.productList = []
 			this.page = 1 // 重置页码
 			this.activeCate = id;
+			wx.setStorageSync('cateId', id)
 			this.getProductList()
 		},
 		async getCates() {

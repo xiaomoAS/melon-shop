@@ -1,7 +1,11 @@
 <template>
 	<view class="pro_list_cont">
-		<navigator :url="`/pages/product-detail/index?id=${info.productId}`">
+		<view v-if="!info.stock" class="no-stock-back"></view>
+		<navigator class="navigator" :url="`/pages/product-detail/index?id=${info.productId}`" :class="{ disabled: !info.stock }">
 			<view class="pro_i">
+				<view v-if="!info.stock" class="no-stock__img-back">
+					<image class="no-stock__img-back--img" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/e31f1be8adee4b8ba9e573c3ce3d8f1d/%E7%BB%84%2015166%20%281%29.png?Expires=2074390376&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=IFkA5FRXbVp8sO7DTg9R2hvS7sM%3D" mode="widthFix"></image>
+				</view>
 				<image class="i" :src="info.imgUrl" mode="widthFix"></image> 
 			</view>
 			<view class="bit_cont">
@@ -11,7 +15,7 @@
 					<view class="tips_dl">
 						<view v-for="(tag, index) in info.tagList" :key="index" class="dd bg_3">{{ tag }}</view>
 					</view>
-					<view class="ys_time">
+					<view v-if="info.stock" class="ys_time">
 						<view class="dt">预售期</view>
 						<view class="dd">{{ formatDate(Number(info.presaleStartTime), 'MM月DD日') }}</view>
 					</view>
@@ -53,7 +57,7 @@ export default {
 		formatDate,
 		async addCart() {
 			try {
-				await this.$http.post('/shopcart/add', { ...this.info })
+				await this.$http.post('/shopcart/add', { ...this.info, changeCount: 1 })
 				uni.showToast({ title: '添加成功' })
 				uni.$emit('refreshShopCart')
 			} catch (error) {

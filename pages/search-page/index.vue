@@ -24,7 +24,7 @@
 						<ProductItem :info="item" />
 					</view>
 					<LoadMore 
-						v-if="!noMoreData"
+						v-if="productList.length && !noMoreData"
 						@visible="loadMoreData" 
 						:threshold="50"
 						:once="false"

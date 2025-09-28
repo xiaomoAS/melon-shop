@@ -12,7 +12,7 @@
 					<text class="num">{{ total }}</text>
 				</view>
 				<view class="xj">￥{{ priceInfo.realpayPrice || 0  }}</view>
-				<view class="yj" v-if="priceInfo.newPersonPrice || priceInfo.shipPrice">￥{{ priceInfo.totalPrice }}</view>
+				<view class="yj" v-if="priceInfo.newPersonPrice || priceInfo.waybillPriceLimit">￥{{ priceInfo.totalPrice }}</view>
 				
 				<view v-if="info" class="add-cart-box" @click="addCartHandler">
 					<uni-icons class="icon" color="#60C45D" type="cart-filled" size="14"></uni-icons>
@@ -38,7 +38,7 @@
 					</view>
 				<view class="del_all" @click="clearCart"><image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/fe8f46b9761d4e7e8a57bec3f4e49200/ico_2.png?Expires=2073876106&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=ebfmzCkkDbDP7O2pjeFhK8pSobI%3D" mode="widthFix"></image>清空购物车</view>
 			</view>
-			<view v-for="item in cartList" :key="item.productId" class="pro_list">
+			<view v-for="(item, cartIndex) in cartList" :key="item.productId" class="pro_list">
 				<label class="sele_rad">
 					<view class="ring" :class="{ active: item.selected }">
 					  <checkbox :checked="item.selected" @click="toggleSelectItem(item)"></checkbox>
@@ -49,8 +49,9 @@
 					<view class="detail_inf">
 						<view class="title">{{ item.title }}</view>
 						<view class="bits">￥{{ item.price }}/{{ item.specName }}</view>
+						<view class="text">库存：{{ item.stock || 0 }}</view>
 						<view class="count_cont">
-							<image class="btn less" :class="{disabled: item.buyCounts <= 1}" @click="decrease(item)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
+							<image class="btn less" :class="{disabled: item.buyCounts <= 0}" @click="decrease(item, cartIndex)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
 							<text class="int">{{ item.buyCounts }}</text>
 							<image class="btn plus" @click="increase(item)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
 						</view>
@@ -60,14 +61,17 @@
 			<view class="total_price_cont">
 				<view class="title_head">
 					<view class="tle">选中商品总价</view>
-					<view class="total">￥{{ priceInfo.totalPrice || 0 }}（运费：{{ priceInfo.shipTotalPrice || 0 }}）</view>
+					<view class="total">
+						￥{{ priceInfo.totalPrice || 0 }}
+						<text v-if="selectList.length">（运费：<text v-if="priceInfo.shipTotalPrice">{{ priceInfo.shipTotalPrice || 0 }}</text><text v-else>选择默认收货地址后查看</text>）</text>
+					</view>
 				</view>
-				<view v-if="priceInfo.shipPrice" class="dl">
+				<view v-if="priceInfo.waybillPriceLimit" class="dl">
 					<view class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/05a860ef9f874ed696e19c3374f7419c/order_ico_2.png?Expires=2073876488&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5edejPW2awsLyvfjOWNrI8yBClU%3D" mode="widthFix"></image> </view>
 						运费券
 					</view>
-					<view class="dd">-￥{{ priceInfo.shipPrice }}</view>
+					<view class="dd">-￥{{ priceInfo.waybillPriceLimit }}</view>
 				</view>
 				<view v-if="priceInfo.newPersonPrice" class="dl">
 					<view class="dt">
@@ -84,7 +88,7 @@
 						<text class="num">{{ total }}</text>
 					</view>
 					<view class="xj">￥{{ priceInfo.realpayPrice || 0 }}</view>
-					<view class="yj" v-if="priceInfo.newPersonPrice || priceInfo.shipPrice">￥{{ priceInfo.totalPrice }}</view>
+					<view class="yj" v-if="priceInfo.newPersonPrice || priceInfo.waybillPriceLimit">￥{{ priceInfo.totalPrice }}</view>
 
 					<view v-if="info" class="add-cart-box" @click="addCartHandler">
 						<uni-icons class="icon" color="#60C45D" type="cart-filled" size="14"></uni-icons>
@@ -152,7 +156,7 @@ export default {
 		async addCartHandler() {
 			try {
 				if (!this.info) return
-				await this.$http.post('/shopcart/add', { ...this.info })
+				await this.$http.post('/shopcart/add', { ...this.info, changeCount: 1 })
 				uni.showToast({ title: '添加成功' })
 				uni.$emit('refreshShopCart')
 			} catch (error) {
@@ -191,22 +195,49 @@ export default {
 				this.priceInfo = {}
 			}
 		},
-    async decrease(item) {
-			if (item.buyCounts <= 1) return
+    async decrease(item, cartIndex) {
 			try {
-			  item.buyCounts--
-				await this.$http.post('/shopcart/delete', { ...item })
-				if (item.selected) {
-					this.updatePrice()
+				if (item.buyCounts <= 0) return
+				// 只剩一个了，购物车清除该商品
+				if (item.buyCounts === 1) {
+					uni.showModal({
+						title: '',
+						content: '确认要删除该商品?',
+						success: async (res) => {
+							if (res.confirm) {
+								item.buyCounts--
+								await this.$http.post('/shopcart/delete', { ...item, buyCounts: undefined, changeCount: 1 })
+								// 手动剔除
+								this.cartList.splice(cartIndex, 1)
+								this.total = this.cartList ? this.cartList.length : 0
+								uni.showToast({ title: '删除成功', icon: 'none' })
+								if (item.selected) {
+									this.updatePrice()
+								}
+							} else if (res.cancel) {
+								//TODO
+							}
+						}
+					})
+				} else {
+					item.buyCounts--
+					await this.$http.post('/shopcart/delete', { ...item, buyCounts: undefined, changeCount: 1 })
+					if (item.selected) {
+						this.updatePrice()
+					}
 				}
 			} catch (error) {
-				uni.showToast({ title: '减少失败', icon: 'none' })
+				console.log('error', error);
 			}
 		},
 		async increase(item) {
+			if (item.buyCounts >= item.stock) {
+				uni.showToast({ title: '库存不足', icon: 'none' })
+				return
+			}
 			item.buyCounts++
 			try {
-				await this.$http.post('/shopcart/add', { ...item })
+				await this.$http.post('/shopcart/add', { ...item, buyCounts: undefined, changeCount: 1 })
 				if (item.selected) {
 					this.updatePrice()
 				}

@@ -80,14 +80,17 @@
 			</view>
 			<view class="dl">
 				<view class="dt">运费</view>
-				<!-- 运费有优惠的样式 -->
-				<view v-if="freightCouponSelect" class="dd">
-					<view class="yj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
-					<view class="xj">￥{{ realFreight }}</view>
+				<view v-if="priceInfo.shipTotalPrice">
+					<!-- 运费有优惠的样式 -->
+					<view v-if="freightCouponSelect" class="dd">
+						<view class="yj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
+						<view class="xj">￥{{ priceInfo.shipPrice || 0 }}</view>
+					</view>
+					<view v-else class="dd">
+						<view class="xj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
+					</view>
 				</view>
-				<view v-else class="dd">
-					<view class="xj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
-				</view>
+				<view v-else class="dd">选择默认收货地址后查看</view>
 			</view>
 		</view>
 		<view class="order_pay_cont">
@@ -189,22 +192,17 @@ export default {
 		allCount() {
 			return this.productList.reduce((total, product) => total + product.buyCounts, 0)
 		},
-		realFreight() {
-			const price = (this.priceInfo.shipTotalPrice || 0) - (this.priceInfo.shipPrice || 0)
-			if (!price || price <= 0) return 0
-			return Math.round(price * 100) / 100
-		},
 		// 实际总价
 		realTotalPrice() {
 			if (!this.priceInfo.totalPrice) return 0
 			let total = this.priceInfo.totalPrice
 			if (this.freightCouponSelect) {
 				// 运费券金额 大于 总运费，最多优惠总运费金额
-				if (this.realFreight <= 0) {
+				if (this.priceInfo.shipPrice <= 0) {
 					total -= (this.priceInfo.shipTotalPrice || 0)
 				} else {
 					// 运费券金额 小于 总运费，优惠运费券金额	
-					total -= (this.priceInfo.shipPrice || 0)
+					total -= (this.priceInfo.waybillPriceLimit || 0)
 				}
 			}
 			// 新人优惠券直接减
@@ -322,6 +320,7 @@ export default {
 					return
 				}
 				const param = {
+					orderId: this.orderId ? Number(this.orderId) : undefined,
 					requestSource: this.orderId ? undefined : SOURCE.CART, // 仅购物车结算传
 					productList: this.productList.map((item) => ({
 						productId: item.productId,

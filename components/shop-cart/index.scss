@@ -112,6 +112,13 @@
   width: calc(100% - 108rpx);
   padding-left: 14rpx;
   position: relative;
+
+  .text {
+    display: inline-block;
+    font-size: 24rpx;
+    color: #FF5F36;
+    margin-left: 8rpx;
+  }
 }
 .join_cart_cont .pro_list .pro_detail_cont .detail_inf .title {
   font-size: 28rpx;
