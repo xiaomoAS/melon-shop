@@ -3,6 +3,7 @@
 		<view class="order_baner">
 			<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/d419c2daf131498484ff07beb7e1d06e/banner%20%281%29.png?Expires=2074071887&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=47k6WS%2FO6HxHFI3i%2B%2FsunBvm53k%3D" mode="widthFix"></image>
 		</view>
+
 		<navigator url="/pages/address-manage/index" class="order_adres_cont">
 			<view class="l_cont">
 				<view class="dt"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/448679a90eb74a30b8f4ce9a87ee4f2e/order_ico_1.png?Expires=2073953745&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=bG4RpdbkOM4DCD6QpKH4Hthxq6g%3D" mode="widthFix"></image> </view>
@@ -67,8 +68,19 @@
 		</view>
 		<view class="order_total_cont">
 			<view class="tle_total">
-				<view class="tle">商品总价</view>
-				<view class="dd">￥{{ priceInfo.totalPrice }}</view>
+				<view class="tle">商品价格明细</view>
+			</view>
+			<view class="dl">
+				<view class="dt">商品总价(含运费)</view>
+				<view class="dd">
+					<view v-if="newCouponSelect || freightCouponSelect" class="dd">
+						<view class="yj">￥{{ priceInfo.totalPrice || 0 }}</view>
+						<view class="xj">￥{{ realTotalPrice || 0 }}</view>
+					</view>
+					<view v-else class="dd">
+						<view class="xj">￥{{ priceInfo.totalPrice || 0 }}</view>
+					</view>
+				</view>
 			</view>
 			<view class="dl">
 				<view class="dt">商品种类</view>
@@ -79,12 +91,24 @@
 				<view class="dd">x{{ allCount }}</view>
 			</view>
 			<view class="dl">
+				<view class="dt">仅商品总价</view>
+				<view class="dd">
+					<view v-if="newCouponSelect" class="dd">
+						<view class="yj">￥{{ goodsPrice || 0 }}</view>
+						<view class="xj">￥{{ realGoodsPrice || 0 }}</view>
+					</view>
+					<view v-else class="dd">
+						<view class="xj">￥{{ goodsPrice || 0 }}</view>
+					</view>
+				</view>
+			</view>
+			<view class="dl">
 				<view class="dt">运费</view>
 				<view v-if="userAddress">
 					<!-- 运费有优惠的样式 -->
 					<view v-if="freightCouponSelect" class="dd">
 						<view class="yj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
-						<view class="xj">￥{{ priceInfo.shipPrice || 0 }}</view>
+						<view class="xj">￥{{ realFreightPrice || 0 }}</view>
 					</view>
 					<view v-else class="dd">
 						<view class="xj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
@@ -192,22 +216,38 @@ export default {
 		allCount() {
 			return this.productList.reduce((total, product) => total + product.buyCounts, 0)
 		},
+		// 仅商品价格
+		goodsPrice() {
+			const price = Number(this.priceInfo.totalPrice || 0) - Number(this.priceInfo.shipTotalPrice || 0)
+			return Math.round(price * 100) / 100
+		},
+		// 商品扣减新人优惠券的价格
+		realGoodsPrice() {
+			// 优惠券金额>现有金额 = 0.01
+			const price = this.priceInfo.newPersonPrice >= this.goodsPrice ? 0.01 : this.goodsPrice - this.priceInfo.newPersonPrice
+			return Math.round(price * 100) / 100
+		},
+		// 运费减去运费券金额
+		realFreightPrice() {
+			// 优惠券金额>现有金额 = 0.01
+			const price = this.priceInfo.waybillPriceLimit >= this.priceInfo.shipTotalPrice ? 0.01 : this.priceInfo.shipTotalPrice - this.priceInfo.waybillPriceLimit
+			return Math.round(price * 100) / 100
+		},
 		// 实际总价
 		realTotalPrice() {
 			if (!this.priceInfo.totalPrice) return 0
-			let total = this.priceInfo.totalPrice
+			let total = 0
+			// 运费价格
 			if (this.freightCouponSelect) {
-				// 运费券金额 大于 总运费，最多优惠总运费金额
-				if (this.priceInfo.shipPrice <= 0) {
-					total -= (this.priceInfo.shipTotalPrice || 0)
-				} else {
-					// 运费券金额 小于 总运费，优惠运费券金额	
-					total -= (this.priceInfo.waybillPriceLimit || 0)
-				}
+				total += (this.realFreightPrice || 0)
+			} else {
+				total += (this.priceInfo.shipTotalPrice || 0)
 			}
-			// 新人优惠券直接减
+			// 商品价格
 			if (this.newCouponSelect) {
-				total -= (this.priceInfo.newPersonPrice || 0)
+				total += (this.realGoodsPrice || 0)
+			} else {
+				total += (this.goodsPrice || 0)
 			}
 			// 选择会员充值卡，会员折扣
 			if (this.payMethod === PAY_METHOD.MEMBER_CARD && this.memberInfo.level !== MEMBER_LEVEL.NORMAL) {

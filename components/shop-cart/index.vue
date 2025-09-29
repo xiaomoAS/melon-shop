@@ -49,7 +49,6 @@
 					<view class="detail_inf">
 						<view class="title">{{ item.title }}</view>
 						<view class="bits">￥{{ item.price }}/{{ item.specName }}</view>
-						<view class="text">库存：{{ item.stock || 0 }}</view>
 						<view class="count_cont">
 							<image class="btn less" :class="{disabled: item.buyCounts <= 0}" @click="decrease(item, cartIndex)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
 							<text class="int">{{ item.buyCounts }}</text>
