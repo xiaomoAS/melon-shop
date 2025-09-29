@@ -66,7 +66,7 @@ export default {
 				}
 				await this.$http.post('/shopcart/add', { ...this.info, changeCount: 1 })
 				uni.showToast({ title: '添加成功', icon: 'none' })
-				uni.$emit('refreshShopCart')
+				this.$emit('refreshShopCart')
 			} catch (error) {
 				uni.showToast({ title: '添加失败', icon: 'none' })
 			}

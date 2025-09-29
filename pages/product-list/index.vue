@@ -20,7 +20,7 @@
 						<view class="txt">三餐四季 尽在知花</view>
 					</view>
 					<view class="pro_list_cont" v-for="(item, index) in productList" :key="index" :class="{ 'null': !item.stock }">
-						<ProductItem :info="item" />
+						<ProductItem :info="item" @refreshShopCart="refreshShopCart"/>
 					</view>
 				</view>
 				
@@ -37,7 +37,7 @@
 			</view>
 		</view>
 
-		<ShopCart />
+		<ShopCart ref="shopCartRef"/>
 	</view>
 </template>
 
@@ -75,8 +75,14 @@ export default{
 		await this.getCates()
 		this.activeCate = id || (this.cateList.length ? this.cateList[0].id : null)
 		this.getProductList()
+		this.refreshShopCart()
 	},
 	methods: {
+		refreshShopCart() {
+			if (this.$refs.shopCartRef) {
+				this.$refs.shopCartRef.refreshShopCart()
+			}
+		},
 		toSearchPage() {
 			uni.navigateTo({ url: `/pages/search-page/index?keywords=${this.searchWords}` })
 		},

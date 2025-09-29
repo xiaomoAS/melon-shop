@@ -66,7 +66,7 @@
 				<view class="txt">三餐四季 尽在知花</view>
 			</view>
 			<view class="pro_list_cont" v-for="item in productList" :key="item.productId">
-				<ProductItem :info="item" />
+				<ProductItem :info="item" @refreshShopCart="refreshShopCart"/>
 			</view>
 			<LoadMore 
 				v-if="productList.length && !noMoreData"
@@ -79,7 +79,7 @@
 				</view>
 			</LoadMore>
 		</view>
-		<ShopCart />
+		<ShopCart ref="shopCartRef" />
 	</view>
 </template>
 <script>
@@ -178,8 +178,10 @@
 			// 强制刷新购物车数据
 			refreshShopCart() {
 				// 使用全局事件触发购物车刷新
-				uni.$emit('refreshShopCart')
-				uni.$emit('closeShopCart')
+				if (this.$refs.shopCartRef) {
+					this.$refs.shopCartRef.refreshShopCart()
+					this.$refs.shopCartRef.closeShopCart()
+				}
 			}
 		},
 

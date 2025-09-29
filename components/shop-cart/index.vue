@@ -116,9 +116,6 @@ export default {
   },
   mounted() {
     this.getCartList()
-    // 监听全局刷新事件
-    uni.$on('refreshShopCart', this.refreshShopCart)
-    uni.$on('closeShopCart', this.closeShopCart)
   },
 	props: {
 		cartType: {
@@ -143,11 +140,6 @@ export default {
 			return this.cartList.filter(item => item.selected).length
 		},
 	},
-  beforeDestroy() {
-    // 移除事件监听
-    uni.$off('refreshShopCart', this.refreshShopCart)
-    uni.$off('closeShopCart', this.closeShopCart)
-  },
   methods: {
 		async refreshShopCart() {
 			await this.getCartList()
@@ -164,7 +156,7 @@ export default {
 				}
 				await this.$http.post('/shopcart/add', { ...this.info, changeCount: 1 })
 				uni.showToast({ title: '添加成功', icon: 'none' })
-				uni.$emit('refreshShopCart')
+				this.refreshShopCart()
 			} catch (error) {
 				console.log('error', Object.prototype.toString.call(error).split(' ')[1].split(']')[0], '===', error);
 				uni.showToast({ title: '添加失败', icon: 'none' })
