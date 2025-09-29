@@ -57,8 +57,15 @@ export default {
 		formatDate,
 		async addCart() {
 			try {
+				const cartList = await this.$http.post('/shopcart/list', {}) || []
+				const curProductStock = this.info.stock
+				const curProductInCart = cartList.find((item) => item.productId === this.info.productId)
+				if (curProductInCart && curProductInCart.buyCounts >= curProductStock) {
+					uni.showToast({ title: '该商品购物车数量已到达库存最大值', icon: 'none' })
+					return
+				}
 				await this.$http.post('/shopcart/add', { ...this.info, changeCount: 1 })
-				uni.showToast({ title: '添加成功' })
+				uni.showToast({ title: '添加成功', icon: 'none' })
 				uni.$emit('refreshShopCart')
 			} catch (error) {
 				uni.showToast({ title: '添加失败', icon: 'none' })

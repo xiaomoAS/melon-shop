@@ -70,13 +70,16 @@
 			</view>
 			<view class="deliv_exp">
 				<!-- TODO -->
-				<view class="dl">
+				<view v-if="order.waybillInfo && order.waybillInfo.expectDeliveryTime" class="dl delivery-time">
 					<view class="dt">送达时间：</view>
-					<view class="dd">xxxx</view>
+					<view class="dd">{{ formatDate(order.waybillInfo.expectDeliveryTime, 'MM-DD HH:mm:ss') }}</view>
 				</view>
-				<view class="dl">
+				<view v-if="order.waybillInfo" class="dl">
 					<view class="dt">物流信息：</view>
-					<view class="dd">xxxx</view>
+					<view class="dd">
+						物流公司：{{ order.waybillInfo.waybillCompanyName }}
+						<view>运单号：{{ order.waybillInfo.waybillInfo }}</view>
+					</view>
 				</view>
 				<view class="dl">
 					<view class="dt">收货地址：</view>
@@ -89,14 +92,15 @@
 			<view class="bit_seet_cont">
 				<view v-if="order.orderStatus === ORDER_STATUS.WAIT_PAY" class="btn" @click="cancelOrder(order)">取消订单</view>
 				<view v-if="order.orderStatus === ORDER_STATUS.WAIT_PAY" class="btn sub" @click="toSettlePage(order)">继续支付</view>
+				<view v-if="order.orderStatus === ORDER_STATUS.WAIT_RECEIVE" class="btn sub" @click="confirmReceive(order)">确认收货</view>
 			</view>
 		</view>
 
 		<LoadMore 
 			v-if="orderList.length && !noMoreData"
-			@visible="loadMoreData" 
 			:threshold="50"
 			:once="false"
+			@visible="loadMoreData" 
 		>
 			<view class="custom-load-more">
 				<span>上拉加载更多</span>
@@ -147,20 +151,40 @@ export default {
 	methods: {
 		async cancelOrder(order) {
 			try {
-				await this.$http.post('/order/cancel', { orderId: order.id })
-				uni.showToast({ title: '取消成功', icon: 'none' })
-				// 延迟刷新
-				const timer = setTimeout(() => {
-					this.page = 1
-					this.getOrderList()
-					clearTimeout(timer)
-				}, 1000);
+				uni.showModal({
+					title: '',
+					content: '确认取消该订单?',
+					success: async (res) => {
+						if (res.confirm) {
+							await this.$http.post('/order/cancel', { orderId: order.id })
+							uni.showToast({ title: '取消成功', icon: 'none' })
+							this.switchTab(ORDER_STATUS.CANCELED)
+						} else if (res.cancel) {}
+					}
+				})
 			} catch (error) {
 				console.log(error)
 			}
 		},
 		toSettlePage(order) {
 			uni.navigateTo({ url: `/pages/settlement/index?orderId=${order.id}` })
+		},
+		async confirmReceive(order) {
+			try {
+				uni.showModal({
+					title: '',
+					content: '确认收货吗?',
+					success: async (res) => {
+						if (res.confirm) {
+							await this.$http.post('/order/receive', { orderId: order.id })
+							uni.showToast({ title: '收货成功', icon: 'none' })
+							this.switchTab(ORDER_STATUS.COMPLETED)
+						} else if (res.cancel) {}
+					}
+				})
+			} catch (error) {
+				console.log(error)
+			}
 		},
 		switchTab(tabValue) {
 			this.currentTab = tabValue;

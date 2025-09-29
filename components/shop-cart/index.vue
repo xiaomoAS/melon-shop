@@ -156,10 +156,17 @@ export default {
 		async addCartHandler() {
 			try {
 				if (!this.info) return
+				const curProductStock = this.info.stock
+				const curProductInCart = this.cartList.find((item) => item.productId === this.info.productId)
+				if (curProductInCart && curProductInCart.buyCounts >= curProductStock) {
+					uni.showToast({ title: '该商品购物车数量已到达库存最大值', icon: 'none' })
+					return
+				}
 				await this.$http.post('/shopcart/add', { ...this.info, changeCount: 1 })
-				uni.showToast({ title: '添加成功' })
+				uni.showToast({ title: '添加成功', icon: 'none' })
 				uni.$emit('refreshShopCart')
 			} catch (error) {
+				console.log('error', Object.prototype.toString.call(error).split(' ')[1].split(']')[0], '===', error);
 				uni.showToast({ title: '添加失败', icon: 'none' })
 			}
 		},
@@ -214,9 +221,7 @@ export default {
 								if (item.selected) {
 									this.updatePrice()
 								}
-							} else if (res.cancel) {
-								//TODO
-							}
+							} else if (res.cancel) {}
 						}
 					})
 				} else {
@@ -232,7 +237,7 @@ export default {
 		},
 		async increase(item) {
 			if (item.buyCounts >= item.stock) {
-				uni.showToast({ title: '库存不足', icon: 'none' })
+				uni.showToast({ title: '该商品购物车数量已到达库存最大值', icon: 'none' })
 				return
 			}
 			item.buyCounts++
@@ -247,10 +252,19 @@ export default {
 		},
 		async clearCart() {
 			try {
-				await this.$http.post('/shopcart/delete', { clear: true })
-				uni.showToast({ title: '清除成功' })
-				await this.getCartList()
-				this.updatePrice()
+				uni.showModal({
+					title: '',
+					content: '确认清空购物车吗?',
+					success: async (res) => {
+						if (res.confirm) {
+							await this.$http.post('/shopcart/delete', { clear: true })
+							uni.showToast({ title: '清除成功' })
+							await this.getCartList()
+							this.updatePrice()
+						} else if (res.cancel) {}
+					}
+				})
+				
 			} catch (error) {
 				uni.showToast({ title: '清除失败', icon: 'none' })
 			}

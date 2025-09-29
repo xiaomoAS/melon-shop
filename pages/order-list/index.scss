@@ -193,6 +193,10 @@ page {
   margin-top: 8rpx;
 }
 
+.delivery-time {
+  font-weight: 500;
+}
+
 .order_infor_last .pro_last .list .detail_cont {
   display: flex;
   flex-direction: column;
@@ -265,6 +269,7 @@ page {
 .order_infor_last .deliv_exp {
   padding: 20rpx;
   border: 2rpx solid #D9F3D9;
+  border-radius: 8rpx;
 }
 .order_infor_last .deliv_exp .dl {
   display: flex;
