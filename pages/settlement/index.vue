@@ -80,7 +80,7 @@
 			</view>
 			<view class="dl">
 				<view class="dt">运费</view>
-				<view v-if="priceInfo.shipTotalPrice">
+				<view v-if="userAddress">
 					<!-- 运费有优惠的样式 -->
 					<view v-if="freightCouponSelect" class="dd">
 						<view class="yj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
