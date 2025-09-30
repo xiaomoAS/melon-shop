@@ -71,7 +71,7 @@
 				<view class="tle">商品价格明细</view>
 			</view>
 			<view class="dl">
-				<view class="dt">商品总价(含运费)</view>
+				<view class="dt strong">商品总价(含运费)</view>
 				<view class="dd">
 					<view v-if="newCouponSelect || freightCouponSelect" class="dd">
 						<view class="yj">￥{{ priceInfo.totalPrice || 0 }}</view>
