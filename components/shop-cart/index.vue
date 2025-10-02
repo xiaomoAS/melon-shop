@@ -2,14 +2,14 @@
   <view>
     <view v-if="cartType === CART_TYPE.NORMAL" @click="showCartDetail = !showCartDetail" class="buycar_floor">
 			<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
-			<view class="txt">{{ total }}</view>
+			<view class="txt">{{ totalCount }}</view>
 		</view>
 
-		<view v-else-if="cartType === CART_TYPE.BOTTOM && !showCartDetail" class="bit_buy_cont bottom" @click="showCartDetail = !showCartDetail">
+		<view v-if="(cartType === CART_TYPE.BOTTOM || (cartType === CART_TYPE.NORMAL && this.cartList.length)) && !showCartDetail" class="bit_buy_cont bottom" @click="showCartDetail = !showCartDetail">
 			<view class="l_cont">
 				<view class="buy_num">
 					<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
-					<text class="num">{{ total }}</text>
+					<text class="num">{{ totalCount }}</text>
 				</view>
 				<view class="xj">￥{{ priceInfo.realpayPrice || 0  }}</view>
 				<view class="yj" v-if="priceInfo.newPersonPrice || priceInfo.waybillPriceLimit">￥{{ priceInfo.totalPrice }}</view>
@@ -34,7 +34,7 @@
 							</view>
 							<text>全选</text>
 						</label>
-						<view class="det_all">（共{{ total }}件商品，已选{{ selectedCount }}件）</view>
+						<view class="det_all">（共{{ totalCount }}件商品，已选{{ selectedCount }}件）</view>
 					</view>
 				<view class="del_all" @click="clearCart"><image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/fe8f46b9761d4e7e8a57bec3f4e49200/ico_2.png?Expires=2073876106&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=ebfmzCkkDbDP7O2pjeFhK8pSobI%3D" mode="widthFix"></image>清空购物车</view>
 			</view>
@@ -84,7 +84,7 @@
 				<view class="l_cont">
 					<view class="buy_num">
 						<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
-						<text class="num">{{ total }}</text>
+						<text class="num">{{ totalCount }}</text>
 					</view>
 					<view class="xj">￥{{ priceInfo.realpayPrice || 0 }}</view>
 					<view class="yj" v-if="priceInfo.newPersonPrice || priceInfo.waybillPriceLimit">￥{{ priceInfo.totalPrice }}</view>
@@ -108,7 +108,6 @@ export default {
     return {
       showCartDetail: false,
 			cartList: [],
-			total: 0,
 			priceInfo: {},
 			CART_TYPE
     }
@@ -136,13 +135,15 @@ export default {
 			return this.cartList.length > 0 && this.cartList.every(item => item.selected)
 		},
 		selectedCount() {
-			return this.cartList.filter(item => item.selected).length
+			return this.cartList.filter(item => item.selected).reduce((num, item) => num + item.buyCounts, 0)
 		},
+		totalCount() {
+			return this.cartList.reduce((num, item) => num + item.buyCounts, 0)
+		}
 	},
   methods: {
 		async refreshShopCart() {
 			await this.getCartList()
-			this.updatePrice()
 		},
 		async addCartHandler() {
 			try {
@@ -169,17 +170,16 @@ export default {
       this.showCartDetail = false
     },
     async getCartList() {
-      try {
-        this.cartList = await this.$http.post('/shopcart/list', {}) || []
-				this.cartList = this.cartList.map(item => ({
-					...item,
-					selected: false // 默认不选中
-				}))
-				this.total = this.cartList ? this.cartList.length : 0
-			} catch (error) {
-				this.cartList = []
-				this.total = 0
-      }
+      	try {
+        	this.cartList = await this.$http.post('/shopcart/list', {}) || []
+			this.cartList = this.cartList.map(item => ({
+				...item,
+				selected: true // 默认选中
+			}))
+		} catch (error) {
+			this.cartList = []
+      	}
+		this.updatePrice()
     },
 		async updatePrice() {
 			try {
@@ -207,7 +207,6 @@ export default {
 								await this.$http.post('/shopcart/delete', { ...item, buyCounts: undefined, changeCount: 1 })
 								// 手动剔除
 								this.cartList.splice(cartIndex, 1)
-								this.total = this.cartList ? this.cartList.length : 0
 								uni.showToast({ title: '删除成功', icon: 'none' })
 								if (item.selected) {
 									this.updatePrice()
@@ -251,7 +250,6 @@ export default {
 							await this.$http.post('/shopcart/delete', { clear: true })
 							uni.showToast({ title: '清除成功' })
 							await this.getCartList()
-							this.updatePrice()
 						} else if (res.cancel) {}
 					}
 				})

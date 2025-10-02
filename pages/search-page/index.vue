@@ -1,9 +1,9 @@
 <template>
-	<view>
+	<view class="main-box">
 		<view class="ifica_search_head">
 			<view class="int_cont">
 				<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix" @click="searchHandlder"></image>
-				<input v-model="keywords" type="text" placeholder="搜索您的商品">
+				<input v-model="keywords" type="text" placeholder="搜索您的商品" @confirm="handleKeyup">
 				<view class="btn" @click="searchHandlder">搜索</view>
 			</view>
 		</view>
@@ -13,7 +13,7 @@
 					<image class="pro_head_bg" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/608def905ee846eab80b698d5d29c6e5/index_case2_bg.png?Expires=2073875992&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Zd2Oz8m0uYQy8idN34qA4pxtSJc%3D" mode="widthFix"></image>
 					<view class="title_head">
 						<image class="logo" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/b5a62a0a9f344046b6ecccd5d5f9184a/pro_logo.png?Expires=2073875894&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=UhwsRTz1JJlnDOlP0K4Tm0ABWGk%3D" mode="widthFix"></image>
-						<view class="dt">团购好货</view>
+						<view class="dt">猹精选</view>
 						<view v-if="productIdList" class="txt">该券可用商品</view>
 						<view v-else class="txt">搜索商品结果</view>
 					</view>
@@ -78,6 +78,9 @@ export default{
 		this.refreshShopCart()
 	},
 	methods: {
+		handleKeyup(event) {
+			this.searchHandlder()
+		},
 		refreshShopCart() {
 			if (this.$refs.shopCartRef) {
 				this.$refs.shopCartRef.refreshShopCart()

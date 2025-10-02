@@ -1,7 +1,22 @@
+.index_head_bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: -1;
+}
+.head_logo {
+  margin-bottom: 20rpx;
+  z-index: 2;
+  
+  image {
+    width: 120rpx;
+    height: 120rpx;
+  }
+}
 .ifica_search_head {
-  height: 130rpx;
+  margin-top: 30rpx;
   padding: 20rpx 20rpx 40rpx;
-  background: linear-gradient(to left, #61C65E, #4B9F49);
 }
 .ifica_search_head .int_cont {
   position: relative;
@@ -20,7 +35,7 @@
 }
 .ifica_search_head .int_cont input {
   width: 100%;
-  height: 70rpx;
+  height: 80rpx;
   border-radius: 100rpx;
   padding-left: 70rpx;
   background: #fff;
@@ -36,7 +51,7 @@
   left: 20rpx;
   top: 50%;
   transform: translateY(-50%);
-  width: 24rpx;
+  width: 30rpx;
 }
 .ifiac_filter_cont {
   border-top-right-radius: 20rpx;
@@ -101,9 +116,8 @@
 .ifiac_filter_cont .main_cont {
   height: calc(100vh - 110rpx);
   overflow-y: scroll;
-  /* #ifdef H5 */
-  padding-bottom: 120rpx;
-  /* #endif */
+  padding-bottom: 60px;
+  background: #FFFFFF;
 }
 .test_report_dc {
   position: fixed;

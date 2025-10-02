@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="main-box">
 		<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/916cae2f99af4241acf65617a6a07bd9/index_head_bg.png?Expires=2073875593&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=6l%2B1kM%2BmbcTT4vmhVbD6zlktjVo%3D" class="index_head_bg" mode="widthFix"></image>
 		<view class="contain">
 			<view class="index_header_cont">
@@ -8,7 +8,7 @@
 				</view>
 				<view class="index_search">
 					<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix" @click="toSearchPage"></image>
-					<input v-model="searchWords" type="text" placeholder="搜索您喜欢的商品">
+					<input v-model="searchWords" type="text" placeholder="搜索您喜欢的商品" @confirm="handleKeyup">
 					<view class="btn" @click="toSearchPage">搜索</view>
 				</view>
 				<!-- 轮播图 -->
@@ -62,8 +62,8 @@
 			<image class="pro_head_bg" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/608def905ee846eab80b698d5d29c6e5/index_case2_bg.png?Expires=2073875992&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Zd2Oz8m0uYQy8idN34qA4pxtSJc%3D" mode="widthFix"></image>
 			<view class="title_head">
 				<image class="logo" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/b5a62a0a9f344046b6ecccd5d5f9184a/pro_logo.png?Expires=2073875894&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=UhwsRTz1JJlnDOlP0K4Tm0ABWGk%3D" mode="widthFix"></image>
-				<view class="dt">团购好货</view>
-				<view class="txt">三餐四季 尽在知花</view>
+				<view class="dt">猹精选</view>
+				<view class="txt">好吃，健康，可信赖</view>
 			</view>
 			<view class="pro_list_cont" v-for="item in productList" :key="item.productId">
 				<ProductItem :info="item" @refreshShopCart="refreshShopCart"/>
@@ -123,6 +123,9 @@
 			this.refreshShopCart()
 		},
 		methods: {
+			handleKeyup(event) {
+				this.toSearchPage()
+			},
 			toCatePage(id = null) {
 				wx.setStorageSync('cateId', id)
 				uni.switchTab({ url: '/pages/product-list/index' })
@@ -151,7 +154,6 @@
 			},
 			async getCarouselImages() {
 				try {
-				console.log(11111)
 					this.carouselImages = await this.$http.post('/index/carousel', {})
 				} catch (error) {
 					this.carouselImages = []

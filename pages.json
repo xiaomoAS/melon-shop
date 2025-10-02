@@ -1,15 +1,16 @@
 {
 	"pages": [
 		{
-		"path": "pages/index/index",
-      "style": {
-        "navigationStyle":"custom"
-      }
+			"path": "pages/index/index",
+			"style": {
+				"navigationStyle":"custom"
+			}
 		},
 		{
 			"path": "pages/product-list/index",
 			"style": {
-				"navigationBarTitleText": "分类"
+				"navigationBarTitleText": "分类",
+				"navigationStyle":"custom"
 			}
 		},
 		{
@@ -57,7 +58,9 @@
 		{
 			"path": "pages/search-page/index",
 			"style": {
-				"navigationBarTitleText": "搜索结果"
+				"navigationBarTitleText": "搜索结果",
+				"navigationBarBackgroundColor": "#60C45D",
+				"navigationBarTextStyle": "white"
 			}
 		},
 		{

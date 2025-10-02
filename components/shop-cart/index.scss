@@ -11,8 +11,8 @@
 }
 .buycar_floor .i {
   display: block;
-  width: 80rpx;
-  height: 80rpx;
+  width: 100rpx;
+  height: 100rpx;
   border-radius: 100%;
   box-shadow: 0px 5rpx 18rpx #60C45D8A;
 }
@@ -253,7 +253,7 @@
 .bit_buy_cont .l_cont .buy_num {
   position: absolute;
   left: -40rpx;
-  bottom: 0;
+  bottom: -10rpx;
   display: flex;
   align-items: center;
   justify-content: center;

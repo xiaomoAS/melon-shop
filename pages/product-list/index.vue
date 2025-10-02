@@ -1,9 +1,13 @@
 <template>
 	<view>
+		<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/916cae2f99af4241acf65617a6a07bd9/index_head_bg.png?Expires=2073875593&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=6l%2B1kM%2BmbcTT4vmhVbD6zlktjVo%3D" class="index_head_bg" mode="widthFix"></image>
 		<view class="ifica_search_head">
+			<view class="head_logo">
+				<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4cba2ff43c034c16aab096a3d322ee2e/orange-logo%20%281%29.png?Expires=2073975970&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=svCx34i6wBqlgJ1PYCcMbpAby3c%3D" mode="aspectFit"></image>
+			</view>
 			<view class="int_cont">
 				<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix" @click="toSearchPage"></image>
-				<input v-model="searchWords" type="text" placeholder="搜索您的商品">
+				<input v-model="searchWords" type="text" placeholder="搜索您的商品" @confirm="handleKeyup">
 				<view class="btn" @click="toSearchPage">搜索</view>
 			</view>
 		</view>
@@ -16,8 +20,8 @@
 					<image class="pro_head_bg" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/608def905ee846eab80b698d5d29c6e5/index_case2_bg.png?Expires=2073875992&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Zd2Oz8m0uYQy8idN34qA4pxtSJc%3D" mode="widthFix"></image>
 					<view class="title_head">
 						<image class="logo" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/b5a62a0a9f344046b6ecccd5d5f9184a/pro_logo.png?Expires=2073875894&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=UhwsRTz1JJlnDOlP0K4Tm0ABWGk%3D" mode="widthFix"></image>
-						<view class="dt">团购好货</view>
-						<view class="txt">三餐四季 尽在知花</view>
+						<view class="dt">猹精选</view>
+						<view class="txt">好吃，健康，可信赖</view>
 					</view>
 					<view class="pro_list_cont" v-for="(item, index) in productList" :key="index" :class="{ 'null': !item.stock }">
 						<ProductItem :info="item" @refreshShopCart="refreshShopCart"/>
@@ -78,6 +82,9 @@ export default{
 		this.refreshShopCart()
 	},
 	methods: {
+		handleKeyup(event) {
+			this.toSearchPage()
+		},
 		refreshShopCart() {
 			if (this.$refs.shopCartRef) {
 				this.$refs.shopCartRef.refreshShopCart()

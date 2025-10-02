@@ -125,7 +125,7 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.3);
   z-index: 2;
 }
 
@@ -135,11 +135,11 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.2);
   z-index: 3;
 
   .no-stock__img-back--img {
-    width: 146px;
+    width: 146rpx;
     position: absolute;
     top: 50%;
     left: 50%;

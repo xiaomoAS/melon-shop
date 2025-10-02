@@ -138,7 +138,12 @@
         //         }
         //     }
         // }
-        "title" : "瓜田里的猹"
+        "title" : "瓜田里的猹",
+        "optimization" : {
+            "treeShaking" : {
+                "enable" : false
+            }
+        }
     }
 }
 //pathRewrite: {'^/api': '/'} 重写之后url为 http://127.0.0.1:8100（域名）/xxxx
