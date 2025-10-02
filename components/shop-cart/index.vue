@@ -238,6 +238,7 @@ onTouchStart(e) {
 				await this.$http.post('/shopcart/add', { ...this.info, changeCount: 1 })
 				uni.showToast({ title: '添加成功', icon: 'none' })
 				this.refreshShopCart()
+				this.showCartDetail = true
 			} catch (error) {
 				console.log('error', Object.prototype.toString.call(error).split(' ')[1].split(']')[0], '===', error);
 				uni.showToast({ title: '添加失败', icon: 'none' })
@@ -250,6 +251,9 @@ onTouchStart(e) {
     closeShopCart() {
       this.showCartDetail = false
     },
+	openShopCart() {
+		this.showCartDetail = true
+	},
     async getCartList() {
       	try {
         	this.cartList = await this.$http.post('/shopcart/list', {}) || []

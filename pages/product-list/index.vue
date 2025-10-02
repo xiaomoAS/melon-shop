@@ -7,7 +7,7 @@
 			</view>
 			<view class="int_cont">
 				<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix" @click="toSearchPage"></image>
-				<input v-model="searchWords" type="text" placeholder="搜索您的商品" @confirm="handleKeyup">
+				<input v-model="searchWords" type="text" placeholder="搜索您的商品" @confirm="toSearchPage">
 				<view class="btn" @click="toSearchPage">搜索</view>
 			</view>
 		</view>
@@ -24,7 +24,7 @@
 						<view class="txt">好吃，健康，可信赖</view>
 					</view>
 					<view class="pro_list_cont" v-for="(item, index) in productList" :key="index" :class="{ 'null': !item.stock }">
-						<ProductItem :info="item" @refreshShopCart="refreshShopCart"/>
+						<ProductItem :info="item" @refreshShopCart="refreshShopCart" @openShopCart="openShopCart"/>
 					</view>
 				</view>
 				
@@ -82,13 +82,13 @@ export default{
 		this.refreshShopCart()
 	},
 	methods: {
-		handleKeyup(event) {
-			this.toSearchPage()
-		},
 		refreshShopCart() {
 			if (this.$refs.shopCartRef) {
 				this.$refs.shopCartRef.refreshShopCart()
 			}
+		},
+		openShopCart() {
+			this.$refs.shopCartRef.openShopCart()
 		},
 		toSearchPage() {
 			uni.navigateTo({ url: `/pages/search-page/index?keywords=${this.searchWords}` })

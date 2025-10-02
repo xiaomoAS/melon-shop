@@ -8,7 +8,7 @@
 				</view>
 				<view class="index_search">
 					<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix" @click="toSearchPage"></image>
-					<input v-model="searchWords" type="text" placeholder="搜索您喜欢的商品" @confirm="handleKeyup">
+					<input v-model="searchWords" type="text" placeholder="搜索您喜欢的商品" @confirm="toSearchPage">
 					<view class="btn" @click="toSearchPage">搜索</view>
 				</view>
 				<!-- 轮播图 -->
@@ -66,7 +66,7 @@
 				<view class="txt">好吃，健康，可信赖</view>
 			</view>
 			<view class="pro_list_cont" v-for="item in productList" :key="item.productId">
-				<ProductItem :info="item" @refreshShopCart="refreshShopCart"/>
+				<ProductItem :info="item" @refreshShopCart="refreshShopCart" @openShopCart="openShopCart"/>
 			</view>
 			<LoadMore 
 				v-if="productList.length && !noMoreData"
@@ -123,9 +123,6 @@
 			this.refreshShopCart()
 		},
 		methods: {
-			handleKeyup(event) {
-				this.toSearchPage()
-			},
 			toCatePage(id = null) {
 				wx.setStorageSync('cateId', id)
 				uni.switchTab({ url: '/pages/product-list/index' })
@@ -184,6 +181,9 @@
 					this.$refs.shopCartRef.refreshShopCart()
 					this.$refs.shopCartRef.closeShopCart()
 				}
+			},
+			openShopCart() {
+				this.$refs.shopCartRef.openShopCart()
 			}
 		},
 

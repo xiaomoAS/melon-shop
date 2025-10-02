@@ -119,8 +119,8 @@
 		</view>
 		<view class="order_pay_cont">
 			<view class="title">支付方式</view>
-			<radio-group @change="payMethodChange">
-				<view class="pay_list">
+			<radio-group>
+				<view class="pay_list" @click="payMethodChange(PAY_METHOD.WE_CHAT)">
 					<view class="l_cont">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/7bf717a5de2f4d6d96385b79d7208d9c/order_ico_4.png?Expires=2073953856&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=hqNrVt4wn%2FQH1AUGdu2DZVnuxtI%3D" mode="widthFix"></image> </view>
 						<view class="cont">
@@ -131,7 +131,7 @@
 						<radio :value="PAY_METHOD.WE_CHAT" :checked="payMethod === PAY_METHOD.WE_CHAT" class="pay-radio" />
 					</view>
 				</view>
-				<view class="pay_list">
+				<view class="pay_list" @click="payMethodChange(PAY_METHOD.MEMBER_CARD)">
 					<view class="l_cont">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f96029eafb244211b53a05a59f376bef/order_ico_5.png?Expires=2073953887&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=LjRrr5ecgpw0kNHxoDxr98iR%2FV4%3D" mode="widthFix"></image> </view>
 						<view class="cont">
@@ -142,7 +142,7 @@
 						</view>
 					</view>
 					<view class="r_cont">
-						<view class="charge_btn" @click="chargeHandler">充值</view>
+						<view class="charge_btn" @click.stop="chargeHandler">充值</view>
 						<radio :value="PAY_METHOD.MEMBER_CARD" class="pay-radio" :checked="payMethod === PAY_METHOD.MEMBER_CARD"/>
 					</view>
 				</view>
@@ -301,8 +301,8 @@ export default {
 			this.getPriceInfo(this.productIdList.length ? this.productIdList : this.productList.map((item) => item.productId))
 			this.getMemberInfo()
 		},
-		payMethodChange(e) {
-			this.payMethod = Number(e.detail.value)
+		payMethodChange(val) {
+			this.payMethod = Number(val)
 		},
 		async getMemberInfo() {
 			try {

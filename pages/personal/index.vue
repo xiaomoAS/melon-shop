@@ -85,6 +85,8 @@
 			</view>
 		</view>
 
+		<view class="bottom-button">我要当团长!</view>
+
 		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
 </template>

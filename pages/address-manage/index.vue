@@ -1,5 +1,8 @@
 <template>
 	<view class="contain">
+
+		<view v-if="!addressList.length" class="no-address">~暂无收货地址</view>
+
 		<view v-for="item in addressList" :key="item.id" class="adres_list">
 			<view class="tis_detail">
 				<view class="tle">

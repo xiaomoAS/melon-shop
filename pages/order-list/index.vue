@@ -15,9 +15,15 @@
 		</scroll-view>
 		<view class="order_search_cont">
 			<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix" @click="searchHandler"></image>
-			<input v-model="orderId" type="text" placeholder="搜索您的订单号">
+			<input v-model="orderId" type="text" placeholder="搜索您的订单号" @confirm="searchHandler">
 			<view class="btn" @click="searchHandler">搜索</view>
 		</view>
+
+		<view v-if="!orderList.length" class="no-order-box">
+			<view>~您当前未享受好吃、健康、可信赖的猹选好果</view>
+			<text class="text-button" @click="toMainPage">去下单</text>
+		</view>
+
 		<view class="order_infor_last" v-for="order in orderList" :key="order.id">
 			<view class="order_title">
 				<view class="num">订单号：{{ order.id }}</view>
@@ -149,6 +155,9 @@ export default {
 		this.getOrderList()
 	},
 	methods: {
+		toMainPage() {
+			uni.switchTab({ url: '/pages/index/index' })
+		},
 		async cancelOrder(order) {
 			try {
 				uni.showModal({

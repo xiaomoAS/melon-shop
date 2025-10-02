@@ -7,6 +7,10 @@
 					<image class="no-stock__img-back--img" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/e31f1be8adee4b8ba9e573c3ce3d8f1d/%E7%BB%84%2015166%20%281%29.png?Expires=2074390376&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=IFkA5FRXbVp8sO7DTg9R2hvS7sM%3D" mode="widthFix"></image>
 				</view>
 				<image class="i" :src="info.imgUrl" mode="widthFix"></image> 
+				<view class="pro__tip-box">
+					<view v-if="info.stock">预售期：{{ formatDate(Number(info.presaleStartTime), 'MM月DD日') }}</view>
+					<view class="pro__tip-box--stock">已售{{ info.saleCount }}{{ info.specName }}/剩余{{ info.stock }}{{ info.specName }}</view>
+				</view>
 			</view>
 			<view class="bit_cont">
 				<view class="name">{{ info.title }}</view>
@@ -14,10 +18,6 @@
 				<view class="bit_deta">
 					<view class="tips_dl">
 						<view v-for="(tag, index) in info.tagList" :key="index" class="dd bg_3">{{ tag }}</view>
-					</view>
-					<view v-if="info.stock" class="ys_time">
-						<view class="dt">预售期</view>
-						<view class="dd">{{ formatDate(Number(info.presaleStartTime), 'MM月DD日') }}</view>
 					</view>
 				</view>
 			</view>
@@ -67,6 +67,7 @@ export default {
 				await this.$http.post('/shopcart/add', { ...this.info, changeCount: 1 })
 				uni.showToast({ title: '添加成功', icon: 'none' })
 				this.$emit('refreshShopCart')
+				this.$emit('openShopCart')
 			} catch (error) {
 				uni.showToast({ title: '添加失败', icon: 'none' })
 			}

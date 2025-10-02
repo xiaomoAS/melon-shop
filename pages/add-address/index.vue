@@ -3,11 +3,11 @@
 		<view class="adres_detail_cont">
 			<view class="dl">
 				<view class="dt"><text>*</text>收货人</view>
-				<view class="dd"><input v-model="receiver" type="text" placeholder="请填写收货人"> </view>
+				<view class="dd"><input v-model="receiver" ref="receiverRef" type="text" placeholder="请填写收货人"> </view>
 			</view>
 			<view class="dl">
 				<view class="dt"><text>*</text>电话</view>
-				<view class="dd"><input v-model="mobile" type="text" placeholder="请填写联系电话"> </view>
+				<view class="dd"><input v-model="mobile" ref="mobileRef" type="text" placeholder="请填写联系电话"> </view>
 			</view>
 			<view class="dl">
 				<picker mode="multiSelector" range-key="name" :range="addressList" @columnchange="columnchangeHandler" @change="pickerChangeHandler">

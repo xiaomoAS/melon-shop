@@ -3,7 +3,7 @@
 		<view class="ifica_search_head">
 			<view class="int_cont">
 				<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4504ca659b80453ca747baaabba8d106/ico_1.png?Expires=2073875740&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yYeoocs0saGNdYETNQ9FgrHVaB0%3D" mode="widthFix" @click="searchHandlder"></image>
-				<input v-model="keywords" type="text" placeholder="搜索您的商品" @confirm="handleKeyup">
+				<input v-model="keywords" type="text" placeholder="搜索您的商品" @confirm="searchHandlder">
 				<view class="btn" @click="searchHandlder">搜索</view>
 			</view>
 		</view>
@@ -21,7 +21,7 @@
 					<view v-if="!productList.length" class="no-content">暂无相关商品～</view>
 
 					<view class="pro_list_cont" v-for="item in productList" :key="item.productId" :class="{ 'null': !item.stock }">
-						<ProductItem :info="item" @refreshShopCart="refreshShopCart"/>
+						<ProductItem :info="item" @refreshShopCart="refreshShopCart" @openShopCart="openShopCart"/>
 					</view>
 					<LoadMore 
 						v-if="productList.length && !noMoreData"
@@ -78,13 +78,13 @@ export default{
 		this.refreshShopCart()
 	},
 	methods: {
-		handleKeyup(event) {
-			this.searchHandlder()
-		},
 		refreshShopCart() {
 			if (this.$refs.shopCartRef) {
 				this.$refs.shopCartRef.refreshShopCart()
 			}
+		},
+		openShopCart() {
+			this.$refs.shopCartRef.openShopCart()
 		},
 		searchHandlder() {
 			this.productList = []
