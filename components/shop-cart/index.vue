@@ -29,7 +29,7 @@
 					<view>加购</view>
 				</view>
 			</view>
-			<view class="buy_btn" :class="{ disabled: selectedCount === 0 }" @click="settleHandler">立即购买</view>
+			<view class="buy_btn" :class="{ disabled: selectedCount === 0 }" @click.stop="settleHandler">立即购买</view>
 		</view>
 		
 		<!-- 遮罩层 -->
@@ -48,21 +48,23 @@
 					</view>
 				<view class="del_all" @click="clearCart"><image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/fe8f46b9761d4e7e8a57bec3f4e49200/ico_2.png?Expires=2073876106&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=ebfmzCkkDbDP7O2pjeFhK8pSobI%3D" mode="widthFix"></image>清空购物车</view>
 			</view>
-			<view v-for="(item, cartIndex) in cartList" :key="item.productId" class="pro_list">
-				<label class="sele_rad">
-					<view class="ring" :class="{ active: item.selected }">
-					  <checkbox :checked="item.selected" @click="toggleSelectItem(item)"></checkbox>
-					</view>
-				</label>
-				<view class="pro_detail_cont">
-					<view class="pro_i"><image :src="item.imgUrl" mode=""></image> </view>
-					<view class="detail_inf">
-						<view class="title">{{ item.title }}</view>
-						<view class="bits">￥{{ item.price }}/{{ item.specName }}</view>
-						<view class="count_cont">
-							<image class="btn less" :class="{disabled: item.buyCounts <= 0}" @click="decrease(item, cartIndex)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
-							<text class="int">{{ item.buyCounts }}</text>
-							<image class="btn plus" @click="increase(item)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
+			<view class="cart-item-box">
+				<view v-for="(item, cartIndex) in cartList" :key="item.productId" class="pro_list">
+					<label class="sele_rad">
+						<view class="ring" :class="{ active: item.selected }">
+						<checkbox :checked="item.selected" @click="toggleSelectItem(item)"></checkbox>
+						</view>
+					</label>
+					<view class="pro_detail_cont">
+						<view class="pro_i"><image :src="item.imgUrl" mode=""></image> </view>
+						<view class="detail_inf">
+							<view class="title">{{ item.title }}</view>
+							<view class="bits">￥{{ item.price }}/{{ item.specName }}</view>
+							<view class="count_cont">
+								<image class="btn less" :class="{disabled: item.buyCounts <= 0}" @click="decrease(item, cartIndex)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
+								<text class="int">{{ item.buyCounts }}</text>
+								<image class="btn plus" @click="increase(item)" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
+							</view>
 						</view>
 					</view>
 				</view>
@@ -104,7 +106,7 @@
 						<view>加购</view>
 					</view>
 				</view>
-				<view class="buy_btn" :class="{ disabled: selectedCount === 0 }" @click="settleHandler">立即购买</view>
+				<view class="buy_btn" :class="{ disabled: selectedCount === 0 }" @click.stop="settleHandler">立即购买</view>
 			</view>
 		</view>
   </view>
@@ -162,68 +164,76 @@ export default {
 			return this.cartList.reduce((num, item) => num + item.buyCounts, 0)
 		}
 	},
-  methods: {
-// 拖拽相关方法
-handleOuterTouchMove(e) {
-  // 拖拽时阻止页面滚动
-  if (this.isDragging) {
-    e.preventDefault && e.preventDefault();
-    e.stopPropagation && e.stopPropagation();
-    return false;
-  }
-},
-onTouchStart(e) {
- const touch = e.touches[0];
- this.isDragging = true;
- this.startX = touch.clientX;
- this.startY = touch.clientY;
- this.lastX = this.cartIconX;
- this.lastY = this.cartIconY;
- this.dragMoved = false;
- // 拖拽时禁止页面滚动
- // H5
- if (typeof document !== 'undefined' && document.body) {
-   document.body.style.overflow = 'hidden';
-   document.body.style.touchAction = 'none';
- }
- // 小程序环境可根据平台自行扩展
-},
- onTouchMove(e) {
-  if (!this.isDragging) return;
-  e.preventDefault && e.preventDefault();
-  e.stopPropagation && e.stopPropagation();
-  const touch = e.touches[0];
-  const offsetX = touch.clientX - this.startX;
-  const offsetY = touch.clientY - this.startY;
-  if (Math.abs(offsetX) > this.dragThreshold || Math.abs(offsetY) > this.dragThreshold) {
-  	this.dragMoved = true;
-  }
-  let newX = this.lastX + offsetX;
-  let newY = this.lastY + offsetY;
-  // 边界动态计算，兼容rpx
-  const iconPx = this.iconPx;
-  const winW = uni.getSystemInfoSync().windowWidth;
-  const winH = uni.getSystemInfoSync().windowHeight;
-  newX = Math.max(0, Math.min(newX, winW - iconPx));
-  newY = Math.max(0, Math.min(newY, winH - iconPx));
-  this.cartIconX = newX;
-  this.cartIconY = newY;
- },
- onTouchEnd(e) {
-  this.isDragging = false;
-  // 拖拽结束恢复页面滚动
-  if (typeof document !== 'undefined' && document.body) {
-    document.body.style.overflow = '';
-    document.body.style.touchAction = '';
-  }
- },
- handleCartClick(e) {
-  // 拖拽距离小于阈值才认为是点击
-  if (!this.dragMoved) {
-  	this.showCartDetail = !this.showCartDetail;
-  }
- },
- async refreshShopCart() {
+	watch: {
+		cartList: {
+			handler(newVal) {
+				this.$emit('updateCartList', newVal || [])
+			},
+			immediate: true
+		},
+	},
+  	methods: {
+	// 拖拽相关方法
+	handleOuterTouchMove(e) {
+	// 拖拽时阻止页面滚动
+	if (this.isDragging) {
+		e.preventDefault && e.preventDefault();
+		e.stopPropagation && e.stopPropagation();
+		return false;
+	}
+	},
+	onTouchStart(e) {
+	const touch = e.touches[0];
+	this.isDragging = true;
+	this.startX = touch.clientX;
+	this.startY = touch.clientY;
+	this.lastX = this.cartIconX;
+	this.lastY = this.cartIconY;
+	this.dragMoved = false;
+	// 拖拽时禁止页面滚动
+	// H5
+	if (typeof document !== 'undefined' && document.body) {
+	document.body.style.overflow = 'hidden';
+	document.body.style.touchAction = 'none';
+	}
+	// 小程序环境可根据平台自行扩展
+	},
+	onTouchMove(e) {
+	if (!this.isDragging) return;
+	e.preventDefault && e.preventDefault();
+	e.stopPropagation && e.stopPropagation();
+	const touch = e.touches[0];
+	const offsetX = touch.clientX - this.startX;
+	const offsetY = touch.clientY - this.startY;
+	if (Math.abs(offsetX) > this.dragThreshold || Math.abs(offsetY) > this.dragThreshold) {
+		this.dragMoved = true;
+	}
+	let newX = this.lastX + offsetX;
+	let newY = this.lastY + offsetY;
+	// 边界动态计算，兼容rpx
+	const iconPx = this.iconPx;
+	const winW = uni.getSystemInfoSync().windowWidth;
+	const winH = uni.getSystemInfoSync().windowHeight;
+	newX = Math.max(0, Math.min(newX, winW - iconPx));
+	newY = Math.max(0, Math.min(newY, winH - iconPx));
+	this.cartIconX = newX;
+	this.cartIconY = newY;
+	},
+	onTouchEnd(e) {
+	this.isDragging = false;
+	// 拖拽结束恢复页面滚动
+	if (typeof document !== 'undefined' && document.body) {
+		document.body.style.overflow = '';
+		document.body.style.touchAction = '';
+	}
+	},
+	handleCartClick(e) {
+	// 拖拽距离小于阈值才认为是点击
+	if (!this.dragMoved) {
+		this.showCartDetail = !this.showCartDetail;
+	}
+	},
+	async refreshShopCart() {
 			await this.getCartList()
 		},
 		async addCartHandler() {

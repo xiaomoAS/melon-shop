@@ -31,7 +31,12 @@
 				<ReportViewer :product-id="info.productId">
 					<view class="btn btn_ys_1">检测报告</view>
 				</ReportViewer>
-				<view class="btn btn_ys_2" @click="addCart(info)">加入购物车</view>
+				<view v-if="curBuyCounts <= 0" class="btn btn_ys_2" @click="addCart">加入购物车</view>
+				<view v-else class="count-btn-box">
+					<image class="count-btn less" :class="{disabled: curBuyCounts <= 0}" @click="deleteCart" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/debd0e25572e47af91bba4464c516404/acout_less.png?Expires=2073876207&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=M6WnCyRZy%2BzvT4P48LUAkRFZt%2FU%3D"  mode="widthFix"></image>
+					<view class="count-btn__text">{{ curBuyCounts }}</view>
+					<image class="count-btn plus" @click="addCart" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/007b7c6a2307494ab99542b2106ab33a/acout_plus.png?Expires=2073876383&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=JTh8cJynH3CggbgPqexKOe5qsO0%3D" mode="widthFix"></image>
+				</view>
 			</view>
 		</view>
 	</view>
@@ -51,9 +56,45 @@ export default {
 			type: Object,
 			required: true,
 			default: () => ({})
+		},
+		cartList: {
+			type: Array,
+			required: false,
+			default: () => ([])
+		}
+	},
+	computed: {
+		curBuyCounts() {
+			// 当前商品购物车数量
+			const curProductInCart = this.cartList.find((item) => item.productId === this.info.productId)
+			return curProductInCart ? curProductInCart.buyCounts || 0 : 0
 		}
 	},
 	methods: {
+		async deleteCart() {
+			try {
+				if (this.curBuyCounts <= 0) return
+				// 只剩一个了，购物车清除该商品
+				if (this.curBuyCounts === 1) {
+					uni.showModal({
+						title: '',
+						content: '确认要剔除该商品?',
+						success: async (res) => {
+							if (res.confirm) {
+								await this.$http.post('/shopcart/delete', { ...this.info, buyCounts: undefined, changeCount: 1 })
+								uni.showToast({ title: '剔除成功', icon: 'none' })
+								this.$emit('refreshShopCart')
+							} else if (res.cancel) {}
+						}
+					})
+				} else {
+					await this.$http.post('/shopcart/delete', { ...this.info, buyCounts: undefined, changeCount: 1 })
+					this.$emit('refreshShopCart')
+				}
+			} catch (error) {
+				console.log('error', error);
+			}
+		},
 		formatDate,
 		async addCart() {
 			try {
@@ -67,10 +108,7 @@ export default {
 				await this.$http.post('/shopcart/add', { ...this.info, changeCount: 1 })
 				uni.showToast({ title: '添加成功', icon: 'none' })
 				this.$emit('refreshShopCart')
-				this.$emit('openShopCart')
-			} catch (error) {
-				uni.showToast({ title: '添加失败', icon: 'none' })
-			}
+			} catch (error) {}
 		}
 	}
 }

@@ -3,6 +3,26 @@
     pointer-events: none;
   }
 }
+.count-btn-box {
+  display: flex;
+  align-items: center;
+  margin-left: 16rpx;
+}
+.count-btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 42rpx;
+  height: 42rpx;
+
+  &__text {
+    margin: 0 8rpx;
+  }
+}
+.count-btn.disabled{
+	opacity: 0.5;
+  pointer-events: none; 
+}
 
 .pro_list_cont {
   position: relative;
@@ -19,7 +39,7 @@
   position: relative;
 
   .pro__tip-box {
-    font-size: 24rpx;
+    font-size: 28rpx;
     width: 100%;
     display: flex;
     align-items: center;

@@ -66,7 +66,7 @@
 				<view class="txt">好吃，健康，可信赖</view>
 			</view>
 			<view class="pro_list_cont" v-for="item in productList" :key="item.productId">
-				<ProductItem :info="item" @refreshShopCart="refreshShopCart" @openShopCart="openShopCart"/>
+				<ProductItem :info="item" :cart-list="cartList" @refreshShopCart="refreshShopCart"/>
 			</view>
 			<LoadMore 
 				v-if="productList.length && !noMoreData"
@@ -79,7 +79,7 @@
 				</view>
 			</LoadMore>
 		</view>
-		<ShopCart ref="shopCartRef" />
+		<ShopCart ref="shopCartRef" @updateCartList="(val) => cartList = val"/>
 	</view>
 </template>
 <script>
@@ -99,7 +99,8 @@
 				page: 1,
 				pageSize: 5,
 				totalCount: 0,
-				searchWords: ''
+				searchWords: '',
+				cartList: []
 			}
 		},
 		components: {
@@ -182,9 +183,6 @@
 					this.$refs.shopCartRef.closeShopCart()
 				}
 			},
-			openShopCart() {
-				this.$refs.shopCartRef.openShopCart()
-			}
 		},
 
 	}

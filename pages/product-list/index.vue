@@ -24,8 +24,9 @@
 						<view class="txt">好吃，健康，可信赖</view>
 					</view>
 					<view class="pro_list_cont" v-for="(item, index) in productList" :key="index" :class="{ 'null': !item.stock }">
-						<ProductItem :info="item" @refreshShopCart="refreshShopCart" @openShopCart="openShopCart"/>
+						<ProductItem :info="item" :cart-list="cartList" @refreshShopCart="refreshShopCart"/>
 					</view>
+					<ShopCart ref="shopCartRef" @updateCartList="(val) => cartList = val"/>
 				</view>
 				
 				<LoadMore 
@@ -40,8 +41,6 @@
 				</LoadMore>
 			</view>
 		</view>
-
-		<ShopCart ref="shopCartRef"/>
 	</view>
 </template>
 
@@ -60,6 +59,7 @@ export default{
 			totalCount: 0,
 			activeCate: null,
 			searchWords: '',
+			cartList: []
 		}
 	},
 	computed: {
@@ -86,9 +86,6 @@ export default{
 			if (this.$refs.shopCartRef) {
 				this.$refs.shopCartRef.refreshShopCart()
 			}
-		},
-		openShopCart() {
-			this.$refs.shopCartRef.openShopCart()
 		},
 		toSearchPage() {
 			uni.navigateTo({ url: `/pages/search-page/index?keywords=${this.searchWords}` })

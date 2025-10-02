@@ -151,8 +151,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 34rpx;
-  height: 34rpx;
+  width: 38rpx;
+  height: 38rpx;
 }
 .count_cont .btn.disabled{
 	opacity: 0.5;
@@ -231,6 +231,10 @@
     z-index: 2;
     background-color: #FFFFFF;
   }
+}
+.cart-item-box {
+  max-height: 300px;
+  overflow-y: auto;
 }
 .add-cart-box {
   display: flex;

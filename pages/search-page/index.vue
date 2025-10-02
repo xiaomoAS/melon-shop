@@ -21,8 +21,10 @@
 					<view v-if="!productList.length" class="no-content">暂无相关商品～</view>
 
 					<view class="pro_list_cont" v-for="item in productList" :key="item.productId" :class="{ 'null': !item.stock }">
-						<ProductItem :info="item" @refreshShopCart="refreshShopCart" @openShopCart="openShopCart"/>
+						<ProductItem :info="item" :cart-list="cartList" @refreshShopCart="refreshShopCart"/>
 					</view>
+					
+					<ShopCart ref=shopCartRef @updateCartList="(val) => cartList = val" />
 					<LoadMore 
 						v-if="productList.length && !noMoreData"
 						@visible="loadMoreData" 
@@ -36,8 +38,6 @@
 				</view>
 			</view>
 		</view>
-
-		<ShopCart ref=shopCartRef />
 	</view>
 </template>
 
@@ -54,7 +54,8 @@ export default{
 			pageSize: 5,
 			totalCount: 0,
 			keywords: '',
-			productIdList: undefined
+			productIdList: undefined,
+			cartList: []
 		}
 	},
 	components: {
@@ -82,9 +83,6 @@ export default{
 			if (this.$refs.shopCartRef) {
 				this.$refs.shopCartRef.refreshShopCart()
 			}
-		},
-		openShopCart() {
-			this.$refs.shopCartRef.openShopCart()
 		},
 		searchHandlder() {
 			this.productList = []

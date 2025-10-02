@@ -8,7 +8,7 @@
     <!-- 底部弹层 -->
     <view 
       v-if="visible" 
-      class="popup-mask" 
+      class="popup-mask"
       @click="hidePreview"
     >
       <view class="popup-container" @click.stop>
