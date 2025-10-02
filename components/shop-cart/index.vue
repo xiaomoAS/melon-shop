@@ -1,9 +1,19 @@
 <template>
-  <view>
-    <view v-if="cartType === CART_TYPE.NORMAL" @click="showCartDetail = !showCartDetail" class="buycar_floor">
-			<image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
-			<view class="txt">{{ totalCount }}</view>
-		</view>
+  <view
+    @touchmove="handleOuterTouchMove"
+  >
+    <view
+      v-if="cartType === CART_TYPE.NORMAL && !showCartDetail"
+      class="buycar_floor"
+      :style="{ position: 'fixed', left: cartIconX + 'px', top: cartIconY + 'px', zIndex: 9999 }"
+      @touchstart="onTouchStart"
+      @touchmove.stop.prevent="onTouchMove"
+      @touchend="onTouchEnd"
+      @click="handleCartClick"
+    >
+   <image class="i" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/f1c89225d7fe4b59b6bd5e23fb6a1fcd/buycar_floor.png?Expires=2073876067&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=4puVWmu8FhXqEHshWItevJABMM8%3D" mode="widthFix"></image>
+   <view class="txt">{{ totalCount }}</view>
+  </view>
 
 		<view v-if="(cartType === CART_TYPE.BOTTOM || (cartType === CART_TYPE.NORMAL && this.cartList.length)) && !showCartDetail" class="bit_buy_cont bottom" @click="showCartDetail = !showCartDetail">
 			<view class="l_cont">
@@ -107,9 +117,20 @@ export default {
   data() {
     return {
       showCartDetail: false,
-			cartList: [],
-			priceInfo: {},
-			CART_TYPE
+   cartList: [],
+   priceInfo: {},
+   CART_TYPE,
+   iconRpx: 100, // icon宽高，和样式保持一致
+   iconPx: uni.getSystemInfoSync().windowWidth / 750 * 100, // rpx转px
+   cartIconX: uni.getSystemInfoSync().windowWidth - (uni.getSystemInfoSync().windowWidth / 750 * 100), // 初始靠右
+   cartIconY: (uni.getSystemInfoSync().windowHeight - (uni.getSystemInfoSync().windowWidth / 750 * 100)) / 2, // 初始垂直居中
+   isDragging: false,
+   startX: 0,
+   startY: 0,
+   lastX: 0,
+   lastY: 0,
+   dragThreshold: 10, // 拖拽与点击区分阈值
+   dragMoved: false
     }
   },
   mounted() {
@@ -142,7 +163,67 @@ export default {
 		}
 	},
   methods: {
-		async refreshShopCart() {
+// 拖拽相关方法
+handleOuterTouchMove(e) {
+  // 拖拽时阻止页面滚动
+  if (this.isDragging) {
+    e.preventDefault && e.preventDefault();
+    e.stopPropagation && e.stopPropagation();
+    return false;
+  }
+},
+onTouchStart(e) {
+ const touch = e.touches[0];
+ this.isDragging = true;
+ this.startX = touch.clientX;
+ this.startY = touch.clientY;
+ this.lastX = this.cartIconX;
+ this.lastY = this.cartIconY;
+ this.dragMoved = false;
+ // 拖拽时禁止页面滚动
+ // H5
+ if (typeof document !== 'undefined' && document.body) {
+   document.body.style.overflow = 'hidden';
+   document.body.style.touchAction = 'none';
+ }
+ // 小程序环境可根据平台自行扩展
+},
+ onTouchMove(e) {
+  if (!this.isDragging) return;
+  e.preventDefault && e.preventDefault();
+  e.stopPropagation && e.stopPropagation();
+  const touch = e.touches[0];
+  const offsetX = touch.clientX - this.startX;
+  const offsetY = touch.clientY - this.startY;
+  if (Math.abs(offsetX) > this.dragThreshold || Math.abs(offsetY) > this.dragThreshold) {
+  	this.dragMoved = true;
+  }
+  let newX = this.lastX + offsetX;
+  let newY = this.lastY + offsetY;
+  // 边界动态计算，兼容rpx
+  const iconPx = this.iconPx;
+  const winW = uni.getSystemInfoSync().windowWidth;
+  const winH = uni.getSystemInfoSync().windowHeight;
+  newX = Math.max(0, Math.min(newX, winW - iconPx));
+  newY = Math.max(0, Math.min(newY, winH - iconPx));
+  this.cartIconX = newX;
+  this.cartIconY = newY;
+ },
+ onTouchEnd(e) {
+  this.isDragging = false;
+  // 拖拽结束恢复页面滚动
+  if (typeof document !== 'undefined' && document.body) {
+    document.body.style.overflow = '';
+    document.body.style.touchAction = '';
+  }
+ },
+ handleCartClick(e) {
+  // 拖拽距离小于阈值才认为是点击
+  if (!this.dragMoved) {
+  	this.showCartDetail = !this.showCartDetail;
+  }
+ },
+ async refreshShopCart() {
 			await this.getCartList()
 		},
 		async addCartHandler() {
