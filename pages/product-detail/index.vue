@@ -1,11 +1,10 @@
 <template>
 	<view class="warpin">
-		<swiper class="detail_baner" :indicator-dots="true" :autoplay="true" :interval="3000" :duration="1000">
-			<swiper-item>
-				<view class="swiper-item"><image :src="detail.mainImgUrl" mode="widthFix"></image> </view>
-			</swiper-item>
-			<view class="detail_baner-title">{{ detail.title }}</view>
-		</swiper>
+		<view class="detail_baner">
+			<image :src="detail.mainImgUrl" mode="widthFix"></image>
+			<uni-icons class="detail_baner-icon" type="left" size="30" color="#FFFFFF" @click="backHandler"></uni-icons>
+			<!-- <view class="detail_baner-title">{{ detail.title }}</view> -->
+		</view>
 		<view class="detail_inf_cont">
 			<view class="title">{{ detail.title }}</view>
 			<view class="detail-info-box">
@@ -78,7 +77,10 @@ export default {
 				this.detail = {}
 			}
 		},
-		formatDate
+		formatDate,
+		backHandler() {
+			uni.navigateBack()
+		}
 	},
 	onLoad(options) {
 		console.log('页面加载参数:', options)

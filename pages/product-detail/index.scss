@@ -3,7 +3,6 @@ page {
 }
 .detail_baner {
   position: relative;
-  height: 300px;
   margin-bottom: 20rpx;
 }
 .detail_baner image {
@@ -20,6 +19,11 @@ page {
 	font-size: 28rpx;
 	font-weight: 600;
 }
+.detail_baner-icon {
+	position: absolute;
+	top: 62px;
+	left: 16px;
+}
 .detail_inf_cont {
   padding: 20rpx;
   background: linear-gradient(#C6FFCE, #FEFFFE, #FFFFFF);
@@ -27,7 +31,8 @@ page {
   margin-bottom: 20rpx;
 }
 .detail_inf_cont .title {
-  font-size: 24rpx;
+  font-size: 30rpx;
+  font-weight: 600;
   color: #000000;
   margin-bottom: 10rpx;
 }
