@@ -85,7 +85,7 @@
 			</view>
 		</view>
 
-		<view class="bottom-button">我要当团长!</view>
+		<view class="bottom-button" @click="openArticleHandler">我要当团长!</view>
 
 		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
@@ -131,6 +131,12 @@
 			}
 		},
 		methods: {
+			openArticleHandler() {
+				console.log('12312312')
+				wx.openOfficialAccountArticle({
+				  url: 'https://mp.weixin.qq.com/s/Yf5adowfIkBW5KMBoD4TNw'
+				})
+			},
 			chargeHandler() {
 				this.$refs.rechargeRef.open()
 			},

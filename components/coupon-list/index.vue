@@ -12,7 +12,7 @@
 				<view class="btn" @click="toSearchPage(item)">去使用</view>
 			</view>
 		</view>
-		<view v-if="!couponList.lengths" class="no-coupon-tip">暂无优惠券~</view>
+		<view v-if="!couponList.length" class="no-coupon-tip">暂无优惠券~</view>
 
 		<LoadMore 
 			v-if="couponList.length && !noMoreData"
