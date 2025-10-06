@@ -188,16 +188,16 @@
 .index_new_vip .pro_last .list_cont .pro_price .dt {
   padding: 14rpx 0rpx;
   text-align: center;
-  border-bottom-right-radius: 100rpx;
-  font-size: 18rpx;
+  border-bottom-right-radius: 80rpx;
+  font-size: 20rpx;
   color: #fff;
   width: 82rpx;
   background: #FF5F36;
+  font-weight: 600;
 }
 .index_new_vip .pro_last .list_cont .pro_price .dd {
   width: calc(100% - 82rpx);
-  padding-left: 10rpx;
-  font-size: 28rpx;
+  font-size: 32rpx;
   font-weight: bold;
   color: #FF5F36;
 }
