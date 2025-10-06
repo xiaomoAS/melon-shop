@@ -4,17 +4,31 @@
 			<swiper-item>
 				<view class="swiper-item"><image :src="detail.mainImgUrl" mode="widthFix"></image> </view>
 			</swiper-item>
+			<view class="detail_baner-title">{{ detail.title }}</view>
 		</swiper>
 		<view class="detail_inf_cont">
 			<view class="title">{{ detail.title }}</view>
-			<view class="price_inf">
-				<view class="price">￥{{ detail.price }}</view>
-				<view class="dw"> /{{ detail.specName }}</view>
-			</view>
-			<view class="allow">
-				<view>剩余</view>
-				<text>{{ detail.stock }}</text>
-				<view>份</view>
+			<view class="detail-info-box">
+				<view class="price_inf">
+					<view class="price">￥{{ detail.price }}</view>
+					<view class="dw"> /{{ detail.specName }}</view>
+				</view>
+				<view class="detail-info-box__right">
+					<view class="allow">
+						<view>发货时间:</view>
+						<text>{{ formatDate(Number(detail.presaleStartTime), 'MM月DD日') }}</text>
+					</view>
+					<view class="allow">
+						<view>已售</view>
+						<text>{{ detail.saleCount }}</text>
+						<view>{{ detail.specName }}</view>
+					</view>
+					<view class="allow">
+						<view>剩余</view>
+						<text>{{ detail.stock }}</text>
+						<view>{{ detail.specName }}</view>
+					</view>
+				</view>
 			</view>
 		</view>
 		<view class="contain">
@@ -41,6 +55,7 @@
 <script>
 import ShopCart from '@/components/shop-cart/index.vue'
 import { CART_TYPE } from '@/components/shop-cart/constants.js'
+import { formatDate } from '@/utils/common';
 
 export default {
 	name: 'ProductDetail',
@@ -62,7 +77,8 @@ export default {
 				console.error('获取商品详情失败:', error)
 				this.detail = {}
 			}
-		}
+		},
+		formatDate
 	},
 	onLoad(options) {
 		console.log('页面加载参数:', options)

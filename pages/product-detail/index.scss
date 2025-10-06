@@ -2,11 +2,23 @@ page {
   background: #F4F4F4;
 }
 .detail_baner {
+  position: relative;
+  height: 300px;
   margin-bottom: 20rpx;
 }
 .detail_baner image {
   display: block;
   width: 100%;
+}
+.detail_baner-title {
+	position: absolute;
+	letter-spacing: 2rpx;
+	top: 62px;
+	left: 50%;
+	transform: translateX(-50%);
+	color: #FFFFFF;
+	font-size: 28rpx;
+	font-weight: 600;
 }
 .detail_inf_cont {
   padding: 20rpx;
@@ -19,28 +31,38 @@ page {
   color: #000000;
   margin-bottom: 10rpx;
 }
+.detail-info-box {
+	width: 100%;
+	display: flex;
+	align-items: flex-end;
+	
+	&__right {
+		margin-left: auto;
+		display: flex;
+		align-items: center;
+	}
+}
 .detail_inf_cont .price_inf {
   display: flex;
   align-items: flex-end;
 }
 .detail_inf_cont .price_inf .price {
   font-size: 40rpx;
+  line-height: 40rpx;
+  vertical-align: bottom;
   font-weight: bold;
   color: #FF5F36;
 }
 .detail_inf_cont .price_inf .dw {
-  margin-bottom: 3px;
   font-size: 24rpx;
   color: #60C45D;
 }
 .detail_inf_cont .allow {
-  position: absolute;
-  bottom: 20rpx;
-  right: 20rpx;
   display: flex;
   align-items: center;
   font-size: 22rpx;
   color: #666666;
+  margin-left: 8rpx;
 }
 .detail_inf_cont .allow text {
   color: #FF0000;

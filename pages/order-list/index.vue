@@ -1,5 +1,5 @@
 <template>
-	<view class="contain">
+	<view class="contain mian-box">
 		<scroll-view class="order_head_navi" scroll-x="true" show-scrollbar="false">
 			<view class="tab-container">
 				<view
@@ -20,7 +20,7 @@
 		</view>
 
 		<view v-if="!orderList.length" class="no-order-box">
-			<view>~您当前未享受好吃、健康、可信赖的猹选好果</view>
+			<view>您当前未享受好吃、健康、可信赖的猹选好果</view>
 			<text class="text-button" @click="toMainPage">去下单</text>
 		</view>
 
@@ -41,7 +41,7 @@
 									<view class="pro_i"><image :src="product.imgUrl || 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/204d3d96231349298d64fd8bc225bf0a/index_case1_2.png?Expires=2074059755&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=KOk2NNsu%2BaSUpyPUrTzkrc00TPE%3D'" mode="widthFix"></image> </view>
 									<view class="">
 										<view class="name">{{ product.productName }}</view>
-										<view class="text">{{ product.desc }}</view>
+										<!-- <view class="text">{{ product.desc }}</view> -->
 										<view v-if="product.tagList">
 											<view v-for="tag in product.tagList" :key="tag" class="bis">{{ tag }}</view>
 										</view>
@@ -54,10 +54,10 @@
 								</view>
 							</view>
 						</navigator>
-
+<!-- 
 						<ReportViewer :product-id="product.productId" custom-class="order-report">
 							<view class="btn">检测报告</view>
-						</ReportViewer>
+						</ReportViewer> -->
 					</view>
 					
 					<!-- 展开/收起按钮 -->

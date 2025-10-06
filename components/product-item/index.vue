@@ -8,7 +8,7 @@
 				</view>
 				<image class="i" :src="info.imgUrl" mode="widthFix"></image> 
 				<view class="pro__tip-box">
-					<view v-if="info.stock">预售期：{{ formatDate(Number(info.presaleStartTime), 'MM月DD日') }}</view>
+					<view v-if="info.stock">发货时间：{{ formatDate(Number(info.presaleStartTime), 'MM月DD日') }}</view>
 					<view class="pro__tip-box--stock">已售{{ info.saleCount }}{{ info.specName }}/剩余{{ info.stock }}{{ info.specName }}</view>
 				</view>
 			</view>
