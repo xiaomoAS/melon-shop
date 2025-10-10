@@ -148,8 +148,7 @@
 				</view>
 			</radio-group>
 			
-			<!-- TODO: 文案 -->
-			<view class="bit_txt">如果您有问题，可以电话联系XXX,我们将高效解决！</view>
+			<view class="bit_txt">如果您有问题，可以电话联系<text class="phone-text" @click="phoneHandler">13020036833</text>,我们将高效解决！</view>
 		</view>
 		<view class="order_foot_cont">
 			<view class="cont">
@@ -285,6 +284,17 @@ export default {
 		}
 	},
 	methods: {
+		phoneHandler() {
+			wx.makePhoneCall({
+				phoneNumber: '13020036833',
+				success(res) {
+					console.log('拨打电话成功', res);
+				},
+				fail(err) {
+					console.error('拨打电话失败', err);
+				}
+			});
+		},
 		couponSelectChange(coupon, couponIndex) {
 			this.$set(this.couponList[couponIndex], 'selected', !coupon.selected)
 		},

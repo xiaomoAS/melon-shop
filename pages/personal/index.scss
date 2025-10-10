@@ -422,6 +422,10 @@ page {
   line-height: 28rpx;
   color: #666666;
   margin-bottom: 20rpx;
+
+  .phone-text {
+    color:#4A90E2;
+  }
 }
 .user_bits_txt .bit_dl {
   display: flex;
@@ -435,6 +439,10 @@ page {
 .user_bits_txt .bit_dl .dd {
   font-size: 24rpx;
   color: #5EC05B;
+
+  .phone-text {
+    text-decoration: underline;
+  }
 }
 .user_dump_btn {
   display: flex;

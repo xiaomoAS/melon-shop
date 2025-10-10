@@ -76,12 +76,12 @@
 			</view>
 			<CouponList ref="couponListRef"></CouponList>
 		</view>
-		<!-- TODO: 文案 -->
+
 		<view class="user_bits_txt">
-			<view class="txt">如果您有问题，可以电话联系XXX,我们将高效解决！</view>
+			<view class="txt">如果您有问题，可以电话联系<text class="phone-text" @click="phoneHandler">13020036833</text>,我们将高效解决！</view>
 			<view class="bit_dl">
 				<view class="dt">工作日：09:00-18:00</view>
-				<view class="dd">客栈热线 xxxxxx</view>
+				<view class="dd">客栈热线 <text class="phone-text" @click="phoneHandler">13020036833</text></view>
 			</view>
 		</view>
 
@@ -131,8 +131,18 @@
 			}
 		},
 		methods: {
+			phoneHandler() {
+				wx.makePhoneCall({
+					phoneNumber: '13020036833',
+					success(res) {
+						console.log('拨打电话成功', res);
+					},
+					fail(err) {
+						console.error('拨打电话失败', err);
+					}
+				});
+			},
 			openArticleHandler() {
-				console.log('12312312')
 				wx.openOfficialAccountArticle({
 				  url: 'https://mp.weixin.qq.com/s/Yf5adowfIkBW5KMBoD4TNw'
 				})

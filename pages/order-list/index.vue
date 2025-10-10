@@ -96,6 +96,7 @@
 				</view>
 			</view>
 			<view class="bit_seet_cont">
+				<view class="btn" @click="phoneHandler">联系客服</view>
 				<view v-if="order.orderStatus === ORDER_STATUS.WAIT_PAY" class="btn" @click="cancelOrder(order)">取消订单</view>
 				<view v-if="order.orderStatus === ORDER_STATUS.WAIT_PAY" class="btn sub" @click="toSettlePage(order)">继续支付</view>
 				<view v-if="order.orderStatus === ORDER_STATUS.WAIT_RECEIVE" class="btn sub" @click="confirmReceive(order)">确认收货</view>
@@ -155,6 +156,17 @@ export default {
 		this.getOrderList()
 	},
 	methods: {
+		phoneHandler() {
+			wx.makePhoneCall({
+				phoneNumber: '13020036833',
+				success(res) {
+					console.log('拨打电话成功', res);
+				},
+				fail(err) {
+					console.error('拨打电话失败', err);
+				}
+			});
+		},
 		toMainPage() {
 			uni.switchTab({ url: '/pages/index/index' })
 		},
