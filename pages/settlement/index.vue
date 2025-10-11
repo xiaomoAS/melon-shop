@@ -382,18 +382,24 @@ export default {
 					couponIdList: this.couponList.filter((item) => item.selected).map((item) => item.couponId)
 				}
 				const { paySuccess = false} = await this.$http.post('/order/create', param)
-				if (paySuccess) {
-					uni.showToast({ title: '支付成功' , icon: 'none'})
-					wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_SEND)
-				} else {
-					uni.showToast({ title: '支付失败' , icon: 'none'})
-					wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_PAY)
+				// 微信支付
+				if (this.payMethod === PAY_METHOD.WE_CHAT) {
+
+				} else if (this.payMethod === PAY_METHOD.MEMBER_CARD) {
+					// 充值卡支付
+					if (paySuccess) {
+						uni.showToast({ title: '支付成功' , icon: 'none'})
+						wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_SEND)
+					} else {
+						uni.showToast({ title: '支付失败' , icon: 'none'})
+						wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_PAY)
+					}
+					// 等待显示提示
+					const timer = setTimeout(() => {
+						uni.switchTab({ url: '/pages/order-list/index' })
+						clearTimeout(timer)
+					}, 500);
 				}
-				// 等待显示提示
-				const timer = setTimeout(() => {
-					uni.switchTab({ url: '/pages/order-list/index' })
-					clearTimeout(timer)
-				}, 500);
 			} catch (error) {
 				console.log(error)
 			}
