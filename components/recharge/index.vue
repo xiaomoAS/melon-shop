@@ -170,18 +170,61 @@ export default {
 			})
 		},
 		// 确认充值
-		handleRecharge(value) {
-			if (!this.customAmount || isNaN(this.customAmount) || Number(this.customAmount) <= 0) {
-				uni.showToast({
-					title: '请输入有效的充值金额',
-					icon: 'none'
-				})
-				return
+		async handleRecharge(value) {
+			try {
+				if (!this.customAmount || isNaN(this.customAmount) || Number(this.customAmount) <= 0) {
+					uni.showToast({
+						title: '请输入有效的充值金额',
+						icon: 'none'
+					})
+					return
+				}
+				const data = await this.$http.post('/order/createMemberOrder', { totalPrice: String(this.customAmount) })
+				let that = this
+				wx.requestPayment
+				(
+				  {
+				    "timeStamp": `${Math.floor(Date.now() / 1000)}`,
+				    "nonceStr": data.nonceStr,
+				    "package": data.packageStr,
+				    "signType": data.signType,
+				    "paySign": data.paySign,
+				    "success":function(res){
+						console.log('成功', res)
+						let startTime = Date.now()
+						const intervalId = setInterval(async () => {
+						    try {
+						        const res = await that.$http.post('/order/queryWechatPay', { orderId: data.orderId })
+						        // 充值成功
+						        if (res.orderStatus === PAY_STATUS.SUCCESS) {
+									uni.showToast({ title: '充值成功', icon: 'none' })
+									that.$emit('success')
+									that.close()
+						            return
+						        }
+						        if (Date.now() - startTime >= 10000) {
+									uni.showToast({ title: '充值超时' , icon: 'none'})
+						            clearInterval(intervalId) // 超过10秒也停止轮询
+						        }
+						    } catch (error) {
+						        uni.showToast({ title: '充值失败' , icon: 'none'})
+						        clearInterval(intervalId) // 出错也停止轮询
+						    }
+						}, 1000); // 例如每1秒轮询一次
+					},
+				    "fail":function(res){
+						console.log('失败', res)
+						uni.showToast({ title: '充值失败' , icon: 'none'})
+					},
+				    "complete":function(res){
+						console.log('完成', res)
+					}
+				  }
+				)
+			} catch (error) {
+				console.log(error)
 			}
-
-			uni.showToast({ title: '充值成功', icon: 'none' })
-			this.$emit('success')
-			this.close()
+			
 		},
 		// 关闭弹窗
 		handleClose() {

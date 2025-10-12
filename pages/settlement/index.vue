@@ -164,7 +164,7 @@
 </template>
 
 <script>
-import { MEMBER_LEVEL, MEMBER_LEVEL_NAME, PAY_METHOD, SOURCE } from '@/constants/common.js'
+import { MEMBER_LEVEL, MEMBER_LEVEL_NAME, PAY_METHOD, SOURCE, PAY_STATUS } from '@/constants/common.js'
 import { COUPON_TYPE } from '@/components/coupon-list/constants.js'
 import { ORDER_STATUS } from '@/pages/order-list/constants.js'
 import Recharge from '@/components/recharge/index.vue'
@@ -381,13 +381,76 @@ export default {
 					payMethod: this.payMethod,
 					couponIdList: this.couponList.filter((item) => item.selected).map((item) => item.couponId)
 				}
-				const { paySuccess = false} = await this.$http.post('/order/create', param)
+				const data = await this.$http.post('/order/create', param)
+				let that = this
 				// 微信支付
 				if (this.payMethod === PAY_METHOD.WE_CHAT) {
-
+					wx.requestPayment
+					(
+					  {
+					    "timeStamp": `${Math.floor(Date.now() / 1000)}`,
+					    "nonceStr": data.nonceStr,
+					    "package": data.packageStr,
+					    "signType": data.signType,
+					    "paySign": data.paySign,
+					    "success":function(res){
+							console.log('成功', res)
+							let startTime = Date.now()
+							const intervalId = setInterval(async () => {
+							    try {
+							        const res = await that.$http.post('/order/queryWechatPay', { orderId: data.orderId })
+							        // 支付成功
+							        if (res.orderStatus === PAY_STATUS.SUCCESS) {
+										uni.showToast({ title: '支付成功' , icon: 'none'})
+										wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_SEND)
+							            clearInterval(intervalId) // 清除定时器
+										// 等待显示提示
+										const timer = setTimeout(() => {
+											uni.switchTab({ url: '/pages/order-list/index' })
+											clearTimeout(timer)
+										}, 500);
+							            return
+							        }
+							        if (Date.now() - startTime >= 10000) {
+										uni.showToast({ title: '支付超时' , icon: 'none'})
+										wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_PAY)
+							            clearInterval(intervalId) // 超过10秒也停止轮询
+										// 等待显示提示
+										const timer = setTimeout(() => {
+											uni.switchTab({ url: '/pages/order-list/index' })
+											clearTimeout(timer)
+										}, 500);
+							        }
+							    } catch (error) {
+							        uni.showToast({ title: '支付失败' , icon: 'none'})
+							        wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_PAY)
+							        clearInterval(intervalId) // 出错也停止轮询
+									// 等待显示提示
+									const timer = setTimeout(() => {
+										uni.switchTab({ url: '/pages/order-list/index' })
+										clearTimeout(timer)
+									}, 500);
+							    }
+							}, 1000); // 例如每1秒轮询一次
+						},
+					    "fail":function(res){
+							console.log('失败', res)
+							uni.showToast({ title: '支付失败' , icon: 'none'})
+							wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_PAY)
+							// 等待显示提示
+							const timer = setTimeout(() => {
+								uni.switchTab({ url: '/pages/order-list/index' })
+								clearTimeout(timer)
+							}, 500);
+						},
+					    "complete":function(res){
+							console.log('完成', res)
+						}
+					  }
+					)
 				} else if (this.payMethod === PAY_METHOD.MEMBER_CARD) {
 					// 充值卡支付
-					if (paySuccess) {
+					if (data.paySuccess) {
 						uni.showToast({ title: '支付成功' , icon: 'none'})
 						wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_SEND)
 					} else {

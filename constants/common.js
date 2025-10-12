@@ -23,3 +23,8 @@ export const PAY_METHOD = {
 export const SOURCE = {
   CART: 1, // 购物车
 }
+
+// 支付状态
+export const PAY_STATUS = {
+	SUCCESS: 4, // 成功
+}
