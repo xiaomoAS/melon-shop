@@ -26,6 +26,12 @@
 			}
 		},
 		{
+			"path": "pages/order-detail/index",
+			"style": {
+				"navigationBarTitleText": "订单详情"
+			}
+		},
+		{
 			"path": "pages/product-detail/index",
 			"style": {
 				"navigationBarTitleText": "商品详情",
