@@ -389,7 +389,7 @@ export default {
 					wx.requestPayment
 					(
 					  {
-					    "timeStamp": `${Math.floor(Date.now() / 1000)}`,
+					    "timeStamp": data.timestamp,
 					    "nonceStr": data.nonceStr,
 					    "package": data.packageStr,
 					    "signType": data.signType,
