@@ -1,5 +1,6 @@
 <template>
-	<view class="main-box">
+	<!-- 没token代表没登陆 -->
+	<view class="main-box" :class="{ 'no-login': !token || !cartList.length }">
 		<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/916cae2f99af4241acf65617a6a07bd9/index_head_bg.png?Expires=2073875593&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=6l%2B1kM%2BmbcTT4vmhVbD6zlktjVo%3D" class="index_head_bg" mode="widthFix"></image>
 		<view class="contain">
 			<view class="index_header_cont">
@@ -79,7 +80,7 @@
 				</view>
 			</LoadMore>
 		</view>
-		<ShopCart ref="shopCartRef" @updateCartList="(val) => cartList = val"/>
+		<ShopCart v-if="token" ref="shopCartRef" @updateCartList="(val) => cartList = val"/>
 	</view>
 </template>
 <script>
@@ -100,7 +101,8 @@
 				pageSize: 5,
 				totalCount: 0,
 				searchWords: '',
-				cartList: []
+				cartList: [],
+				token: null
 			}
 		},
 		components: {
@@ -114,6 +116,7 @@
 			},
 		},
 		onShow() {
+			this.token = uni.getStorageSync('token')
 			this.page = 1
 			this.productList = []
 			this.getCarouselImages()

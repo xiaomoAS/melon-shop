@@ -2,6 +2,10 @@
 .main-box {
   padding-bottom: 60px;
   background: #F4F4F4;
+
+  &.no-login {
+    padding-bottom: 0;
+  }
 }
 .head_logo {
   margin-bottom: 20rpx;
