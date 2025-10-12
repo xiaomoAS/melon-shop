@@ -72,7 +72,7 @@
 
 <script>
 import { memberConfigs } from '@/pages/personal/constants.js'
-import { MEMBER_LEVEL } from '@/constants/common.js'
+import { MEMBER_LEVEL, PAY_STATUS } from '@/constants/common.js'
 
 export default {
 	name: 'Recharge',
@@ -200,6 +200,7 @@ export default {
 									uni.showToast({ title: '充值成功', icon: 'none' })
 									that.$emit('success')
 									that.close()
+									clearInterval(intervalId) // 超过10秒也停止轮询
 						            return
 						        }
 						        if (Date.now() - startTime >= 10000) {
@@ -207,6 +208,7 @@ export default {
 						            clearInterval(intervalId) // 超过10秒也停止轮询
 						        }
 						    } catch (error) {
+								console.log(error)
 						        uni.showToast({ title: '充值失败' , icon: 'none'})
 						        clearInterval(intervalId) // 出错也停止轮询
 						    }
