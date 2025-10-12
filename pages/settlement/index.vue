@@ -325,7 +325,8 @@ export default {
 			try {
 				if(!list || !list.length) return
 				this.priceInfo = await this.$http.post('/shopcart/calculate', {
-					checkedProductIdList: list
+					checkedProductIdList: list,
+					orderId: this.orderId
 				})
 			} catch (error) {
 				this.priceInfo = {}
