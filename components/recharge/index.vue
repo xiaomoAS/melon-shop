@@ -85,6 +85,7 @@ export default {
 			selectedPackage: -1, // -1表示未选择套餐，使用自定义金额
 			memberInfo: {},
 			userInfo: {},
+			payLoading: false,
 			memberPackages: [
 				{
 					level: MEMBER_LEVEL.GOLD,
@@ -121,6 +122,7 @@ export default {
 		open() {
 			this.customAmount = ''
 			this.selectedPackage = -1
+			this.payLoading = false
 			this.getMemberInfo()
 			this.getUserInfo()
 			this.$refs.popup.open('center')
@@ -170,8 +172,10 @@ export default {
 			})
 		},
 		// 确认充值
-		async handleRecharge(value) {
+		async handleRecharge() {
 			try {
+				// 支付中，返回
+				if (this.payLoading) return
 				if (!this.customAmount || isNaN(this.customAmount) || Number(this.customAmount) <= 0) {
 					uni.showToast({
 						title: '请输入有效的充值金额',
@@ -179,6 +183,7 @@ export default {
 					})
 					return
 				}
+				this.payLoading = true
 				const data = await this.$http.post('/order/createMemberOrder', { totalPrice: String(this.customAmount) })
 				let that = this
 				wx.requestPayment
@@ -204,12 +209,13 @@ export default {
 						            return
 						        }
 						        if (Date.now() - startTime >= 10000) {
-									uni.showToast({ title: '充值超时' , icon: 'none'})
-						            clearInterval(intervalId) // 超过10秒也停止轮询
+											uni.showToast({ title: '充值超时' , icon: 'none'})
+											that.payLoading = false
+						          clearInterval(intervalId) // 超过10秒也停止轮询
 						        }
 						    } catch (error) {
-								console.log(error)
 						        uni.showToast({ title: '充值失败' , icon: 'none'})
+										that.payLoading = false
 						        clearInterval(intervalId) // 出错也停止轮询
 						    }
 						}, 1000); // 例如每1秒轮询一次
@@ -217,6 +223,7 @@ export default {
 				    "fail":function(res){
 						console.log('失败', res)
 						uni.showToast({ title: '充值失败' , icon: 'none'})
+						that.payLoading = false
 					},
 				    "complete":function(res){
 						console.log('完成', res)
@@ -224,6 +231,7 @@ export default {
 				  }
 				)
 			} catch (error) {
+				this.payLoading = false
 				console.log(error)
 			}
 			

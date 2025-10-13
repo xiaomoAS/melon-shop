@@ -155,7 +155,7 @@
 				<view class="l_cont">
 					总价: <text>￥{{ realTotalPrice }}</text>
 				</view>
-				<view class="btn" @click="submitHandler">提交订单</view>
+				<button class="btn" :disabled="payLoading" @click="submitHandler">提交订单</button>
 			</view>
 		</view>
 
@@ -187,7 +187,8 @@ export default {
 			MEMBER_LEVEL,
 			MEMBER_LEVEL_NAME,
 			COUPON_TYPE,
-			PAY_METHOD
+			PAY_METHOD,
+			payLoading: false,
 		}
 	},
 	components: {
@@ -277,6 +278,7 @@ export default {
 		this.pageOptions = options;
 	},
 	async onShow() {
+		this.payLoading = false
 		// 页面显示时，如果有保存的参数，重新加载数据
 		if (this.pageOptions) {
 			console.log('onShow - 使用保存的参数重新加载数据');
@@ -370,6 +372,7 @@ export default {
 					uni.showToast({ title: '请先选择默认收货地址', icon: 'none' })
 					return
 				}
+				this.payLoading = true
 				const param = {
 					orderId: this.orderId ? Number(this.orderId) : undefined,
 					requestSource: this.orderId ? undefined : SOURCE.CART, // 仅购物车结算传
@@ -465,6 +468,7 @@ export default {
 					}, 500);
 				}
 			} catch (error) {
+				this.payLoading = false
 				console.log(error)
 			}
 		},
