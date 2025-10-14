@@ -189,12 +189,12 @@ export default {
 				wx.requestPayment
 				(
 				  {
-				    "timeStamp": data.timestamp,
-				    "nonceStr": data.nonceStr,
-				    "package": data.packageStr,
-				    "signType": data.signType,
-				    "paySign": data.paySign,
-				    "success":function(res){
+				    timeStamp: data.timestamp,
+				    nonceStr: data.nonceStr,
+				    package: data.packageStr,
+				    signType: data.signType,
+				    paySign: data.paySign,
+				    success:function(res){
 						console.log('成功', res)
 						let startTime = Date.now()
 						const intervalId = setInterval(async () => {
@@ -209,23 +209,23 @@ export default {
 						            return
 						        }
 						        if (Date.now() - startTime >= 10000) {
-											uni.showToast({ title: '充值超时' , icon: 'none'})
-											that.payLoading = false
-						          clearInterval(intervalId) // 超过10秒也停止轮询
+									uni.showToast({ title: '充值超时' , icon: 'none'})
+									that.payLoading = false
+						            clearInterval(intervalId) // 超过10秒也停止轮询
 						        }
 						    } catch (error) {
 						        uni.showToast({ title: '充值失败' , icon: 'none'})
-										that.payLoading = false
+								that.payLoading = false
 						        clearInterval(intervalId) // 出错也停止轮询
 						    }
 						}, 1000); // 例如每1秒轮询一次
 					},
-				    "fail":function(res){
+				    fail:function(res){
 						console.log('失败', res)
 						uni.showToast({ title: '充值失败' , icon: 'none'})
 						that.payLoading = false
 					},
-				    "complete":function(res){
+				    complete:function(res){
 						console.log('完成', res)
 					}
 				  }

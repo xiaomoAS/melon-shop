@@ -392,12 +392,12 @@ export default {
 					wx.requestPayment
 					(
 					  {
-					    "timeStamp": data.timestamp,
-					    "nonceStr": data.nonceStr,
-					    "package": data.packageStr,
-					    "signType": data.signType,
-					    "paySign": data.paySign,
-					    "success":function(res){
+					    timeStamp: data.timestamp,
+					    nonceStr: data.nonceStr,
+					    package: data.packageStr,
+					    signType: data.signType,
+					    paySign: data.paySign,
+					    success:function(res){
 							console.log('成功', res)
 							let startTime = Date.now()
 							const intervalId = setInterval(async () => {
@@ -437,7 +437,7 @@ export default {
 							    }
 							}, 1000); // 例如每1秒轮询一次
 						},
-					    "fail":function(res){
+					    fail:function(res){
 							console.log('失败', res)
 							uni.showToast({ title: '支付失败' , icon: 'none'})
 							wx.setStorageSync('orderTab', ORDER_STATUS.WAIT_PAY)
@@ -447,7 +447,7 @@ export default {
 								clearTimeout(timer)
 							}, 500);
 						},
-					    "complete":function(res){
+					    complete:function(res){
 							console.log('完成', res)
 						}
 					  }

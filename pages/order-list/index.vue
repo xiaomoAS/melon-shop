@@ -1,6 +1,6 @@
 <template>
 	<view class="contain mian-box">
-		<scroll-view class="order_head_navi" scroll-x="true" show-scrollbar="false">
+		<scroll-view class="order_head_navi" scroll-x="true" :show-scrollbar="false">
 			<view class="tab-container">
 				<view
 					class="li"
