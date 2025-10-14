@@ -66,8 +66,12 @@ http.interceptors.response.use((response) => {
 			case 200:
 				return Promise.resolve(response.data.data)
 			case 401:
+				const pages = getCurrentPages()
+				const currentPage = pages[pages.length - 1]
+				const currentPagePath = currentPage.$page.fullPath
+				console.log('currentPagePathxxx', Object.prototype.toString.call(currentPagePath).split(' ')[1].split(']')[0], '===', currentPagePath);
 				uni.navigateTo({
-					url: '/pages/user-login/index'
+					url: `/pages/user-login/index?returnUrl=${encodeURIComponent(currentPagePath)}`
 				})
 				return Promise.reject(response)
 			default:

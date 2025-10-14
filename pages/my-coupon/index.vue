@@ -16,7 +16,7 @@
 				:class="{ active: activeTab === COUPON_TYPE.FREIGHT }"
 				@click="switchTab(COUPON_TYPE.FREIGHT)"
 			>
-				<text>运费券</text>
+				<text>包邮券</text>
 			</view>
 		</view>
 		<CouponList :coupon-type="activeTab"></CouponList>
@@ -38,7 +38,7 @@ export default {
 			activeTab: COUPON_TYPE.NEW_DISCOUNT, // 当前激活的tab，默认为新人专享券
 			tabList: [
 				{ name: '新人劵', value: COUPON_TYPE.NEW_DISCOUNT },
-				{ name: '运费券', value: COUPON_TYPE.FREIGHT }
+				{ name: '包邮券', value: COUPON_TYPE.FREIGHT }
 			],
 			COUPON_TYPE
 		}

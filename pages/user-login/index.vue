@@ -9,9 +9,9 @@
 			
 			<button 
 				class="login-btn" 
-				@click="handleLogin"
 				:loading="loading"
 				:disabled="loading"
+				@click="handleLogin"
 			>
 				{{ loading ? '登录中...' : '微信一键登录' }}
 			</button>
@@ -24,16 +24,17 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue';
+import { ref } from 'vue';
+import { onLoad } from '@dcloudio/uni-app'
 
-const loading = ref(false);
-const errorMsg = ref('');
+const loading = ref(false)
+const errorMsg = ref('')
+const returnUrl = ref(null)
 
-// 自动登录
-onMounted(() => {
-	// console.log('登录页面加载完成，开始自动登录...');
-	// autoLogin();
-});
+onLoad((options) => {
+	returnUrl.value = options.returnUrl ? decodeURIComponent(options.returnUrl) : null
+	console.log('optionsxxx', Object.prototype.toString.call(options).split(' ')[1].split(']')[0], '===', returnUrl.value);
+})
 
 // 登录按钮点击事件
 const handleLogin = async () => {
@@ -112,23 +113,21 @@ const sendLoginRequest = async (data) => {
 			});
 			
 			// 保存用户信息到本地
-			// uni.setStorageSync('userInfo', res.data.userInfo);
 			uni.setStorageSync('token', res.data.data.token);
 			
-			// 跳转到首页
+			// 跳转到原来页面
 			setTimeout(() => {
-				uni.switchTab({
-					url: '/pages/index/index'
-				});
-			}, 1500);
+				console.log('xxx', returnUrl.value);
+				
+				uni.switchTab({ url: '/pages/index/index' })
+			}, 1000)
 		} else {
-			throw new Error(res.data.message || '登录失败');
+			throw new Error(res.data.message || '登录失败')
 		}
 	} catch (error) {
-		console.error('后端登录失败:', error);
-		throw error;
+		console.error('后端登录失败:', error)
 	}
-};
+}
 </script>
 
 <style scoped lang="scss">

@@ -80,7 +80,7 @@
 				<view v-if="priceInfo.waybillPriceLimit" class="dl">
 					<view class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/05a860ef9f874ed696e19c3374f7419c/order_ico_2.png?Expires=2073876488&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5edejPW2awsLyvfjOWNrI8yBClU%3D" mode="widthFix"></image> </view>
-						运费券
+						包邮券
 					</view>
 					<view class="dd">-￥{{ priceInfo.waybillPriceLimit }}</view>
 				</view>

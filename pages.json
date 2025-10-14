@@ -57,6 +57,12 @@
 			}
 		},
 		{
+			"path": "pages/get-coupon/index",
+			"style": {
+				"navigationBarTitleText": "领取优惠券"
+			}
+		},
+		{
 			"path": "pages/user-login/index",
 			"style": {
 				"navigationBarTitleText": "登陆"

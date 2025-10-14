@@ -52,7 +52,7 @@
 				<view v-for="(coupon, couponIndex) in couponList" :key="coupon.couponId" class="dl">
 					<view v-if="COUPON_TYPE.FREIGHT === coupon.coupon.type" class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/05a860ef9f874ed696e19c3374f7419c/order_ico_2.png?Expires=2073876488&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=5edejPW2awsLyvfjOWNrI8yBClU%3D" mode="widthFix"></image> </view>
-						运费券
+						包邮券
 					</view>
 					<view v-else-if="COUPON_TYPE.NEW_DISCOUNT === coupon.coupon.type" class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/525a98181c884d0e854f14f241cde3d4/order_ico_3.png?Expires=2073876622&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lJjlb4qD0VewJtyVTV5656JOFo8%3D" mode="widthFix"></image> </view>
@@ -227,10 +227,10 @@ export default {
 			const price = this.priceInfo.newPersonPrice >= this.goodsPrice ? 0.01 : this.goodsPrice - this.priceInfo.newPersonPrice
 			return Math.round(price * 100) / 100
 		},
-		// 运费减去运费券金额
+		// 运费减去包邮券金额
 		realFreightPrice() {
-			// 优惠券金额>现有金额 = 0.01
-			const price = this.priceInfo.waybillPriceLimit >= this.priceInfo.shipTotalPrice ? 0.01 : this.priceInfo.shipTotalPrice - this.priceInfo.waybillPriceLimit
+			// 优惠券金额>现有金额 = 0
+			const price = this.priceInfo.waybillPriceLimit >= this.priceInfo.shipTotalPrice ? 0 : this.priceInfo.shipTotalPrice - this.priceInfo.waybillPriceLimit
 			return Math.round(price * 100) / 100
 		},
 		// 实际总价
@@ -256,7 +256,7 @@ export default {
 			}
 			return Math.round(total * 100) / 100
 		},
-		// 运费券是否选中
+		// 包邮券是否选中
 		freightCouponSelect() {
 			const coupon = this.couponList.find((coupon) => COUPON_TYPE.FREIGHT === coupon.coupon.type)
 			if (!coupon) return false

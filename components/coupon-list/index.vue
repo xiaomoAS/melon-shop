@@ -3,7 +3,7 @@
 		<view v-for="item in couponList" :key="item.couponId" class="coupon_list">
 			<view class="coupon_name">{{ getCouponShortName(item) }}</view>
 			<view class="coupon_deta">
-				<view class="tle">{{ getCouponName(item) }}</view>
+				<view class="tle">{{ item.coupon.name }}</view>
 				<view class="time">{{ formatExpireTime(item.coupon.endTime) }}</view>
 				<view class="txt">{{ getCouponDesc(item) }}</view>
 			</view>
