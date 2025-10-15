@@ -56,7 +56,7 @@
 					</view>
 					<view v-else-if="COUPON_TYPE.NEW_DISCOUNT === coupon.coupon.type" class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/525a98181c884d0e854f14f241cde3d4/order_ico_3.png?Expires=2073876622&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lJjlb4qD0VewJtyVTV5656JOFo8%3D" mode="widthFix"></image> </view>
-						新人专享券
+						专享券
 					</view>
 					<view  class="dd">
 						<view v-if="coupon.coupon">-￥{{ COUPON_TYPE.NEW_DISCOUNT === coupon.coupon.type ? coupon.coupon.newPersonPrice || 0 : coupon.coupon.waybillPriceLimit || 0 }}</view>
@@ -221,7 +221,7 @@ export default {
 			const price = Number(this.priceInfo.totalPrice || 0) - Number(this.priceInfo.shipTotalPrice || 0)
 			return Math.round(price * 100) / 100
 		},
-		// 商品扣减新人优惠券的价格
+		// 商品扣减专享券的价格
 		realGoodsPrice() {
 			// 优惠券金额>现有金额 = 0.01
 			const price = this.priceInfo.newPersonPrice >= this.goodsPrice ? 0.01 : this.goodsPrice - this.priceInfo.newPersonPrice
@@ -262,7 +262,7 @@ export default {
 			if (!coupon) return false
 			return coupon.selected
 		},
-		// 新人优惠券是否选中
+		// 专享券是否选中
 		newCouponSelect() {
 			const coupon = this.couponList.find((coupon) => COUPON_TYPE.NEW_DISCOUNT === coupon.coupon.type)
 			if (!coupon) return false

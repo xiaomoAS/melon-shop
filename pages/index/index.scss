@@ -74,6 +74,7 @@
 .index_baner .swiper-item image{
   width: 100%;
   height: 100%;
+  border-radius: 20rpx;
 }
 
 
@@ -172,7 +173,9 @@
 }
 .index_new_vip .pro_last .list_cont .tis_i .i {
   display: block;
-  max-width: 60%;
+  min-width: 100%;
+  min-height: 100%;
+  border-radius: 10rpx;
 }
 .index_new_vip .pro_last .list_cont .pro_name {
   padding: 15rpx 0;

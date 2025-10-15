@@ -32,11 +32,11 @@
 					</view>
 				</view>
 
-				<!-- 新人专享 -->
+				<!-- 专享 -->
 				<view v-if="newPersonList.length" class="index_new_vip">
 					<image class="tips" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/29b37b79ca524070b69881a8a0be4d84/tip_1.png?Expires=2073875832&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=yea3i%2FfwVPnD91oEwgNeiUyJ4x8%3D" mode="widthFix" @click="toCatePage()"></image>
 					<view class="head_title">
-						<view class="tle">新人<text>专享</text> </view>
+						<view class="tle">专享<text>优惠</text> </view>
 						<view class="txt">开启品质生活</view>
 					</view>
 					<view class="pro_last">
@@ -44,11 +44,11 @@
 							<navigator :url="`/pages/product-detail/index?id=${newItem.productId}`">
 								<view class="tis_i">
 									<image class="i" :src="newItem.imgUrl" mode="widthFix"></image> 
-									<view class="tip_txt">新客专享</view>
+									<view class="tip_txt">专享优惠</view>
 								</view>
 								<view class="pro_name">{{ newItem.title }}</view>
 								<view class="pro_price">
-									<view class="dt">新人价</view>
+									<view class="dt">专享价</view>
 									<view class="dd">￥{{ newItem.realpayPrice }}</view>
 								</view>
 							</navigator>

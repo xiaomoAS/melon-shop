@@ -87,7 +87,7 @@
 				<view v-if="priceInfo.newPersonPrice" class="dl">
 					<view class="dt">
 						<view class="i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/525a98181c884d0e854f14f241cde3d4/order_ico_3.png?Expires=2073876622&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=lJjlb4qD0VewJtyVTV5656JOFo8%3D" mode="widthFix"></image> </view>
-						新人专享券
+						专享券
 					</view>
 					<view class="dd">-￥{{ priceInfo.newPersonPrice }}</view>
 				</view>
