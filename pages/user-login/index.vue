@@ -26,6 +26,7 @@
 <script setup>
 import { ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app'
+import { http } from '@/utils/service.js'
 
 const loading = ref(false)
 const errorMsg = ref('')
@@ -33,7 +34,6 @@ const returnUrl = ref(null)
 
 onLoad((options) => {
 	returnUrl.value = options.returnUrl ? decodeURIComponent(options.returnUrl) : null
-	console.log('optionsxxx', Object.prototype.toString.call(options).split(' ')[1].split(']')[0], '===', returnUrl.value);
 })
 
 // 登录按钮点击事件
@@ -43,12 +43,10 @@ const handleLogin = async () => {
 		errorMsg.value = '';
 		
 		// 1. 获取用户信息（会弹出授权窗口）
-		const userInfo = await getUserProfile();
-		console.log('获取用户信息成功:', userInfo);
+		const userInfo = await getUserProfile()
 		
 		// 2. 获取登录凭证
 		const loginRes = await wxLogin();
-		console.log('获取登录凭证成功:', loginRes);
 		
 		// 3. 发送到后端验证
 		await sendLoginRequest({
@@ -57,13 +55,8 @@ const handleLogin = async () => {
 		});
 		
 	} catch (error) {
-		console.error('登录失败:', error);
-		loading.value = false;
-		if (error.errMsg && error.errMsg.includes('deny')) {
-			errorMsg.value = '需要授权才能登录';
-		} else {
-			errorMsg.value = '登录失败，请重试';
-		}
+		loading.value = false
+		errorMsg.value = '登录失败，请重试'
 	}
 };
 
@@ -91,39 +84,28 @@ const wxLogin = () => {
 
 // 发送登录请求到后端
 const sendLoginRequest = async (data) => {
-	// 这里替换为你的实际API地址
-	const apiUrl = 'https://www.melon-bamboo.com/wechat/user/code2Session';
-	
-	try {
-		const res = await uni.request({
-			url: apiUrl,
-			method: 'POST',
-			data: {
-				code: data.code,
-			}
-		});
+  try {
+    const { token } = await http.post('/wechat/user/code2Session', {
+        code: data.code
+    })
+
+		// 登录成功
+		uni.showToast({
+			title: '登录成功',
+			icon: 'success'
+		})
 		
-		console.log('后端登录响应:', res);
+		// 保存用户信息到本地
+		uni.setStorageSync('token', token)
 		
-		if (res.data && res.data.success) {
-			// 登录成功
-			uni.showToast({
-				title: '登录成功',
-				icon: 'success'
-			});
-			
-			// 保存用户信息到本地
-			uni.setStorageSync('token', res.data.data.token);
-			
-			// 跳转到原来页面
-			setTimeout(() => {
-				console.log('xxx', returnUrl.value);
-				
+		// 跳转到原来页面
+		setTimeout(() => {
+			if (returnUrl.value.includes('/pages/get-coupon/index')) {
+				uni.redirectTo({ url: returnUrl.value })
+			} else {
 				uni.switchTab({ url: '/pages/index/index' })
-			}, 1000)
-		} else {
-			throw new Error(res.data.message || '登录失败')
-		}
+			}
+		}, 500)
 	} catch (error) {
 		console.error('后端登录失败:', error)
 	}

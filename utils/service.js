@@ -68,9 +68,21 @@ http.interceptors.response.use((response) => {
 			case 401:
 				const pages = getCurrentPages()
 				const currentPage = pages[pages.length - 1]
-				const currentPagePath = currentPage.$page.fullPath
+				// 使用 route + options 重新构建URL，避免双重编码
+				const currentRoute = currentPage.route
+				const currentOptions = currentPage.options
+				let currentPagePath = `/${currentRoute}`
+				
+				// 如果有查询参数，手动拼接
+				if (currentOptions && Object.keys(currentOptions).length > 0) {
+					const queryString = Object.keys(currentOptions)
+						.map(key => `${key}=${currentOptions[key]}`)
+						.join('&')
+					currentPagePath += `?${queryString}`
+				}
+				
 				console.log('currentPagePathxxx', Object.prototype.toString.call(currentPagePath).split(' ')[1].split(']')[0], '===', currentPagePath);
-				uni.navigateTo({
+				uni.reLaunch({
 					url: `/pages/user-login/index?returnUrl=${encodeURIComponent(currentPagePath)}`
 				})
 				return Promise.reject(response)
