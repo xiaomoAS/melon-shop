@@ -168,6 +168,7 @@ import { MEMBER_LEVEL, MEMBER_LEVEL_NAME, PAY_METHOD, SOURCE, PAY_STATUS } from 
 import { COUPON_TYPE } from '@/components/coupon-list/constants.js'
 import { ORDER_STATUS } from '@/pages/order-list/constants.js'
 import Recharge from '@/components/recharge/index.vue'
+import { resourceHrefHandler } from '@/utils/common'
 
 export default {
 	data() {
@@ -189,6 +190,9 @@ export default {
 			COUPON_TYPE,
 			PAY_METHOD,
 			payLoading: false,
+			resourceInfo: {
+				url: 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/d419c2daf131498484ff07beb7e1d06e/banner%20%281%29.png?Expires=2074071887&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=47k6WS%2FO6HxHFI3i%2B%2FsunBvm53k%3D', // 资源地址
+			}
 		}
 	},
 	components: {
@@ -272,6 +276,7 @@ export default {
 	async onLoad(options) {
 		this.productIdList = options.productIdList ? options.productIdList.split(',').map((id) => Number(id)) : []
 		this.orderId = options.orderId || null
+		this.getTopImg()
 		// 初始化数据
 		await this.initPageData();
 		// 保存页面参数到data中，供onShow使用
@@ -286,6 +291,13 @@ export default {
 		}
 	},
 	methods: {
+		async getTopImg() {
+			try {
+				this.resourceInfo = await this.$http.post('/resource/get', { id: 7 })
+			} catch (error) {
+				this.resourceInfo.url = 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/d419c2daf131498484ff07beb7e1d06e/banner%20%281%29.png?Expires=2074071887&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=47k6WS%2FO6HxHFI3i%2B%2FsunBvm53k%3D'
+			}
+		},
 		phoneHandler() {
 			wx.makePhoneCall({
 				phoneNumber: '13020036833',
@@ -477,6 +489,7 @@ export default {
 			this.isExpanded = !this.isExpanded
 		}
 	},
+	resourceHrefHandler
 }
 </script>
 

@@ -30,7 +30,10 @@
 								{{ memberConfig.title }}
 							</view>
 						</view>
-						<view class="balance">当前会员折扣：<text>{{ memberInfo.discount * 10 }}折</text></view>
+						<view class="balance">当前会员折扣：
+							<text v-if="memberInfo.level === MEMBER_LEVEL.NORMAL">无折扣</text>
+							<text v-else>{{ memberInfo.discount * 10 }}折</text>
+						</view>
 						<view class="balance">会员余额: <text>{{ memberInfo.remainPrice }}元</text></view>
 					</view>
 					
@@ -86,6 +89,7 @@ export default {
 			memberInfo: {},
 			userInfo: {},
 			payLoading: false,
+			MEMBER_LEVEL,
 			memberPackages: [
 				{
 					level: MEMBER_LEVEL.GOLD,

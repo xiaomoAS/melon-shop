@@ -1,7 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="coupon_baner">
-			<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/42bed1e64df34a5bae49856265907066/carousel-1.png?Expires=2073865388&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=wibX0MJ%2By7WmGBHvAoaHXBrkaEE%3D" mode="widthFix"></image>
+			<image :src="resourceInfo.url" mode="widthFix" @click="resourceHrefHandler(resourceInfo)"></image>
 		</view>
 		<view class="coupon_nav">
 			<view
@@ -26,7 +26,7 @@
 <script>
 import CouponList from '@/components/coupon-list/index.vue'
 import { COUPON_TYPE } from '@/components/coupon-list/constants.js'
-
+import { resourceHrefHandler } from '@/utils/common'
 
 export default {
 	name: 'MyCounpon',
@@ -40,17 +40,31 @@ export default {
 				{ name: '优惠券', value: COUPON_TYPE.NEW_DISCOUNT },
 				{ name: '包邮券', value: COUPON_TYPE.FREIGHT }
 			],
-			COUPON_TYPE
+			COUPON_TYPE,
+			resourceInfo: {
+				url: 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/42bed1e64df34a5bae49856265907066/carousel-1.png?Expires=2073865388&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=wibX0MJ%2By7WmGBHvAoaHXBrkaEE%3D'
+			}
 		}
 	},
+	onLoad() {
+		this.getTopImg()
+	},
 	methods: {
+		async getTopImg() {
+			try {
+				this.resourceInfo = await this.$http.post('/resource/get', { id: 8 })
+			} catch (error) {
+				this.resourceInfo.url = 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/42bed1e64df34a5bae49856265907066/carousel-1.png?Expires=2073865388&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=wibX0MJ%2By7WmGBHvAoaHXBrkaEE%3D'
+			}
+		},
 		// 切换tab
 		switchTab(type) {
 			this.activeTab = type;
 			// 可以在这里添加切换tab时的其他逻辑，比如重新加载数据
 			const tabName = this.tabList.find(tab => tab.value === type)?.name;
 			console.log('切换到tab:', tabName, 'type:', type);
-		}
+		},
+		resourceHrefHandler
 	}
 }
 </script>

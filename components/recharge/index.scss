@@ -91,14 +91,18 @@
 }
 
 .list {
-	width: 33%;
-	margin-right: 1%;
+	width: 32%;
 	margin-bottom: 20rpx;
 	padding: 20rpx 0;
 	border-radius: 10rpx;
 	background: #F7F7F7;
 	text-align: center;
 	transition: all 0.3s ease;
+	box-sizing: border-box;
+
+	&:not(:last-of-type) {
+		margin-right: 2%;
+	}
 }
 
 .list:nth-child(3n) {
