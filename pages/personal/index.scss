@@ -109,6 +109,9 @@ page {
 }
 .user_member_cont.lv_1 {
   background: linear-gradient(#fcd896, #fcd1ab, #fdf2c6, #f8ecc0);
+  .icon-image {
+    width: 180rpx;
+  }
 }
 .user_member_cont.lv_1 .lv_tips {
   background: linear-gradient(to right, #FFD700, #ffd483, #FFE4B5, #FFE4B5);
@@ -131,6 +134,9 @@ page {
 }
 .user_member_cont.lv_2 {
   background: linear-gradient(#ABC0FF, #E4D4FE, #EDEDF9, #EDEDF9);
+  .icon-image {
+    width: 160rpx;
+  }
 }
 .user_member_cont.lv_2 .lv_tips {
   background: linear-gradient(to right, #ABC0FF, #E4D4FE, #E4E4F8, #E4E4F8);
@@ -153,6 +159,10 @@ page {
 }
 .user_member_cont.lv_0 {
   background: linear-gradient(#B3BED1, #DAE1EF, #B9C3D7);
+
+  .icon-image {
+    width: 150rpx;
+  }
 }
 .user_member_cont.lv_0 .lv_tips {
   background: #AAB4C5;
@@ -175,6 +185,9 @@ page {
 }
 .user_member_cont.lv_3 {
   background: linear-gradient(#73AEFE, #ABB9FE, #DEF0FE);
+  .icon-image {
+    width: 202rpx;
+  }
 }
 .user_member_cont.lv_3 .lv_tips {
   background: linear-gradient(to right, #C6DEFD, #7CBAFF, #D6E7FE);
@@ -195,29 +208,10 @@ page {
 .user_member_cont.lv_3 .lv_exp_cont .exp_line .ing {
   background: linear-gradient(to left, #0082F2, #0066FF);
 }
-.user_member_cont .lv0_tips_ico {
+.user_member_cont .icon-image {
   position: absolute;
   right: 40rpx;
-  width: 200rpx;
   top: -50rpx;
-}
-.user_member_cont .lv1_tips_ico {
-  position: absolute;
-  right: 40rpx;
-  width: 205rpx;
-  top: -50rpx;
-}
-.user_member_cont .lv2_tips_ico {
-  position: absolute;
-  right: 40rpx;
-  width: 197rpx;
-  top: -50rpx;
-}
-.user_member_cont .lv3_tips_ico {
-  position: absolute;
-  right: 40rpx;
-  width: 322rpx;
-  top: -100rpx;
 }
 .user_member_cont .lv_tips {
   display: inline-flex;

@@ -17,7 +17,7 @@
 		</view>
 		<!-- 会员信息 -->
 		<view v-if="memberConfig" class="user_member_cont" :class="memberConfig.mainClass">
-			<image class="lv0_tips_ico" :src="memberConfig.mainIcon" mode="widthFix"></image>
+			<image class="icon-image" :src="memberConfig.mainIcon" mode="widthFix"></image>
 			<view class="lv_tips">当前等级</view>
 			<view class="level-icons">
 				<view class="lv_inf">
