@@ -1,3 +1,5 @@
+import { RESOURCE_LINK_TYPE } from "../constants/common";
+
 /**
  * 格式化时间函数
  * @param {Date|string|number} date - 要格式化的时间，可以是Date对象、时间戳或时间字符串
@@ -124,3 +126,43 @@ export const dateFormats = {
   iso: (date) => new Date(date).toISOString(),
   timestamp: (date) => new Date(date).getTime()
 }
+
+/**
+ * @description: 资源位跳转逻辑
+ */
+export const resourceHrefHandler = (item) => {
+  if (!item.linkUrl || !item.linkType) return
+  const linkType = Number(item.linkType)
+  if (linkType === RESOURCE_LINK_TYPE.MINI) {
+    // 首页&我的页面
+    if (['/pages/index/index', '/pages/personal/index'].includes(item.linkType)) {
+      uni.switchTab({ url: item.linkUrl })
+    } else if (item.linkUrl.includes('/pages/product-list/index')) {
+      // 类目页面
+      const regex = /[?&]cateId=([^&#]*)/
+      const results = item.linkUrl.match(regex)
+      const cateId = results ? results[1] : null
+      if (cateId) {
+        wx.setStorageSync('cateId', Number(cateId))
+      }
+			uni.switchTab({ url: '/pages/product-list/index' })
+    } else if (item.linkUrl.includes('/pages/order-list/index')) {
+      // 订单列表页面
+      const regex = /[?&]orderTab=([^&#]*)/
+      const results = item.linkUrl.match(regex)
+      const orderTab = results ? results[1] : null
+      if (orderTab) {
+        wx.setStorageSync('orderTab', Number(orderTab))
+      }
+			uni.switchTab({ url: '/pages/order-list/index' })
+    } else {
+      // 其他正常页面
+      uni.navigateTo({ url: item.linkUrl  })
+    }
+  } else if (linkType === RESOURCE_LINK_TYPE.OFFICIAL) {
+    // 公众号
+    wx.openOfficialAccountArticle({
+      url: item.linkUrl
+    })
+  }
+} 

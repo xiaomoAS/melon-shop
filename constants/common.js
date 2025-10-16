@@ -28,3 +28,8 @@ export const SOURCE = {
 export const PAY_STATUS = {
 	SUCCESS: 4, // 成功
 }
+
+export const RESOURCE_LINK_TYPE = {
+  MINI: 1, // 小程序
+  OFFICIAL: 2, // 公众号
+}

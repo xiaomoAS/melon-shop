@@ -15,7 +15,7 @@
 				<!-- 轮播图 -->
 				<swiper v-if="carouselImages.length" class="index_baner" :autoplay="true" :interval="3000" :duration="1000">
 					<swiper-item v-for="(item,index) in carouselImages" :key="index">
-						<view class="swiper-item"><image :src="item.url" name="{{item.name}}" id="{{item.id}}" mode="aspectFill"></image> </view>
+						<view class="swiper-item" @click="resourceHrefHandler(item)"><image :src="item.url" name="{{item.name}}" id="{{item.id}}" mode="aspectFill"></image> </view>
 					</swiper-item>
 				</swiper>
 
@@ -87,6 +87,7 @@
 	import ProductItem from '@/components/product-item/index.vue'
 	import ShopCart from '@/components/shop-cart/index.vue'
 	import LoadMore from '@/components/load-more/index.vue'
+	import { resourceHrefHandler } from '@/utils/common'
 
 	export default {
 		data() {
@@ -186,6 +187,7 @@
 					this.$refs.shopCartRef.closeShopCart()
 				}
 			},
+			resourceHrefHandler,
 		},
 
 	}
