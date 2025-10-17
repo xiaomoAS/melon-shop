@@ -69,9 +69,9 @@
 			</view>
 			<view class="total_inf">
 				<view class="dd">
-					共 <text>{{ order.productList.length }}</text> 件商品
-					原价: <text>¥{{ order.totalAmount }} </text>
-					{{ order.orderStatus === ORDER_STATUS.WAIT_PAY ? '应付' : '实付' }}: <text>¥{{ order.realPayAmount }}</text>
+					共 <text class="amount">{{ order.productList.length }}</text> 件商品
+					原价: <text class="amount">¥{{ order.totalAmount }} </text>
+					<text v-if="order.orderStatus > ORDER_STATUS.WAIT_PAY"> 实付: <text class="amount">¥{{ order.realPayAmount }}</text></text>
 				</view>
 			</view>
 			<view class="deliv_exp">
@@ -84,7 +84,7 @@
 					<view class="dt">物流信息：</view>
 					<view class="dd">
 						物流公司：{{ order.waybillInfo.waybillCompanyName }}
-						<view>运单号：{{ order.waybillInfo.waybillCode }}</view>
+						<view v-if="order.waybillInfo.waybillCode">运单号：{{ order.waybillInfo.waybillCode }}</view>
 					</view>
 				</view>
 				<view class="dl">
