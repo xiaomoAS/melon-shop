@@ -5,7 +5,7 @@
     <uni-popup ref="popup" type="bottom" border-radius="10px 10px 0 0" background-color="#fff">
       <view class="getnickbox">
         <view class="flex_align_center">
-          <image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/4cba2ff43c034c16aab096a3d322ee2e/orange-logo%20%281%29.png?Expires=2073975970&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=svCx34i6wBqlgJ1PYCcMbpAby3c%3D" class="logoimg" mode="aspectFit"></image>
+          <image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/da449df52fc542dc9750403211634c3a/yuguo_logo%20%281%29.png?Expires=2076054860&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=MD4eu2NbpcKOFbv7%2BtjyfdHlctI%3D" class="logoimg" mode="aspectFit"></image>
           <view class="name">
             <text>钰果日记生鲜申请</text>
           </view>
