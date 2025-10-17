@@ -1,5 +1,5 @@
 {
-    "name" : "瓜田里的猹",
+    "name" : "钰果日记生鲜",
     "appid" : "__UNI__6A2F798",
     "description" : "",
     "versionName" : "1.0.0",
@@ -138,7 +138,7 @@
         //         }
         //     }
         // }
-        "title" : "瓜田里的猹",
+        "title" : "钰果日记生鲜",
         "optimization" : {
             "treeShaking" : {
                 "enable" : false

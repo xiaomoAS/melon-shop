@@ -121,7 +121,7 @@
 		// #ifdef H5
 		"navigationStyle":"custom", //设置成 custom 即可解决微信 H5 双标题的问题
 		// #endif 
-		"navigationBarTitleText": "瓜田里的猹",
+		"navigationBarTitleText": "钰果日记生鲜",
 		"navigationBarTextStyle":"black",
 		"navigationBarBackgroundColor": "#fff",
 		"backgroundColor": "#fff",

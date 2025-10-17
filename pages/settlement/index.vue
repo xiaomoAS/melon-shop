@@ -65,6 +65,10 @@
 					</view>
 				</view>
 			</view>
+			<view v-else class="no-coupon-tip">
+				<view>您当前的优惠券用完啦</view>
+				<view>关注<text class="button-text" @click="openOfficial">瓜田里一只猹</text>，每天都有券领取哟～</view>
+			</view>
 		</view>
 		<view class="order_total_cont">
 			<view class="tle_total">
@@ -291,6 +295,19 @@ export default {
 		}
 	},
 	methods: {
+		openOfficial() {
+			wx.openOfficialAccountProfile({
+				username: 'gh_f67e74cdaf08',
+				success(res) {
+					// 调用成功的回调函数
+					console.log('打开成功', res);
+				},
+				fail(err) {
+					// 调用失败的回调函数
+					console.log('打开失败', err);
+				}
+			})
+		},
 		async getTopImg() {
 			try {
 				this.resourceInfo = await this.$http.post('/resource/get', { id: 7 })

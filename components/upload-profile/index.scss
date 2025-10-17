@@ -7,11 +7,13 @@
   }
   
   .logoimg {
-    width: 50rpx;
-    height: 50rpx;
+    width: 60rpx;
+    height: 60rpx;
   }
   
   .name {
+    font-size: 36rpx;
+    font-weight: 600;
     margin-left: 20rpx;
     
     text {
@@ -20,7 +22,8 @@
   }
   
   .m1 {
-    font-weight: 500;
+    font-weight: 600;
+    font-size: 32rpx;
     margin-top: 30rpx;
   }
   

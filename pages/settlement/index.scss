@@ -400,3 +400,12 @@ page {
 .strong {
   font-weight: 600;
 }
+.no-coupon-tip {
+  font-size: 24rpx;
+  text-align: center;
+  color: #8F8F8F;
+
+  .button-text {
+    color:#4A90E2;
+  }
+}

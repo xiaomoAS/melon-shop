@@ -1,3 +1,7 @@
+.coupon-box {
+  height: 100%;
+}
+
 .coupon_list {
   margin-bottom: 20rpx;
   background: url("https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/e1eeeb8f19ec4314bef478d3f42f7324/yhq_bg.png?Expires=2074059159&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=iJYLsH%2FzuJB0pBCAdYtt2olHyxY%3D") no-repeat center;
@@ -78,7 +82,16 @@
 }
 
 .no-coupon-tip {
-  font-size: 30rpx;
+  font-size: 24rpx;
   text-align: center;
   color: #8F8F8F;
+
+  .button-text {
+    color:#4A90E2;
+  }
+
+  &.my-coupon {
+    font-size: 28rpx;
+    margin-top: 20rpx;
+  }
 }
