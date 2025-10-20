@@ -1,7 +1,7 @@
 <template>
 	<view class="contain">
 		<view class="order_baner">
-			<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/d419c2daf131498484ff07beb7e1d06e/banner%20%281%29.png?Expires=2074071887&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=47k6WS%2FO6HxHFI3i%2B%2FsunBvm53k%3D" mode="widthFix"></image>
+			<image :src="resourceInfo.url" mode="widthFix" @click="resourceHrefHandler(resourceInfo)"></image>
 		</view>
 
 		<navigator url="/pages/address-manage/index" class="order_adres_cont">
@@ -504,9 +504,9 @@ export default {
 		// 切换展开/收起状态
 		toggleExpand() {
 			this.isExpanded = !this.isExpanded
-		}
+		},
+		resourceHrefHandler,
 	},
-	resourceHrefHandler
 }
 </script>
 
