@@ -45,7 +45,7 @@
 				</view>
 			</view>
 			
-			<ShopCart :cart-type="CART_TYPE.BOTTOM" :info="{ ...detail, imgUrl: detail.mainImgUrl }"/>
+			<ShopCart v-if="token" :cart-type="CART_TYPE.BOTTOM" :info="{ ...detail, imgUrl: detail.mainImgUrl }"/>
 		</view>
 		
 	</view>
@@ -61,7 +61,8 @@ export default {
 	data() {
 		return {
 			detail: {},
-			CART_TYPE
+			CART_TYPE,
+			token: null
 		}
 	},
 	components: {
@@ -85,6 +86,7 @@ export default {
 	onLoad(options) {
 		console.log('页面加载参数:', options)
 		this.detail = {}
+		this.token = uni.getStorageSync('token')
 		if (options && options.id) {
 			this.getProductDetail(options.id)
 		}

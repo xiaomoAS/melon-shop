@@ -24,7 +24,7 @@
 						<ProductItem :info="item" :cart-list="cartList" @refreshShopCart="refreshShopCart"/>
 					</view>
 					
-					<ShopCart ref=shopCartRef @updateCartList="(val) => cartList = val" />
+					<ShopCart v-if="token" ref=shopCartRef @updateCartList="(val) => cartList = val" />
 					<LoadMore 
 						v-if="productList.length && !noMoreData"
 						@visible="loadMoreData" 
@@ -55,7 +55,8 @@ export default{
 			totalCount: 0,
 			keywords: '',
 			productIdList: undefined,
-			cartList: []
+			cartList: [],
+			token: null,
 		}
 	},
 	components: {
@@ -76,6 +77,7 @@ export default{
 		this.getProductList()
 	},
 	onShow() {
+		this.token = uni.getStorageSync('token')
 		this.refreshShopCart()
 	},
 	methods: {
