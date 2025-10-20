@@ -158,7 +158,7 @@ export default {
 	methods: {
 		phoneHandler() {
 			wx.makePhoneCall({
-				phoneNumber: '13020036833',
+				phoneNumber: '18612655137',
 				success(res) {
 					console.log('拨打电话成功', res);
 				},

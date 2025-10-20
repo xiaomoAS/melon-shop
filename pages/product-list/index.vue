@@ -26,7 +26,7 @@
 					<view class="pro_list_cont" v-for="(item, index) in productList" :key="index" :class="{ 'null': !item.stock }">
 						<ProductItem :info="item" :cart-list="cartList" @refreshShopCart="refreshShopCart"/>
 					</view>
-					<ShopCart ref="shopCartRef" @updateCartList="(val) => cartList = val"/>
+					<ShopCart v-if="token" ref="shopCartRef" @updateCartList="(val) => cartList = val"/>
 				</view>
 				
 				<LoadMore 
@@ -59,7 +59,8 @@ export default{
 			totalCount: 0,
 			activeCate: null,
 			searchWords: '',
-			cartList: []
+			cartList: [],
+			token: null,
 		}
 	},
 	computed: {
@@ -73,6 +74,7 @@ export default{
 		ShopCart
 	},
 	async onShow() {
+		this.token = uni.getStorageSync('token')
 		this.productList = []
 		this.page = 1 // 重置页码
 		const id = wx.getStorageSync('cateId')

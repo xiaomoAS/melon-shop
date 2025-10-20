@@ -78,14 +78,14 @@
 		</view>
 
 		<view class="user_bits_txt">
-			<view class="txt">如果您有问题，可以电话联系<text class="phone-text" @click="phoneHandler">13020036833</text>,我们将高效解决！您还可以在我们未覆盖区域当团长，挣佣金！</view>
+			<view class="txt">如果您有问题，可以电话联系<text class="phone-text" @click="phoneHandler">18612655137</text>,我们将高效解决！您还可以在我们未覆盖区域当团长，挣佣金！</view>
 			<view class="bit_dl">
 				<view class="dt">工作日：09:00-18:00</view>
-				<view class="dd">客栈热线&nbsp;<text class="phone-text" @click="phoneHandler">13020036833</text></view>
+				<view class="dd">客栈热线&nbsp;<text class="phone-text" @click="phoneHandler">18612655137</text></view>
 			</view>
 		</view>
 
-		<view class="bottom-button" @click="openArticleHandler">我要当团长!</view>
+		<!-- <view class="bottom-button" @click="openArticleHandler">我要当团长!</view> -->
 
 		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
@@ -133,7 +133,7 @@
 		methods: {
 			phoneHandler() {
 				wx.makePhoneCall({
-					phoneNumber: '13020036833',
+					phoneNumber: '18612655137',
 					success(res) {
 						console.log('拨打电话成功', res);
 					},

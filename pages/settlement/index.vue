@@ -152,7 +152,7 @@
 				</view>
 			</radio-group>
 			
-			<view class="bit_txt">如果您有问题，可以电话联系<text class="phone-text" @click="phoneHandler">13020036833</text>,我们将高效解决！</view>
+			<view class="bit_txt">如果您有问题，可以电话联系<text class="phone-text" @click="phoneHandler">18612655137</text>,我们将高效解决！</view>
 		</view>
 		<view class="order_foot_cont">
 			<view class="cont">
@@ -317,7 +317,7 @@ export default {
 		},
 		phoneHandler() {
 			wx.makePhoneCall({
-				phoneNumber: '13020036833',
+				phoneNumber: '18612655137',
 				success(res) {
 					console.log('拨打电话成功', res);
 				},
