@@ -52,7 +52,7 @@ export default {
 	methods: {
 		async getTopImg() {
 			try {
-				this.resourceInfo = await this.$http.post('/resource/get', { id: 8 })
+				this.resourceInfo = await this.$http.post('/resource/get', { id: 16 })
 			} catch (error) {
 				this.resourceInfo.url = 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/42bed1e64df34a5bae49856265907066/carousel-1.png?Expires=2073865388&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=wibX0MJ%2By7WmGBHvAoaHXBrkaEE%3D'
 			}
