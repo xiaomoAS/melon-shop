@@ -112,14 +112,14 @@
 .ifiac_filter_cont .l_filter_nav .li.active::after {
   left: 0;
 }
-.ifiac_filter_cont .l_filter_nav .li:hover {
-  background: #fff;
-  color: #60C45D;
-  font-weight: bold;
-}
-.ifiac_filter_cont .l_filter_nav .li:hover::after {
-  left: 0;
-}
+// .ifiac_filter_cont .l_filter_nav .li:hover {
+//   background: #fff;
+//   color: #60C45D;
+//   font-weight: bold;
+// }
+// .ifiac_filter_cont .l_filter_nav .li:hover::after {
+//   left: 0;
+// }
 .ifiac_filter_cont .main_cont {
   overflow-y: scroll;
   padding-bottom: 40px;

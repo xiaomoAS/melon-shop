@@ -23,7 +23,7 @@
 						<view class="txt">好吃，健康，可信赖</view>
 					</view>
 					<view v-for="(cate, cateIndex) in cateList" :key="cate.id" :id="'cate-' + cate.id" class="cate-section">
-						<view class="cate-title" v-if="getProductsByCate(cate.id).length > 0">{{ cate.name }}</view>
+						<!-- <view class="cate-title" v-if="getProductsByCate(cate.id).length > 0">{{ cate.name }}</view> -->
 						<view class="pro_list_cont" v-for="(item, index) in getProductsByCate(cate.id)" :key="item.id" :class="{ 'null': !item.stock }">
 							<ProductItem :info="item" :cart-list="cartList" @refreshShopCart="refreshShopCart"/>
 						</view>
@@ -56,7 +56,8 @@ export default{
 			scrollIntoView: '',
 			scrollTop: 0,
 			catePositions: [],
-			isScrolling: false
+			isScrolling: false,
+			scrollTimer: null,
 		}
 	},
 	computed: {
@@ -66,24 +67,29 @@ export default{
 		LoadMore,
 		ShopCart
 	},
-	async onShow() {
-		this.token = uni.getStorageSync('token')
-		this.productList = []
-		this.page = 1 // 重置页码
-		const id = wx.getStorageSync('cateId')
-		await this.getCates()
-		this.activeCate = id || (this.cateList.length ? this.cateList[0].id : null)
-		await this.getAllProducts()
-		
-		// 如果有初始cateId，自动滚动到对应位置
-		if (id && this.cateList.length > 0) {
-			this.$nextTick(() => {
-				this.scrollToCate(id)
-			})
-		}
-		
-		this.refreshShopCart()
-	},
+async onShow() {
+	this.token = uni.getStorageSync('token')
+	this.productList = []
+	this.page = 1 // 重置页码
+	const id = wx.getStorageSync('cateId')
+	await this.getCates()
+	
+	// 确保cateList有数据后再设置activeCate
+	if (this.cateList.length > 0) {
+		this.activeCate = id || this.cateList[0].id
+	} else {
+		this.activeCate = null
+	}
+	
+	await this.getAllProducts()
+	
+	// 如果有初始cateId，自动滚动到对应位置
+	if (id && this.cateList.length > 0) {
+		this.scrollToCate(id)
+	}
+	
+	this.refreshShopCart()
+},
 	methods: {
 		async getAllProducts() {
 			if (!this.cateList.length) return
@@ -101,11 +107,13 @@ export default{
 		},
 		cateClickHandler(id) {
 			this.activeCate = id
-			// wx.setStorageSync('cateId', id)
 			this.scrollToCate(id)
 		},
 		scrollToCate(cateId) {
-			this.scrollIntoView = 'cate-' + cateId
+			this.scrollIntoView = null
+			this.$nextTick(() => {
+				this.scrollIntoView = 'cate-' + cateId
+			})
 		},
 		async getCates() {
 			try {
@@ -138,7 +146,7 @@ export default{
 			clearTimeout(this.scrollTimer)
 			this.scrollTimer = setTimeout(() => {
 				this.calculateCatePositions()
-			}, 100)
+			}, 10) // 增加防抖时间，避免频繁计算
 		},
 		calculateCatePositions() {
 			this.catePositions = []
@@ -181,12 +189,13 @@ export default{
 			})
 		},
 		determineActiveCate() {
+			
 			if (this.catePositions.length === 0) return
 			
 			// 找到当前滚动位置对应的类目
-			let currentCate = this.activeCate
+			let currentCate = null
 			const currentScrollTop = this.scrollTop
-			const threshold = 100 // 阈值，调整敏感度
+			const threshold = 20 // 阈值，避免过于敏感
 			
 			// 从上到下遍历，找到第一个底部位置大于当前滚动位置+阈值的类目
 			for (let i = 0; i < this.catePositions.length; i++) {
@@ -198,14 +207,19 @@ export default{
 			}
 			
 			// 如果没有找到合适的类目，选择最后一个
-			if (currentCate === this.activeCate && this.catePositions.length > 0) {
+			if (currentCate === null && this.catePositions.length > 0) {
 				const lastPos = this.catePositions[this.catePositions.length - 1]
 				if (lastPos && currentScrollTop + threshold >= lastPos.top) {
 					currentCate = lastPos.id
 				}
 			}
 			
-			if (currentCate !== this.activeCate) {
+			// 如果还是null，选择第一个类目
+			if (currentCate === null && this.cateList.length > 0) {
+				currentCate = this.cateList[0].id
+			}
+			
+			if (currentCate !== null && currentCate !== this.activeCate) {
 				this.activeCate = currentCate
 			}
 		}
