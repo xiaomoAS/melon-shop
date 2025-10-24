@@ -28,17 +28,6 @@
 					</view>
 					<ShopCart v-if="token" ref="shopCartRef" @updateCartList="(val) => cartList = val"/>
 				</view>
-				
-				<LoadMore 
-					v-if="productList.length && !noMoreData"
-					@visible="loadMoreData" 
-					:threshold="50"
-					:once="false"
-				>
-					<view class="custom-load-more">
-						<span>上拉加载更多</span>
-					</view>
-				</LoadMore>
 			</view>
 		</view>
 	</view>
@@ -55,7 +44,7 @@ export default{
 			cateList:[],
 			productList: [],
 			page: 1,
-			pageSize: 5,
+			pageSize: 100,
 			totalCount: 0,
 			activeCate: null,
 			searchWords: '',
@@ -64,9 +53,6 @@ export default{
 		}
 	},
 	computed: {
-		noMoreData() {
-			return this.page * this.pageSize >= this.totalCount
-		},
 	},
 	components: {
 		ProductItem,
@@ -80,10 +66,16 @@ export default{
 		const id = wx.getStorageSync('cateId')
 		await this.getCates()
 		this.activeCate = id || (this.cateList.length ? this.cateList[0].id : null)
-		this.getProductList()
+		this.getAllProducts()
 		this.refreshShopCart()
 	},
 	methods: {
+		async getAllProducts() {
+			if (!this.cateList.length) return
+			const promiseArr = this.cateList.map((item) => this.getProductsByCateId(item.id))
+			const results = await Promise.all(promiseArr) || []
+			this.productList = results.flat()
+		},
 		refreshShopCart() {
 			if (this.$refs.shopCartRef) {
 				this.$refs.shopCartRef.refreshShopCart()
@@ -97,7 +89,6 @@ export default{
 			this.page = 1 // 重置页码
 			this.activeCate = id;
 			wx.setStorageSync('cateId', id)
-			this.getProductList()
 		},
 		async getCates() {
 			try {
@@ -106,28 +97,16 @@ export default{
 				this.cateList = []
 			}
 		},
-		loadMoreData() {
-			// 检查是否还有更多数据
-			if (this.noMoreData) {
-				console.log('没有更多数据了')
-				return
-			}
-			// 增加页码并加载下一页
-			this.page = this.page + 1
-			this.getProductList()
-		},
-		async getProductList() {
+		async getProductsByCateId(id = null) {
 			try {
 				const { rows, total } = await this.$http.post('/items/catItems', {
-					cateId:this.activeCate ? Number(this.activeCate) : null,
+					cateId: id,
 					page: this.page,
 					pageSize: this.pageSize,
 				})
-				this.productList.push(...rows)
-				this.totalCount = total
+				return rows || []
 			} catch (error) {
-				this.productList = []
-				this.totalCount = 0
+				return []
 			}
 		},
 	},

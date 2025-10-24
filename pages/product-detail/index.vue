@@ -1,5 +1,5 @@
 <template>
-	<view class="warpin">
+	<view class="detail-box">
 		<view class="detail_baner">
 			<image :src="detail.mainImgUrl" mode="widthFix"></image>
 			<uni-icons class="detail_baner-icon" type="left" size="30" color="#FFFFFF" @click="backHandler"></uni-icons>
