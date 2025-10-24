@@ -195,7 +195,7 @@ async onShow() {
 			// 找到当前滚动位置对应的类目
 			let currentCate = null
 			const currentScrollTop = this.scrollTop
-			const threshold = 20 // 阈值，避免过于敏感
+			const threshold = 150 // 阈值，避免过于敏感
 			
 			// 从上到下遍历，找到第一个底部位置大于当前滚动位置+阈值的类目
 			for (let i = 0; i < this.catePositions.length; i++) {
