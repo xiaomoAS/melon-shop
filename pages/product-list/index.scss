@@ -1,3 +1,8 @@
+.product-box {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
 .index_head_bg {
   position: absolute;
   top: 0;
@@ -56,21 +61,23 @@
 .ifiac_filter_cont {
   border-top-right-radius: 20rpx;
   background: linear-gradient(#ceedcd, #fff 10%);
-  height: calc(100vh - 210rpx);
   padding-left: 130rpx;
   position: relative;
   z-index: 2;
   margin-top: -20rpx;
+  height: calc(100vh - 310rpx);
 }
 .ifiac_filter_cont .l_filter_nav {
   width: 130rpx;
   position: absolute;
   top: 0;
   left: 0;
-  height: calc(100vh - 110rpx);
+  height: calc(100vh - 310rpx);
   overflow-y: scroll;
   background: #F4F4F4;
-  padding: 20rpx 0 0;
+  padding: 20rpx 0 40px;
+  box-sizing: border-box;
+  overflow-y: auto;
 }
 .ifiac_filter_cont .l_filter_nav .li {
   position: relative;
@@ -114,10 +121,11 @@
   left: 0;
 }
 .ifiac_filter_cont .main_cont {
-  height: calc(100vh - 110rpx);
   overflow-y: scroll;
-  padding-bottom: 60px;
+  padding-bottom: 40px;
   background: #FFFFFF;
+  height: calc(100vh - 310rpx);
+  box-sizing: border-box;
 }
 .test_report_dc {
   position: fixed;
@@ -173,17 +181,11 @@
 }
 
 .index_pro_contain {
-  border-radius: 20rpx;
   margin: 0 auto;
   background: #fff;
   position: relative;
   padding: 20rpx;
-}
-.index_pro_contain .pro_head_bg {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
+  background: linear-gradient(180deg, #60C45D -23.6%, #FFFFFF 7.7%);
 }
 .index_pro_contain .title_head {
   display: flex;
@@ -342,4 +344,19 @@
 }
 .pro_list_cont.null .bit_cont .bit_deta .ys_time {
   display: none;
+}
+
+	
+.cate-section {
+  margin-bottom: 20rpx;
+  z-index: 1;
+}
+
+.cate-title {
+  font-size: 32rpx;
+  font-weight: bold;
+  color: #333;
+  padding: 20rpx 0;
+  margin-left: 20rpx;
+  border-bottom: 1rpx solid #f0f0f0;
 }

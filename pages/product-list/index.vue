@@ -1,5 +1,5 @@
 <template>
-	<view>
+	<view class="product-box">
 		<image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/916cae2f99af4241acf65617a6a07bd9/index_head_bg.png?Expires=2073875593&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=6l%2B1kM%2BmbcTT4vmhVbD6zlktjVo%3D" class="index_head_bg" mode="widthFix"></image>
 		<view class="ifica_search_head">
 			<view class="head_logo">
@@ -15,21 +15,24 @@
 			<view class="l_filter_nav">
 				<view class="li" :class="{ active: item.id === activeCate }" v-for="item in cateList" :key="item.id" @click="cateClickHandler(item.id)">{{ item.name }}</view>
 			</view>
-			<view class="main_cont">
+			<scroll-view class="main_cont" scroll-y :scroll-into-view="scrollIntoView" @scroll="onScroll" scroll-with-animation>
 				<view class="index_pro_contain">
-					<image class="pro_head_bg" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/608def905ee846eab80b698d5d29c6e5/index_case2_bg.png?Expires=2073875992&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Zd2Oz8m0uYQy8idN34qA4pxtSJc%3D" mode="widthFix"></image>
 					<view class="title_head">
 						<image class="logo" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/b5a62a0a9f344046b6ecccd5d5f9184a/pro_logo.png?Expires=2073875894&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=UhwsRTz1JJlnDOlP0K4Tm0ABWGk%3D" mode="widthFix"></image>
 						<view class="dt">猹精选</view>
 						<view class="txt">好吃，健康，可信赖</view>
 					</view>
-					<view class="pro_list_cont" v-for="(item, index) in productList" :key="index" :class="{ 'null': !item.stock }">
-						<ProductItem :info="item" :cart-list="cartList" @refreshShopCart="refreshShopCart"/>
+					<view v-for="(cate, cateIndex) in cateList" :key="cate.id" :id="'cate-' + cate.id" class="cate-section">
+						<view class="cate-title" v-if="getProductsByCate(cate.id).length > 0">{{ cate.name }}</view>
+						<view class="pro_list_cont" v-for="(item, index) in getProductsByCate(cate.id)" :key="item.id" :class="{ 'null': !item.stock }">
+							<ProductItem :info="item" :cart-list="cartList" @refreshShopCart="refreshShopCart"/>
+						</view>
 					</view>
-					<ShopCart v-if="token" ref="shopCartRef" @updateCartList="(val) => cartList = val"/>
 				</view>
-			</view>
+			</scroll-view>
 		</view>
+
+		<ShopCart v-if="token" ref="shopCartRef" @updateCartList="(val) => cartList = val"/>
 	</view>
 </template>
 
@@ -50,6 +53,10 @@ export default{
 			searchWords: '',
 			cartList: [],
 			token: null,
+			scrollIntoView: '',
+			scrollTop: 0,
+			catePositions: [],
+			isScrolling: false
 		}
 	},
 	computed: {
@@ -66,7 +73,15 @@ export default{
 		const id = wx.getStorageSync('cateId')
 		await this.getCates()
 		this.activeCate = id || (this.cateList.length ? this.cateList[0].id : null)
-		this.getAllProducts()
+		await this.getAllProducts()
+		
+		// 如果有初始cateId，自动滚动到对应位置
+		if (id && this.cateList.length > 0) {
+			this.$nextTick(() => {
+				this.scrollToCate(id)
+			})
+		}
+		
 		this.refreshShopCart()
 	},
 	methods: {
@@ -85,10 +100,12 @@ export default{
 			uni.navigateTo({ url: `/pages/search-page/index?keywords=${this.searchWords}` })
 		},
 		cateClickHandler(id) {
-			this.productList = []
-			this.page = 1 // 重置页码
-			this.activeCate = id;
-			wx.setStorageSync('cateId', id)
+			this.activeCate = id
+			// wx.setStorageSync('cateId', id)
+			this.scrollToCate(id)
+		},
+		scrollToCate(cateId) {
+			this.scrollIntoView = 'cate-' + cateId
 		},
 		async getCates() {
 			try {
@@ -104,11 +121,94 @@ export default{
 					page: this.page,
 					pageSize: this.pageSize,
 				})
-				return rows || []
+				return rows ? rows.map((item) => ({ ...item, cateId: id })) : []
 			} catch (error) {
 				return []
 			}
 		},
+		getProductsByCate(cateId) {
+			return this.productList.filter(item => item.cateId === cateId)
+		},
+		onScroll(e) {
+			this.scrollTop = e.detail.scrollTop
+			this.updateActiveCateByScroll()
+		},
+		updateActiveCateByScroll() {
+			// 使用防抖处理滚动事件
+			clearTimeout(this.scrollTimer)
+			this.scrollTimer = setTimeout(() => {
+				this.calculateCatePositions()
+			}, 100)
+		},
+		calculateCatePositions() {
+			this.catePositions = []
+			const query = uni.createSelectorQuery().in(this)
+			
+			// 获取滚动容器位置
+			query.select('.main_cont').boundingClientRect()
+			
+			// 获取所有类目位置
+			this.cateList.forEach((cate, index) => {
+				query.select('#cate-' + cate.id).boundingClientRect()
+			})
+			
+			query.exec((res) => {
+				if (!res || res.length === 0) return
+				
+				const containerRect = res[0]
+				if (!containerRect) return
+				
+				// 处理类目位置
+				for (let i = 1; i < res.length; i++) {
+					const rect = res[i]
+					const cateIndex = i - 1
+					
+					if (rect && cateIndex < this.cateList.length) {
+						// 计算相对于滚动容器顶部的绝对位置
+						const absoluteTop = this.scrollTop + rect.top - containerRect.top
+						const absoluteBottom = this.scrollTop + rect.bottom - containerRect.top
+						
+						this.catePositions[cateIndex] = {
+							id: this.cateList[cateIndex].id,
+							top: absoluteTop,
+							bottom: absoluteBottom
+						}
+					}
+				}
+				
+				// 位置计算完成后再判断激活类目
+				this.determineActiveCate()
+			})
+		},
+		determineActiveCate() {
+			if (this.catePositions.length === 0) return
+			
+			// 找到当前滚动位置对应的类目
+			let currentCate = this.activeCate
+			const currentScrollTop = this.scrollTop
+			const threshold = 100 // 阈值，调整敏感度
+			
+			// 从上到下遍历，找到第一个底部位置大于当前滚动位置+阈值的类目
+			for (let i = 0; i < this.catePositions.length; i++) {
+				const pos = this.catePositions[i]
+				if (pos && pos.bottom > currentScrollTop + threshold) {
+					currentCate = pos.id
+					break
+				}
+			}
+			
+			// 如果没有找到合适的类目，选择最后一个
+			if (currentCate === this.activeCate && this.catePositions.length > 0) {
+				const lastPos = this.catePositions[this.catePositions.length - 1]
+				if (lastPos && currentScrollTop + threshold >= lastPos.top) {
+					currentCate = lastPos.id
+				}
+			}
+			
+			if (currentCate !== this.activeCate) {
+				this.activeCate = currentCate
+			}
+		}
 	},
 }
 </script>
