@@ -24,7 +24,7 @@
 			</view>
 			<view class="pro_last">
 				<view v-for="product in displayProductList" :key="product.productId" class="pro_list">
-					<view class="pro_i"><image :src="product.imgUrl"></image> </view>
+					<view class="pro_i"><image :src="product.imgUrl" mode="widthFix"></image> </view>
 					<view class="deta_cont">
 						<view class="name">{{ product.title }}</view>
 						<view class="specs">{{ product.desc }}</view>

@@ -115,7 +115,7 @@ page {
 .order_product_contain .pro_list {
   padding: 20rpx 0;
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   position: relative;
 }
 .order_product_contain .pro_list::after {
@@ -133,7 +133,6 @@ page {
   align-items: center;
   justify-content: center;
   width: 132rpx;
-  height: 132rpx;
   border-radius: 10rpx;
 }
 .order_product_contain .pro_list .pro_i image {
