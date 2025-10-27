@@ -19,7 +19,7 @@
 				<view class="index_pro_contain">
 					<view class="title_head">
 						<image class="logo" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/b5a62a0a9f344046b6ecccd5d5f9184a/pro_logo.png?Expires=2073875894&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=UhwsRTz1JJlnDOlP0K4Tm0ABWGk%3D" mode="widthFix"></image>
-						<view class="dt">猹精选</view>
+						<view class="dt">钰果精选</view>
 						<view class="txt">好吃，健康，可信赖</view>
 					</view>
 					<view v-for="(cate, cateIndex) in cateList" :key="cate.id" :id="'cate-' + cate.id" class="cate-section">

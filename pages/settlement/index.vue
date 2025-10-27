@@ -67,7 +67,7 @@
 			</view>
 			<view v-else class="no-coupon-tip">
 				<view>您当前的优惠券用完啦</view>
-				<view>关注<text class="button-text" @click="openOfficial">瓜田里一只猹</text>，每天都有券领取哟～</view>
+				<view>关注<text class="button-text" @click="openOfficial">钰果日记</text>，每天都有券领取哟～</view>
 			</view>
 		</view>
 		<view class="order_total_cont">

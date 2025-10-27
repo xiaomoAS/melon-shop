@@ -20,7 +20,7 @@
 		</view>
 
 		<view v-if="!orderList.length" class="no-order-box">
-			<view>您当前未享受好吃、健康、可信赖的猹选好果</view>
+			<view>您当前未享受好吃、健康、可信赖的精选好果</view>
 			<text class="text-button" @click="toMainPage">去下单</text>
 		</view>
 

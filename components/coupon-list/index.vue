@@ -14,7 +14,7 @@
 		</view>
 		<view v-if="!couponList.length" class="no-coupon-tip" :class="{ 'my-coupon': couponType }">
 			<view>您当前的优惠券用完啦</view>
-			<view>关注<text class="button-text" @click="openOfficial">瓜田里一只猹</text>，每天都有券领取哟～</view>
+			<view>关注<text class="button-text" @click="openOfficial">钰果日记</text>，每天都有券领取哟～</view>
 		</view>
 
 		<LoadMore 
