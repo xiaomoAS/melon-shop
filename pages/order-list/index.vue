@@ -118,7 +118,7 @@
 
 <script>
 import { formatDate } from '@/utils/common';
-import { ORDER_STATUS, ORDER_TABS } from './constants';
+import { ORDER_STATUS, ORDER_TABS, ALL_ORDER_CONFIGS } from './constants';
 import ReportViewer from '@/components/report-view/index.vue';
 import LoadMore from '@/components/load-more/index.vue'
 
@@ -233,7 +233,7 @@ export default {
 			uni.navigateTo({url: `/pages/settlement/index?orderId=1`})
 		},
 		getOrderConfig(order) {
-			const tabItem = ORDER_TABS.find((tab) => tab.value === order.orderStatus)
+			const tabItem = ALL_ORDER_CONFIGS.find((tab) => tab.value === order.orderStatus)
 			return tabItem || {}
 		},
 		async getOrderList() {
