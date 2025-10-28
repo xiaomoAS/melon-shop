@@ -75,10 +75,9 @@
 				</view>
 			</view>
 			<view class="deliv_exp">
-				<!-- TODO -->
 				<view v-if="order.waybillInfo && order.waybillInfo.estimatedDeliveryTime" class="dl delivery-time">
 					<view class="dt">送达时间：</view>
-					<view class="dd">{{ formatDate(order.waybillInfo.estimatedDeliveryTime, 'MM-DD') }}</view>
+					<view class="dd">{{ formatDate(order.waybillInfo.estimatedDeliveryTime, 'MM月DD日') }}</view>
 				</view>
 				<view v-if="order.waybillInfo" class="dl">
 					<view class="dt">物流信息：</view>
