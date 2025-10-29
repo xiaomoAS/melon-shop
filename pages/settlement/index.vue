@@ -115,7 +115,7 @@
 						<view class="xj">￥{{ realFreightPrice || 0 }}</view>
 					</view>
 					<view v-else class="dd">
-						<view class="xj">￥{{ priceInfo.shipTotalPrice || 0 }}</view>
+						<view class="xj">{{ priceInfo.shipTotalPrice > 0 ? `￥${priceInfo.shipTotalPrice}` : '平台包邮' }}</view>
 					</view>
 				</view>
 				<view v-else class="dd">选择默认收货地址后查看</view>

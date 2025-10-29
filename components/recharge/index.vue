@@ -94,20 +94,20 @@ export default {
 				{
 					level: MEMBER_LEVEL.GOLD,
 					title: '黄金会员',
-					price: 1000,
-					discount: '享9.6折'
+					price: 300,
+					discount: '享9.8折'
 				},
 				{
 					level: MEMBER_LEVEL.PLATINUM,
 					title: '铂金会员',
-					price: 5000,
-					discount: '享9.5折'
+					price: 1000,
+					discount: '享9.6折'
 				},
 				{
 					level: MEMBER_LEVEL.DIAMOND,
 					title: '钻石会员',
-					price: 10000,
-					discount: '享9.3折'
+					price: 5000,
+					discount: '享9.5折'
 				}
 			]
 		}

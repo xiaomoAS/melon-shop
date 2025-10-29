@@ -165,4 +165,8 @@ export const resourceHrefHandler = (item) => {
       url: item.linkUrl
     })
   }
-} 
+}
+
+export const isTrulyEmpty = (param) => {
+  return param === null || param === undefined
+}

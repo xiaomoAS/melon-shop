@@ -74,7 +74,7 @@
 					<view class="tle">选中商品总价</view>
 					<view class="total">
 						￥{{ priceInfo.totalPrice || 0 }}
-						<text v-if="selectList.length">（运费：<text v-if="priceInfo.shipTotalPrice">{{ priceInfo.shipTotalPrice || 0 }}</text><text v-else>选择默认收货地址后查看</text>）</text>
+						<text v-if="selectList.length">（运费：<text v-if="!isTrulyEmpty(priceInfo.shipTotalPrice)">{{ priceInfo.shipTotalPrice > 0 ? priceInfo.shipTotalPrice : '平台包邮' }}</text><text v-else>选择默认收货地址后查看</text>）</text>
 					</view>
 				</view>
 				<view v-if="priceInfo.waybillPriceLimit" class="dl">
@@ -113,7 +113,9 @@
 </template>
 
 <script>
+import { isTrulyEmpty } from '../../utils/common'
 import { CART_TYPE } from './constants'
+
 export default {
 	name: 'ShopCart',
   data() {
@@ -363,7 +365,8 @@ export default {
 		toggleSelectItem(item) {
 			this.$set(item, 'selected', !item.selected)
 			this.updatePrice()
-		}
+		},
+		isTrulyEmpty
   },
 }
 </script>
