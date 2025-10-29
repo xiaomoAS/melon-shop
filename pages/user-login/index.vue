@@ -13,7 +13,7 @@
 				:disabled="loading"
 				@click="handleLogin"
 			>
-				{{ loading ? '登录中...' : '微信一键登录' }}
+				{{ loading ? '登录中...' : '一键登录' }}
 			</button>
 			
 			<view v-if="errorMsg" class="error-msg">
