@@ -6,7 +6,7 @@
 			<!-- <view class="detail_baner-title">{{ detail.title }}</view> -->
 		</view>
 		<view class="detail_inf_cont">
-			<view class="title">{{ detail.title }}</view>
+			<view class="title">{{ detail.title }}<text v-if="detail.productStatus === PRODUCT_STATUS.IS_OFF_SHELF">（该商品已下架）</text></view>
 			<view class="detail-info-box">
 				<view class="price_inf">
 					<view class="price">￥{{ detail.price }}</view>
@@ -45,7 +45,7 @@
 				</view>
 			</view>
 			
-			<ShopCart v-if="token" :cart-type="CART_TYPE.BOTTOM" :info="{ ...detail, imgUrl: detail.mainImgUrl }"/>
+			<ShopCart v-if="token && detail.productStatus !== PRODUCT_STATUS.IS_OFF_SHELF" :cart-type="CART_TYPE.BOTTOM" :info="{ ...detail, imgUrl: detail.mainImgUrl }"/>
 		</view>
 		
 	</view>
@@ -55,6 +55,7 @@
 import ShopCart from '@/components/shop-cart/index.vue'
 import { CART_TYPE } from '@/components/shop-cart/constants.js'
 import { formatDate } from '@/utils/common';
+import { PRODUCT_STATUS } from '@/constants/common';
 
 export default {
 	name: 'ProductDetail',
@@ -62,7 +63,8 @@ export default {
 		return {
 			detail: {},
 			CART_TYPE,
-			token: null
+			token: null,
+			PRODUCT_STATUS
 		}
 	},
 	components: {

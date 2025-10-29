@@ -33,3 +33,13 @@ export const RESOURCE_LINK_TYPE = {
   MINI: 1, // 小程序
   OFFICIAL: 2, // 公众号
 }
+
+// 商品状态
+export const PRODUCT_STATUS = {
+  WAIT_PUB: 1, // 待发布
+  WAIT_AUDIT: 2, // 待审核
+  WAIT_ON_SHELF: 3, // 待上架
+  AUDIT_REJECT: 4, // 审核驳回
+  IS_ON_SHELF: 5, // 已上架
+  IS_OFF_SHELF: 6, // 已下架
+}
