@@ -1,0 +1,37 @@
+.popup-box {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24rpx 32rpx;
+  margin: 0 auto;
+  background-color: #FFFFFF;
+  border-radius: 10rpx;
+  font-size: 26rpx;
+  font-weight: normal;
+  color: #262626;
+
+  &__title {
+    font-size: 32rpx;
+    font-weight: 600;
+    color: #262626;
+    margin-bottom: 32rpx;
+  }
+
+  &__protocal {
+    color: #1aad19;
+  }
+}
+
+.btn-group {
+  display: flex;
+  margin-top: 32rpx;
+
+  &__btn {
+    padding: 8rpx 64rpx;
+
+    &:first-of-type {
+      margin-right: 16rpx;
+    }
+  }
+}

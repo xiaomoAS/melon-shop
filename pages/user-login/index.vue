@@ -20,6 +20,8 @@
 				{{ errorMsg }}
 			</view>
 		</view>
+
+		<UserPrivacy ref="userPrivacyRef" :privacyName="privacyInfo.privacyContractName"/>
 	</view>
 </template>
 
@@ -27,34 +29,61 @@
 import { ref } from 'vue';
 import { onLoad } from '@dcloudio/uni-app'
 import { http } from '@/utils/service.js'
+import UserPrivacy from '@/components/user-privacy/index.vue'
 
 const loading = ref(false)
 const errorMsg = ref('')
 const returnUrl = ref(null)
+const userPrivacyRef = ref()
+const privacyInfo = ref({})
 
 onLoad((options) => {
 	returnUrl.value = options.returnUrl ? decodeURIComponent(options.returnUrl) : null
 })
 
+/**
+ * @description: 是否需要获取用户隐私
+ */
+const getPrivacySetting = async () => {
+	return new Promise((resolve, reject) => {
+		wx.getPrivacySetting({
+      success: res => {
+        // 返回结果为: res = { needAuthorization: true/false, privacyContractName: '《xxx隐私保护指引》' }
+				privacyInfo.value = res
+				resolve(res)
+      },
+      fail: (res) => {
+				reject(res)
+			},
+      complete: () => {}
+    })
+	})
+}
+
 // 登录按钮点击事件
 const handleLogin = async () => {
 	try {
-		loading.value = true;
-		errorMsg.value = '';
-		
-		// 1. 获取用户信息（会弹出授权窗口）
+		errorMsg.value = ''
+		// 1. 获取用户信息
 		const userInfo = await getUserProfile()
-		
-		// 2. 获取登录凭证
-		const loginRes = await wxLogin();
-		
-		// 3. 发送到后端验证
+
+		// 2.是否同意协议
+		getPrivacySetting()
+		const agree = await userPrivacyRef.value.open()
+		if (!agree) return
+
+		loading.value = true
+	
+		// 3. 获取登录凭证
+		const loginRes = await wxLogin()
+		// 4. 发送到后端验证
 		await sendLoginRequest({
 			code: loginRes.code,
 			userInfo: userInfo.userInfo
 		});
 		
 	} catch (error) {
+		console.log('error', Object.prototype.toString.call(error).split(' ')[1].split(']')[0], '===', error);
 		loading.value = false
 		errorMsg.value = '登录失败，请重试'
 	}
