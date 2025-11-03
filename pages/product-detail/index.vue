@@ -92,7 +92,17 @@ export default {
 		if (options && options.id) {
 			this.getProductDetail(options.id)
 		}
-	}
+	},
+	onShareAppMessage() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
+	onShareTimeline() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
 }
 </script>
 

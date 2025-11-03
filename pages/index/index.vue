@@ -127,6 +127,16 @@
 			// 强制刷新购物车数据
 			this.refreshShopCart()
 		},
+		onShareAppMessage() {
+			return {
+				path: '/pages/index/index'
+			}
+		},
+		onShareTimeline() {
+			return {
+				path: '/pages/index/index'
+			}
+		},
 		methods: {
 			toCatePage(id = null) {
 				wx.setStorageSync('cateId', id)

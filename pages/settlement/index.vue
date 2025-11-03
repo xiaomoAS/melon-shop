@@ -294,6 +294,16 @@ export default {
 			await this.initPageData();
 		}
 	},
+	onShareAppMessage() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
+	onShareTimeline() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
 	methods: {
 		openOfficial() {
 			wx.openOfficialAccountProfile({

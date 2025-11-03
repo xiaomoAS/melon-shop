@@ -96,6 +96,16 @@ async onShow() {
 	
 	this.refreshShopCart()
 },
+	onShareAppMessage() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
+	onShareTimeline() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
 	methods: {
 		async getAllProducts() {
 			if (!this.cateList.length) return

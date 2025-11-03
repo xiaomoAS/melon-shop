@@ -80,6 +80,16 @@ export default{
 		this.token = uni.getStorageSync('token')
 		this.refreshShopCart()
 	},
+	onShareAppMessage() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
+	onShareTimeline() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
 	methods: {
 		refreshShopCart() {
 			if (this.$refs.shopCartRef) {

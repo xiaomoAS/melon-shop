@@ -130,6 +130,16 @@
 				return memberConfigs[this.memberInfo.level]
 			}
 		},
+		onShareAppMessage() {
+			return {
+				path: '/pages/index/index'
+			}
+		},
+		onShareTimeline() {
+			return {
+				path: '/pages/index/index'
+			}
+		},
 		methods: {
 			phoneHandler() {
 				wx.makePhoneCall({

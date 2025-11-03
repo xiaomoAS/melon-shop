@@ -49,6 +49,16 @@ export default {
 	onLoad() {
 		this.getTopImg()
 	},
+	onShareAppMessage() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
+	onShareTimeline() {
+		return {
+			path: '/pages/index/index'
+		}
+	},
 	methods: {
 		async getTopImg() {
 			try {
