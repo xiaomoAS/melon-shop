@@ -76,7 +76,11 @@ async onShow() {
 	
 	// 确保cateList有数据后再设置activeCate
 	if (this.cateList.length > 0) {
-		this.activeCate = id || this.cateList[0].id
+		if (id && this.cateList.find((item => Number(item.id) === Number(id)))) {
+			this.activeCate = id
+		} else {
+			this.activeCate = this.cateList[0].id
+		}
 	} else {
 		this.activeCate = null
 	}
@@ -84,8 +88,10 @@ async onShow() {
 	await this.getAllProducts()
 	
 	// 如果有初始cateId，自动滚动到对应位置
-	if (id && this.cateList.length > 0) {
-		this.scrollToCate(id)
+	if (this.activeCate && this.cateList.length > 0) {
+		setTimeout(() => {
+			this.scrollToCate(this.activeCate)
+		}, 100)
 	}
 	
 	this.refreshShopCart()

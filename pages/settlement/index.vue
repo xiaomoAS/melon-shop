@@ -243,7 +243,7 @@ export default {
 		},
 		// 实际总价
 		realTotalPrice() {
-			if (!this.priceInfo.totalPrice) return 0
+			if (!this.priceInfo.totalPrice) return 0.01
 			let total = 0
 			// 运费价格
 			if (this.freightCouponSelect) {
@@ -482,6 +482,10 @@ export default {
 					  }
 					)
 				} else if (this.payMethod === PAY_METHOD.MEMBER_CARD) {
+					if (!data) {
+						uni.showToast({ title: '支付失败' , icon: 'none'})
+						return
+					}
 					// 充值卡支付
 					if (data.paySuccess) {
 						uni.showToast({ title: '支付成功' , icon: 'none'})
