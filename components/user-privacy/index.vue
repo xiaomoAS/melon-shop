@@ -6,7 +6,7 @@
 					隐私指引弹窗
 				</view>
 				<view >
-					在您使用钰果日记小程序前，请仔细阅读<text class="popup-box__protocal" @click="downloadFile(serviceFileUrl)">《钰果日记服务协议》</text>、<text class="popup-box__protocal" @click="downloadFile(privacyUrl)">{{ privacyName }}</text>。
+					在您使用钰果日记小程序前，请仔细阅读<text class="popup-box__protocal" @click="downloadFile(serviceFileUrl)">《钰果日记服务协议》</text>、<text class="popup-box__protocal" @click="openPrivacyPolicy">{{ privacyName }}</text>。
 					如您同意上述协议，请点击“同意”开始使用。
 				</view>
 				<view class="btn-group">

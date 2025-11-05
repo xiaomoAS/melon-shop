@@ -51,8 +51,6 @@ let requests = []
 
 // 响应拦截 
 http.interceptors.response.use((response) => {
-	const token = uni.getStorageSync('token')
-	const refresh_token = uni.getStorageSync('refresh_token')
 	if (response) {
 		console.log('封装后 结果（1）：', response)
 		
@@ -87,7 +85,18 @@ http.interceptors.response.use((response) => {
 				})
 				return Promise.reject(response)
 			default:
-				uni.showToast({ title: response.data.msg, icon: 'none' })
+				// 根据config配置决定使用modal还是toast
+				const showModalMsg = response.config.custom.showModalMsg || false;
+				
+				if (showModalMsg) {
+					uni.showModal({
+						title: '提示',
+						content: response.data.msg,
+						showCancel: false
+					})
+				} else {
+					uni.showToast({ title: response.data.msg, icon: 'none', duration: 3000 })
+				}
 				return Promise.reject(response)
 		}
 	}

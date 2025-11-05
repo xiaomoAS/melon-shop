@@ -424,7 +424,7 @@ export default {
 					payMethod: this.payMethod,
 					couponIdList: this.couponList.filter((item) => item.selected).map((item) => item.couponId)
 				}
-				const data = await this.$http.post('/order/create', param)
+				const data = await this.$http.post('/order/create', param, { custom: { showModalMsg: true }})
 				let that = this
 				// 微信支付
 				if (this.payMethod === PAY_METHOD.WE_CHAT) {
