@@ -80,14 +80,16 @@
 
 .index_navi_cont {
   display: flex;
-  align-items: flex-start;
-  margin-bottom: 20rpx;
+  align-items: center;
+  flex-wrap: wrap;
+  margin-bottom: 10rpx;
 }
-.index_navi_cont .list {
-  width: calc(100% / 5);
+.index_navi_cont .cate-item {
+  width: 20%;
   text-align: center;
+  margin-bottom: 10rpx;
 }
-.index_navi_cont .list .tis_i {
+.index_navi_cont .cate-item .tis_i {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -95,12 +97,12 @@
   height: 86rpx;
   border-radius: 50%;
 }
-.index_navi_cont .list .tis_i image {
+.index_navi_cont .cate-item .tis_i image {
   width: 86rpx;
   height: 86rpx;
   border-radius: 50%;
 }
-.index_navi_cont .list .txt {
+.index_navi_cont .cate-item .txt {
   padding: 20rpx 0 0;
   font-size: 24rpx;
   color: #000000;

@@ -21,12 +21,13 @@
 
 				<!-- 类目 -->
 				<view class="index_navi_cont">
-					<view class="list" @click="toCatePage()">
+					<view class="cate-item" @click="toCatePage()">
 						<view class="tis_i"><image src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/3db470eba37b45109b31a31bc4862b42/quanbushangpin.png?Expires=2073903146&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=DTAVQSjY5F6da5ibaWHkzyipNus%3D" mode="widthFix"></image> </view>
 						<view class="txt">全部商品</view>
 					</view>
 					
-					<view v-for="item in cateList.slice(0, 4)" :key="item.id" class="list" @click="toCatePage(item.id)">
+					<!-- 限制两行 -->
+					<view v-for="item in cateList.slice(0, 9)" :key="item.id" class="cate-item" @click="toCatePage(item.id)">
 						<view class="tis_i"><image :src="item.logoUrl" mode="widthFix"></image> </view>
 						<view class="txt">{{ item.name }}</view>
 					</view>
