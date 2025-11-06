@@ -125,7 +125,7 @@ export default {
 					page: this.page,
 					pageSize: this.pageSize,
 				})
-				this.couponList = this.couponList.concat(rows)
+				this.couponList = this.couponList.concat(rows.filter((item) => item.coupon) || [])
 				this.totalCount = total
 			} catch (error) {
 				this.couponList = []
