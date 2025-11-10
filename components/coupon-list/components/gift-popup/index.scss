@@ -4,17 +4,35 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24rpx 32rpx;
+  padding: 40rpx 32rpx;
   margin: 0 auto;
-  border-radius: 10rpx;
+  border-radius: 24rpx;
   font-size: 26rpx;
   font-weight: normal;
   color: #262626;
-  background: linear-gradient(180deg, #60C65D 0%,#F2FBFA 100%);
+  background: linear-gradient(135deg, #60C65D 0%, #4CAF50 50%, #45A049 100%);
+  box-shadow: 0 8rpx 32rpx rgba(96, 198, 93, 0.3);
+  overflow: hidden;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+    transform: rotate(45deg);
+    animation: shimmer 3s infinite;
+  }
 
   &__title {
-    font-size: 32rpx;
-    font-weight: 600;
+    font-size: 36rpx;
+    font-weight: 700;
+    color: #FFFFFF;
+    text-shadow: 0 2rpx 4rpx rgba(0,0,0,0.1);
+    margin-bottom: 40rpx;
+    letter-spacing: 2rpx;
   }
 
   &__content {
@@ -24,19 +42,26 @@
     flex-direction: column;
     align-items: center;
     background-color: #FFFFFF;
-    border-radius: 10rpx;
-    margin-top: 60rpx;
-    padding: 60rpx 20rpx 20rpx;
-    box-shadow: 0px 2px 6px 0px rgba(0,0,0,0.4);
+    border-radius: 20rpx;
+    margin-top: 40rpx;
+    padding: 80rpx 32rpx 40rpx;
+    box-shadow: 0 8rpx 24rpx rgba(0,0,0,0.1);
+    backdrop-filter: blur(10rpx);
   }
+}
+
+@keyframes shimmer {
+  0% { transform: translateX(-100%) rotate(45deg); }
+  100% { transform: translateX(100%) rotate(45deg); }
 }
 
 .logo-image {
   position: absolute;
-  width: 80rpx;
-  height: 80rpx;
-  top: 16rpx;
-  left: 16rpx;
+  width: 100rpx;
+  height: 100rpx;
+  top: 20rpx;
+  left: 20rpx;
+  z-index: 10;
 }
 
 .head-image {
@@ -44,70 +69,238 @@
   top: 0;
   left: 50%;
   transform: translate(-50%, -50%);
-  width: 80rpx;
-  height: 80rpx;
+  width: 120rpx;
+  height: 120rpx;
   border-radius: 50%;
+  border: 6rpx solid #FFFFFF;
+  box-shadow: 0 4rpx 16rpx rgba(0,0,0,0.15);
+  z-index: 20;
 }
 
 .content-title {
-  font-size: 30rpx;
-  font-weight: 600;
+  font-size: 32rpx;
+  font-weight: 700;
+  color: #2E7D32;
+  margin-bottom: 24rpx;
+  text-align: center;
+  line-height: 1.4;
 }
 
 .product-info {
   display: flex;
   align-items: center;
-  font-size: 22rpx;
-  color: #8F8F8F;
-  margin-top: 8rpx;
+  width: 100%;
+  padding: 24rpx;
+  background: linear-gradient(135deg, #F8F9FA 0%, #E8F5E8 100%);
+  border-radius: 16rpx;
+  margin: 20rpx 0;
+  box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
 
   &__image {
-    width: 160rpx;
-    min-width: 160rpx;
-    border-radius: 8rpx;
+    width: 140rpx;
+    height: 140rpx;
+    min-width: 140rpx;
+    border-radius: 12rpx;
+    object-fit: cover;
+    box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
   }
 
   &__content {
-    margin-left: 16rpx;
+    margin-left: 24rpx;
+    flex: 1;
   }
 
   .product-title {
-    font-size: 24rpx;
+    font-size: 28rpx;
     font-weight: 600;
     color: #262626;
+    margin-bottom: 8rpx;
+    line-height: 1.3;
+  }
+
+  view {
+    font-size: 24rpx;
+    color: #666666;
+    margin-bottom: 4rpx;
+    
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
 
 .line-through {
   text-decoration: line-through;
+  color: #999999;
 }
 
 .red-text {
-  color: #FF5F36;
+  color: #FF4757;
+  font-weight: 700;
+  font-size: 32rpx;
 }
 
 .real-price {
-  font-size: 28rpx;
+  font-size: 30rpx;
   font-weight: 600;
-  margin-top: 8rpx;
+  color: #262626;
+  margin: 24rpx 0;
+  padding: 16rpx 24rpx;
+  background: linear-gradient(135deg, #FFF3E0 0%, #FFE0B2 100%);
+  border-radius: 12rpx;
+  text-align: center;
+  box-shadow: 0 2rpx 8rpx rgba(255, 71, 87, 0.1);
 }
 
 .send-button {
-  font-size: 28rpx;
-  background: linear-gradient(0deg, #60C65D 0%,#C2E4C1 100%);
+  font-size: 32rpx;
+  font-weight: 600;
+  background: linear-gradient(135deg, #60C65D 0%, #4CAF50 100%);
   color: #FFFFFF;
-  border-radius: 8rpx;
-  padding: 8rpx 24rpx;
-  margin-top: 16rpx;
+  border-radius: 50rpx;
+  padding: 20rpx 60rpx;
+  margin: 32rpx 0 24rpx;
+  box-shadow: 0 6rpx 20rpx rgba(96, 198, 93, 0.4);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+
+  &:active {
+    transform: translateY(2rpx);
+    box-shadow: 0 4rpx 12rpx rgba(96, 198, 93, 0.3);
+  }
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    background: rgba(255,255,255,0.2);
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+  }
+
+  &:active::before {
+    width: 300rpx;
+    height: 300rpx;
+  }
 }
 
 .send-desc {
   font-weight: 500;
-  color: rgba(44,118,64,0.8);
+  color: #2E7D32;
   font-size: 24rpx;
-  margin-top: 8rpx;
+  text-align: center;
+  line-height: 1.5;
+  padding: 0 20rpx;
 
   .strong {
-    color: #456D4C;
+    color: #FF4757;
+    font-weight: 500;
+  }
+}
+
+// 新增样式
+.price-highlight {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 24rpx 0;
+}
+
+.save-amount {
+  font-size: 24rpx;
+  color: #FF4757;
+  font-weight: 600;
+  margin-top: 8rpx;
+  padding: 4rpx 16rpx;
+  background: rgba(255, 71, 87, 0.1);
+  border-radius: 20rpx;
+}
+
+.coupon-expiry {
+  display: flex;
+  align-items: center;
+  font-size: 24rpx;
+  color: #666666;
+  margin: 16rpx 0;
+
+  .expiry-icon {
+    margin-right: 8rpx;
+    font-size: 28rpx;
+  }
+}
+
+.product-meta {
+  display: flex;
+  flex-direction: column;
+  gap: 4rpx;
+}
+
+.meta-item {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.price-label {
+  font-size: 28rpx;
+  color: #262626;
+}
+
+.price-unit {
+  font-size: 24rpx;
+  color: #666666;
+}
+
+.button-text {
+  position: relative;
+  z-index: 2;
+}
+
+.button-ripple {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  background: rgba(255,255,255,0.3);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.send-button:active .button-ripple {
+  width: 300rpx;
+  height: 300rpx;
+}
+
+// 添加优惠券图标装饰
+.coupon-decoration {
+  position: absolute;
+  top: 20rpx;
+  right: 20rpx;
+  width: 60rpx;
+  height: 60rpx;
+  opacity: 0.8;
+}
+
+// 响应式调整
+@media screen and (max-width: 375px) {
+  .popup-box {
+    width: 90vw;
+    padding: 32rpx 24rpx;
+  }
+  
+  .product-info {
+    flex-direction: column;
+    text-align: center;
+    
+    &__content {
+      margin-left: 0;
+      margin-top: 16rpx;
+    }
   }
 }
