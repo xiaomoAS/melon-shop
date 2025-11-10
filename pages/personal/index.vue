@@ -4,17 +4,9 @@
 		<view class="user_head_bg">
 			我的
 		</view>
-		<view class="user_inf_content">
-			<UploadProfile @updateUserInfo="handleUpdateUserInfo">
-				<view class="ava_inf">
-					<view class="tips_txt">点击头像上传个人信息</view>
-					<view class="ava"><image :src="userInfo.headImgUrl || 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1f25a32b4b97447bac8d02f20f0a47b6/user_ava.png?Expires=2073952610&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=IQflZdBMbA4jh2W7oui1vmaxPuU%3D'" mode=""></image> </view>
-				</view>
-			</UploadProfile>
-			<view class="deta_inf">
-				<view class="name">{{ userInfo.nickName || '微信用户' }}</view>
-			</view>
-		</view>
+		<!-- 头像 -->
+		<UserProfile />
+
 		<!-- 会员信息 -->
 		<view v-if="memberConfig" class="user_member_cont" :class="memberConfig.mainClass">
 			<image class="icon-image" :src="memberConfig.mainIcon" mode="widthFix"></image>
@@ -93,20 +85,19 @@
 
 <script>
 	import Recharge from '@/components/recharge/index.vue'
-	import UploadProfile from '@/components/upload-profile/index.vue'
 	import CouponList from '@/components/coupon-list/index.vue'
 	import { MEMBER_LEVEL } from '@/constants/common.js'
+	import UserProfile from '@/components/user-profile/index.vue'
 	import { memberConfigs } from './constants'
 
 	export default {
 		components: {
 			Recharge,
-			UploadProfile,
-			CouponList
+			CouponList,
+			UserProfile
 		},
 		data() {
 			return {
-				userInfo: {},
 				defaultAddress: null,
 				MEMBER_LEVEL,
 				memberInfo: {
@@ -160,13 +151,6 @@
 			chargeHandler() {
 				this.$refs.rechargeRef.open()
 			},
-			async getUserInfo() {
-				try {
-					this.userInfo = await this.$http.post('/wechat/user/getUserInfo', {})
-				} catch (error) {
-					this.userInfo = {}
-				}
-			},
 			async getMemberInfo() {
 				try {
 					this.memberInfo = await this.$http.post('/user/member/getUserMember', {})
@@ -184,29 +168,9 @@
 			},
 			toMyCoupon() {
 				uni.navigateTo({ url: '/pages/my-coupon/index' })
-			},
-			async handleUpdateUserInfo(userInfo) {
-				try {
-					await this.$http.post('/wechat/user/patchUserInfo', {
-						nickName: userInfo.nickname,
-						headImgUrl: userInfo.avatar
-					})
-					uni.showToast({ title: '更新成功', icon: 'none' })
-					// 更新本地用户信息
-					if (userInfo.avatar) {
-						this.userInfo.headImgUrl = userInfo.avatar;
-					}
-					if (userInfo.nickname) {
-						this.userInfo.nickName = userInfo.nickname;
-					}
-				} catch (error) {
-					uni.showToast({ title: '更新失败', icon: 'none' })
-				}
-			},
-			
+			},	
 		},
 		onShow() {
-			this.getUserInfo()
 			this.getAddressInfo()
 			this.getMemberInfo()
 			this.$nextTick(() => {

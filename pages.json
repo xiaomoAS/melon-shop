@@ -63,6 +63,12 @@
 			}
 		},
 		{
+			"path": "pages/send-coupon/index",
+			"style": {
+				"navigationBarTitleText": "赠送优惠券"
+			}
+		},
+		{
 			"path": "pages/user-login/index",
 			"style": {
 				"navigationBarTitleText": "登陆"

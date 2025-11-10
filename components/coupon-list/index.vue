@@ -9,7 +9,7 @@
 			</view>
 			<view class="play_cont">
 				<view class="txt">1张</view>
-				<view class="btn" @click="toSearchPage(item)">去使用</view>
+				<view class="btn" @click="couponClick(item)">{{ item.coupon.publishType === PUBLISH_TYPE.DISCOUNT_DAILY ? '去赠送' : '去使用' }}</view>
 			</view>
 		</view>
 		<view v-if="!couponList.length" class="no-coupon-tip" :class="{ 'my-coupon': couponType }">
@@ -27,18 +27,22 @@
 				<span>上拉加载更多</span>
 			</view>
 		</LoadMore>
+
+		<GiftPopup ref="giftPopup" />
 	</view>
 	
 </template>
 
 <script>
-import { COUPON_TYPE } from './constants'
+import { COUPON_TYPE, PUBLISH_TYPE } from './constants'
 import LoadMore from '@/components/load-more/index.vue'
+import GiftPopup from './components/gift-popup/index.vue'
 
 export default {
 	name: 'CouponList',
 	components: {
-		LoadMore
+		LoadMore,
+		GiftPopup
 	},
 	props: {
 		couponType: {
@@ -50,6 +54,7 @@ export default {
 	data() {
 		return {
 			COUPON_TYPE,
+			PUBLISH_TYPE,
 			couponList: [],
 			page: 1,
 			pageSize: 5,
@@ -89,8 +94,11 @@ export default {
 			const hours = String(expireDate.getHours()).padStart(2, '0')
 			const minutes = String(expireDate.getMinutes()).padStart(2, '0')
 			
+			// 已经过期
+			if (expireDateStart.getTime() < Date.now()) {
+				return '已过期'
+			} else if (todayStart.getTime() === expireDateStart.getTime()) {
 			// 如果是今天
-			if (todayStart.getTime() === expireDateStart.getTime()) {
 				return `今日${hours}:${minutes}到期`
 			} else {
 				// 如果不是今天
@@ -101,18 +109,13 @@ export default {
 		},
 		getCouponDesc(item) {
 			if (!item.coupon) return ''
-			if (item.coupon.type === COUPON_TYPE.NEW_DISCOUNT) return '新用户特定品类体验券'
 			if (item.coupon.type === COUPON_TYPE.FREIGHT) return '特定品类包邮券'
+			return '用户特定品类体验券'
 		},
 		getCouponShortName(item) {
 			if (!item.coupon) return ''
-			if (item.coupon.type === COUPON_TYPE.NEW_DISCOUNT) return '优惠券'
 			if (item.coupon.type === COUPON_TYPE.FREIGHT) return '包邮券'
-		},
-		getCouponName(item) {
-			if (!item.coupon) return ''
-			if (item.coupon.type === COUPON_TYPE.NEW_DISCOUNT) return '新用户优惠券'
-			if (item.coupon.type === COUPON_TYPE.FREIGHT) return '包邮券'
+			return '优惠券'
 		},
 		async getCouponList(clear = false) {
 			try {
@@ -121,19 +124,24 @@ export default {
 					this.couponList = []
 				}
 				const { rows = [], total = 0 } = await this.$http.post('/user/coupon/list', {
-					couponType: this.couponType,
+					couponType: this.couponType === COUPON_TYPE.ALL ? null : this.couponType,
 					page: this.page,
 					pageSize: this.pageSize,
 				})
 				this.couponList = this.couponList.concat(rows.filter((item) => item.coupon) || [])
+				this.couponList = this.couponList.map((item) => ({...item, coupon: { ...item.coupon, publishType: 3 }}))
 				this.totalCount = total
 			} catch (error) {
 				this.couponList = []
 				this.totalCount = 0
 			}
 		},
-		toSearchPage(item) {
-			uni.navigateTo({ url: `/pages/search-page/index?productIdList=${item.coupon.productIdList}` })
+		couponClick(item) {
+			if (item.coupon.publishType === PUBLISH_TYPE.DISCOUNT_DAILY) {
+				this.$refs.giftPopup.open(item.coupon)
+			} else {
+				uni.navigateTo({ url: `/pages/search-page/index?productIdList=${item.coupon.productIdList}` })
+			}
 		},
 		loadMoreData() {
 			// 检查是否还有更多数据

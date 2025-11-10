@@ -5,18 +5,13 @@
 		</view>
 		<view class="coupon_nav">
 			<view
+				v-for="tab in COUNPON_TABS"
+				:key="tab.label"
 				class="li"
-				:class="{ active: activeTab === COUPON_TYPE.NEW_DISCOUNT }"
-				@click="switchTab(COUPON_TYPE.NEW_DISCOUNT)"
+				:class="{ active: activeTab === tab.value }"
+				@click="switchTab(tab.value)"
 			>
-				<text>优惠券</text>
-			</view>
-			<view
-				class="li"
-				:class="{ active: activeTab === COUPON_TYPE.FREIGHT }"
-				@click="switchTab(COUPON_TYPE.FREIGHT)"
-			>
-				<text>包邮券</text>
+				<text>{{ tab.label }}</text>
 			</view>
 		</view>
 		<CouponList :coupon-type="activeTab"></CouponList>
@@ -27,6 +22,7 @@
 import CouponList from '@/components/coupon-list/index.vue'
 import { COUPON_TYPE } from '@/components/coupon-list/constants.js'
 import { resourceHrefHandler } from '@/utils/common'
+import { COUNPON_TABS } from './constants'
 
 export default {
 	name: 'MyCounpon',
@@ -35,15 +31,12 @@ export default {
 	},
 	data() {
 		return {
-			activeTab: COUPON_TYPE.NEW_DISCOUNT, // 当前激活的tab，默认为专享券
-			tabList: [
-				{ name: '优惠券', value: COUPON_TYPE.NEW_DISCOUNT },
-				{ name: '包邮券', value: COUPON_TYPE.FREIGHT }
-			],
+			activeTab: COUPON_TYPE.ALL, // 当前激活的tab
 			COUPON_TYPE,
 			resourceInfo: {
 				url: 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/42bed1e64df34a5bae49856265907066/carousel-1.png?Expires=2073865388&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=wibX0MJ%2By7WmGBHvAoaHXBrkaEE%3D'
-			}
+			},
+			COUNPON_TABS
 		}
 	},
 	onLoad() {
@@ -70,8 +63,6 @@ export default {
 		// 切换tab
 		switchTab(type) {
 			this.activeTab = type;
-			// 可以在这里添加切换tab时的其他逻辑，比如重新加载数据
-			const tabName = this.tabList.find(tab => tab.value === type)?.name;
 			console.log('切换到tab:', tabName, 'type:', type);
 		},
 		resourceHrefHandler
