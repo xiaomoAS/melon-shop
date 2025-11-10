@@ -129,7 +129,7 @@ export default {
 					pageSize: this.pageSize,
 				})
 				this.couponList = this.couponList.concat(rows.filter((item) => item.coupon) || [])
-				this.couponList = this.couponList.map((item) => ({...item, coupon: { ...item.coupon, publishType: 3 }}))
+				// this.couponList = this.couponList.map((item) => ({...item, coupon: { ...item.coupon, publishType: 3 }}))
 				this.totalCount = total
 			} catch (error) {
 				this.couponList = []

@@ -88,21 +88,19 @@
 
 .product-info {
   display: flex;
+  flex-direction: column;
   align-items: center;
   width: 100%;
   padding: 24rpx;
   background: linear-gradient(135deg, #F8F9FA 0%, #E8F5E8 100%);
   border-radius: 16rpx;
-  margin: 20rpx 0;
   box-shadow: 0 2rpx 8rpx rgba(0,0,0,0.05);
 
   &__image {
-    width: 140rpx;
-    height: 140rpx;
-    min-width: 140rpx;
+    width: 280rpx;
     border-radius: 12rpx;
-    object-fit: cover;
     box-shadow: 0 4rpx 12rpx rgba(0,0,0,0.1);
+    margin-bottom: 8rpx;
   }
 
   &__content {
@@ -208,14 +206,13 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 24rpx 0;
+  margin: 12rpx 0;
 }
 
 .save-amount {
   font-size: 24rpx;
   color: #FF4757;
   font-weight: 600;
-  margin-top: 8rpx;
   padding: 4rpx 16rpx;
   background: rgba(255, 71, 87, 0.1);
   border-radius: 20rpx;
@@ -226,7 +223,7 @@
   align-items: center;
   font-size: 24rpx;
   color: #666666;
-  margin: 16rpx 0;
+  margin-bottom: 8rpx;
 
   .expiry-icon {
     margin-right: 8rpx;

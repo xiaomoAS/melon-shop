@@ -16,7 +16,7 @@
         <view class="content-title">{{ couponInfo.name }}</view>
 
         <view class="product-info">
-          <image class="product-info__image" :src="productInfo.mainImgUrl" mode="aspectFill"></image>
+          <image class="product-info__image" :src="productInfo.mainImgUrl" mode="widthFix"></image>
           <view class="product-info__content">
             <view class="product-title">{{ productInfo.title }}</view>
             <view class="product-meta">
