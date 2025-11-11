@@ -63,7 +63,7 @@
 			}
 		},
 		{
-			"path": "pages/send-coupon/index",
+			"path": "pages/sendCoupon/index",
 			"style": {
 				"navigationBarTitleText": "赠送优惠券"
 			}

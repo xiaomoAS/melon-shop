@@ -92,7 +92,24 @@ export default {
     formatDate,
     async submitHandler() {
       try {
-        await this.$http.post('/user/coupon/donateLinkUrl', { couponId: this.couponInfo.id })
+        const url = await this.$http.post('/user/coupon/donateLinkUrl', { couponId: this.couponInfo.id })
+        if (url) {
+          wx.setClipboardData({
+            data: String(url),
+            success (res) {
+              wx.showToast({
+                title: '分享链接已复制到剪切板',
+                icon: 'none'
+              })
+              this.$refs.popup.close()
+            },
+            fail(res) {
+              console.log(res)
+            }
+          })
+        } else {
+          uni.showToast({ title: '生成链接失败', icon: 'none' })
+        }
       } catch (error) {
         console.log(error)
       }
