@@ -32,8 +32,11 @@ import UploadProfile from '@/components/upload-profile/index.vue'
     methods: {
       copyUserId(data) {
         wx.setClipboardData({
-        data: data,
+        data: String(data),
         success (res) {
+          console.log(res)
+        },
+        fail(res) {
           console.log(res)
         }
       })

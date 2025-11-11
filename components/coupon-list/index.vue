@@ -1,6 +1,9 @@
 <template>
 	<view class="coupon-box">
 		<view v-for="item in couponList" :key="item.couponId" class="coupon_list">
+			<view v-if="item.coupon.expiredFlag" class="expired-box">
+				<image class="expired-icon" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/a0503115a7514426a3ab9963a7e2564c/expired-icon.png?Expires=2078190589&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=LdThYZ8dAKu%2Bi%2FUXNfqPVDAGH5c%3D" mode="widthFix"></image>
+			</view>
 			<view class="coupon_name">{{ getCouponShortName(item) }}</view>
 			<view class="coupon_deta">
 				<view class="tle">{{ item.coupon.name }}</view>
@@ -9,7 +12,7 @@
 			</view>
 			<view class="play_cont">
 				<view class="txt">1张</view>
-				<view class="btn" @click="couponClick(item)">{{ item.coupon.publishType === PUBLISH_TYPE.DISCOUNT_DAILY ? '去赠送' : '去使用' }}</view>
+				<view class="btn" @click="couponClick(item)">{{ item.coupon.donateType === DONATE_TYPE.SEND ? '去赠送' : '去使用' }}</view>
 			</view>
 		</view>
 		<view v-if="!couponList.length" class="no-coupon-tip" :class="{ 'my-coupon': couponType }">
@@ -34,7 +37,7 @@
 </template>
 
 <script>
-import { COUPON_TYPE, PUBLISH_TYPE } from './constants'
+import { COUPON_TYPE, DONATE_TYPE } from './constants'
 import LoadMore from '@/components/load-more/index.vue'
 import GiftPopup from './components/gift-popup/index.vue'
 
@@ -49,12 +52,17 @@ export default {
 			type: Number,
 			default: undefined,
 			required: false
+		},
+		expiredType: {
+			type: Number,
+			default: undefined,
+			required: false
 		}
 	},
 	data() {
 		return {
 			COUPON_TYPE,
-			PUBLISH_TYPE,
+			DONATE_TYPE,
 			couponList: [],
 			page: 1,
 			pageSize: 5,
@@ -94,10 +102,7 @@ export default {
 			const hours = String(expireDate.getHours()).padStart(2, '0')
 			const minutes = String(expireDate.getMinutes()).padStart(2, '0')
 			
-			// 已经过期
-			if (expireDateStart.getTime() < Date.now()) {
-				return '已过期'
-			} else if (todayStart.getTime() === expireDateStart.getTime()) {
+			if (todayStart.getTime() === expireDateStart.getTime()) {
 			// 如果是今天
 				return `今日${hours}:${minutes}到期`
 			} else {
@@ -124,7 +129,8 @@ export default {
 					this.couponList = []
 				}
 				const { rows = [], total = 0 } = await this.$http.post('/user/coupon/list', {
-					couponType: this.couponType === COUPON_TYPE.ALL ? null : this.couponType,
+					expiredType: this.expiredType,
+					couponType: this.couponType,
 					page: this.page,
 					pageSize: this.pageSize,
 				})
@@ -137,7 +143,7 @@ export default {
 			}
 		},
 		couponClick(item) {
-			if (item.coupon.publishType === PUBLISH_TYPE.DISCOUNT_DAILY) {
+			if (item.coupon.donateType === DONATE_TYPE.SEND) {
 				this.$refs.giftPopup.open(item.coupon)
 			} else {
 				uni.navigateTo({ url: `/pages/search-page/index?productIdList=${item.coupon.productIdList}` })
@@ -152,17 +158,6 @@ export default {
 			// 增加页码并加载下一页
 			this.page = this.page + 1
 			this.getCouponList()
-		},
-	},
-	// 适配所有优惠券列表，切换优惠券类型时
-	watch: {
-		couponType: {
-			handler(newVal, oldVal) {
-				if (newVal && newVal !== oldVal) {
-					this.getCouponList(true)
-				}
-			},
-			immediate: true
 		},
 	},
 }

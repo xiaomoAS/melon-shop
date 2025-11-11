@@ -36,6 +36,11 @@ const errorMsg = ref('')
 const returnUrl = ref(null)
 const userPrivacyRef = ref()
 const privacyInfo = ref({})
+// 需要返回的页面
+const needReturnPages = [
+	'/pages/get-coupon/index',
+	'/pages/send-coupon/index'
+]
 
 onLoad((options) => {
 	returnUrl.value = options.returnUrl ? decodeURIComponent(options.returnUrl) : null
@@ -129,7 +134,7 @@ const sendLoginRequest = async (data) => {
 		
 		// 跳转到原来页面
 		setTimeout(() => {
-			if (returnUrl.value.includes('/pages/get-coupon/index')) {
+			if (needReturnPages.some((url) => returnUrl.value.includes(url))) {
 				uni.redirectTo({ url: returnUrl.value })
 			} else {
 				uni.switchTab({ url: '/pages/index/index' })

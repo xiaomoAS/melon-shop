@@ -66,7 +66,7 @@
 					<uni-icons type="right" size="12"></uni-icons>
 				</view>
 			</view>
-			<CouponList ref="couponListRef"></CouponList>
+			<CouponList ref="couponListRef" :expired-type="EXPIRED_TYPE.VALID"></CouponList>
 		</view>
 
 		<view class="user_bits_txt">
@@ -89,6 +89,7 @@
 	import { MEMBER_LEVEL } from '@/constants/common.js'
 	import UserProfile from '@/components/user-profile/index.vue'
 	import { memberConfigs } from './constants'
+import { EXPIRED_TYPE } from '../../components/coupon-list/constants'
 
 	export default {
 		components: {
@@ -106,6 +107,7 @@
 					currentLevelMaxValue: 0,
 					discount: 0
 				},
+				EXPIRED_TYPE
 			}
 		},
 		computed: {

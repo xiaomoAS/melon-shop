@@ -14,15 +14,15 @@
 				<text>{{ tab.label }}</text>
 			</view>
 		</view>
-		<CouponList :coupon-type="activeTab"></CouponList>
+		<CouponList ref="couponListRef" :coupon-type="coupinType" :expired-type="expiredType"></CouponList>
 	</view>
 </template>
 
 <script>
 import CouponList from '@/components/coupon-list/index.vue'
-import { COUPON_TYPE } from '@/components/coupon-list/constants.js'
+import { COUPON_TYPE, EXPIRED_TYPE } from '@/components/coupon-list/constants.js'
 import { resourceHrefHandler } from '@/utils/common'
-import { COUNPON_TABS } from './constants'
+import { COUNPON_TABS, COUPON_TAB_TYPE } from './constants'
 
 export default {
 	name: 'MyCounpon',
@@ -31,7 +31,7 @@ export default {
 	},
 	data() {
 		return {
-			activeTab: COUPON_TYPE.ALL, // 当前激活的tab
+			activeTab: COUPON_TAB_TYPE.ALL, // 当前激活的tab
 			COUPON_TYPE,
 			resourceInfo: {
 				url: 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/42bed1e64df34a5bae49856265907066/carousel-1.png?Expires=2073865388&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=wibX0MJ%2By7WmGBHvAoaHXBrkaEE%3D'
@@ -39,8 +39,28 @@ export default {
 			COUNPON_TABS
 		}
 	},
+	computed: {
+		coupinType() {
+			if (this.activeTab === COUPON_TAB_TYPE.NEW_DISCOUNT) {
+				return COUPON_TYPE.NEW_DISCOUNT
+			}
+			if (this.activeTab === COUPON_TAB_TYPE.FREIGHT) {
+				return COUPON_TYPE.FREIGHT
+			}
+			return null
+		},
+		expiredType() {
+			if (this.activeTab === COUPON_TAB_TYPE.EXPIRED) {
+				return EXPIRED_TYPE.EXPIRED
+			}
+			return null
+		},
+	},
 	onLoad() {
 		this.getTopImg()
+		this.$nextTick(() => {
+			this.$refs.couponListRef && this.$refs.couponListRef.getCouponList(true)
+		})
 	},
 	onShareAppMessage() {
 		return {
@@ -63,7 +83,9 @@ export default {
 		// 切换tab
 		switchTab(type) {
 			this.activeTab = type;
-			console.log('切换到tab:', tabName, 'type:', type);
+			this.$nextTick(() => {
+				this.$refs.couponListRef && this.$refs.couponListRef.getCouponList(true)
+			})
 		},
 		resourceHrefHandler
 	}

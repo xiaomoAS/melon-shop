@@ -90,7 +90,12 @@ export default {
       }
     },
     formatDate,
-    submitHandler() {
+    async submitHandler() {
+      try {
+        await this.$http.post('/user/coupon/donateLinkUrl', { couponId: this.couponInfo.id })
+      } catch (error) {
+        console.log(error)
+      }
     },
     open(couponItem) {
       if (!couponItem) return

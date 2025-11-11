@@ -3,6 +3,7 @@
 }
 
 .coupon_list {
+  position: relative;
   margin-bottom: 20rpx;
   background: url("https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/e1eeeb8f19ec4314bef478d3f42f7324/yhq_bg.png?Expires=2074059159&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=iJYLsH%2FzuJB0pBCAdYtt2olHyxY%3D") no-repeat center;
   background-size: cover;
@@ -11,6 +12,25 @@
   align-items: center;
   padding: 20rpx;
 }
+
+.expired-box {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(1px);
+
+  .expired-icon {
+    width: 120rpx;
+  }
+}
+
 .coupon_list .coupon_name {
   width: 132rpx;
   height: 99rpx;
