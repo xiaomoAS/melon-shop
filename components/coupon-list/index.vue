@@ -12,7 +12,7 @@
 			</view>
 			<view class="play_cont">
 				<view class="txt">1张</view>
-				<view class="btn" @click="couponClick(item)">{{ item.coupon.donateType === DONATE_TYPE.SEND ? '去赠送' : '去使用' }}</view>
+				<view class="btn" @click="couponClick(item)">{{ item.useStatus === USE_COUPON_STATUS.WAIT_SEND ? '去赠送' : '去使用' }}</view>
 			</view>
 		</view>
 		<view v-if="!couponList.length" class="no-coupon-tip" :class="{ 'my-coupon': couponType }">
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { COUPON_TYPE, DONATE_TYPE } from './constants'
+import { COUPON_TYPE, USE_COUPON_STATUS } from './constants'
 import LoadMore from '@/components/load-more/index.vue'
 import GiftPopup from './components/gift-popup/index.vue'
 
@@ -62,7 +62,7 @@ export default {
 	data() {
 		return {
 			COUPON_TYPE,
-			DONATE_TYPE,
+			USE_COUPON_STATUS,
 			couponList: [],
 			page: 1,
 			pageSize: 5,
@@ -135,7 +135,6 @@ export default {
 					pageSize: this.pageSize,
 				})
 				this.couponList = this.couponList.concat(rows.filter((item) => item.coupon) || [])
-				// this.couponList = this.couponList.map((item) => ({...item, coupon: { ...item.coupon, publishType: 3 }}))
 				this.totalCount = total
 			} catch (error) {
 				this.couponList = []
@@ -143,7 +142,7 @@ export default {
 			}
 		},
 		couponClick(item) {
-			if (item.coupon.donateType === DONATE_TYPE.SEND) {
+			if (item.useStatus === USE_COUPON_STATUS.WAIT_SEND) {
 				this.$refs.giftPopup.open(item.coupon)
 			} else {
 				uni.navigateTo({ url: `/pages/search-page/index?productIdList=${item.coupon.productIdList}` })

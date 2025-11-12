@@ -6,8 +6,8 @@ export const COUPON_TYPE = {
 // 发放方式
 export const PUBLISH_TYPE = {
   NEW: 1, // 新用户进入小程序领取
-  DISCOUNT_DAILY: 3, // 每日折扣券
   LINK: 4, // 分享二维码领取
+  DISCOUNT_DAILY: 5, // 每日折扣券
 }
 
 // 过期类型
@@ -16,8 +16,8 @@ export const EXPIRED_TYPE = {
   EXPIRED: 1, // 过期
 }
 
-// 是否可赠送
-export const DONATE_TYPE = {
-  SEND: 1, // 可赠送
-  NO: 2, // 不可赠送
+// 用户券状态
+export const USE_COUPON_STATUS = {
+  WAIT_USE: 1, // 待使用
+  WAIT_SEND: 4, // 待赠送
 }

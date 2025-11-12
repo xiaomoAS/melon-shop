@@ -94,6 +94,7 @@ export default {
       try {
         const url = await this.$http.post('/user/coupon/donateLinkUrl', { couponId: this.couponInfo.id })
         if (url) {
+          let that = this
           wx.setClipboardData({
             data: String(url),
             success (res) {
@@ -101,7 +102,7 @@ export default {
                 title: '分享链接已复制到剪切板',
                 icon: 'none'
               })
-              this.$refs.popup.close()
+              that.$refs.popup.close()
             },
             fail(res) {
               console.log(res)
