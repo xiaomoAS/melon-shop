@@ -15,7 +15,7 @@
 				<view class="btn" @click="couponClick(item)">{{ item.useStatus === USE_COUPON_STATUS.WAIT_SEND ? '去赠送' : '去使用' }}</view>
 			</view>
 		</view>
-		<view v-if="!couponList.length" class="no-coupon-tip" :class="{ 'my-coupon': couponType }">
+		<view v-if="!couponList.length" class="no-coupon-tip" :class="{ 'my-coupon': scene === COUPON_LIST_SCENE.ALL }">
 			<view>您当前的优惠券用完啦</view>
 			<view>关注<text class="button-text" @click="openOfficial">钰果日记</text>，每天都有券领取哟～</view>
 		</view>
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import { COUPON_TYPE, USE_COUPON_STATUS } from './constants'
+import { COUPON_TYPE, USE_COUPON_STATUS, COUPON_LIST_SCENE } from './constants'
 import LoadMore from '@/components/load-more/index.vue'
 import GiftPopup from './components/gift-popup/index.vue'
 
@@ -53,6 +53,11 @@ export default {
 			default: undefined,
 			required: false
 		},
+		scene: {
+			type: Number,
+			default: COUPON_LIST_SCENE.PERSONAL,
+			required: false
+		},
 		expiredType: {
 			type: Number,
 			default: undefined,
@@ -61,6 +66,7 @@ export default {
 	},
 	data() {
 		return {
+			COUPON_LIST_SCENE,
 			COUPON_TYPE,
 			USE_COUPON_STATUS,
 			couponList: [],

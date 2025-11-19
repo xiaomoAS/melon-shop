@@ -14,13 +14,13 @@
 				<text>{{ tab.label }}</text>
 			</view>
 		</view>
-		<CouponList ref="couponListRef" :coupon-type="coupinType" :expired-type="expiredType"></CouponList>
+		<CouponList ref="couponListRef" :coupon-type="couponType" :expired-type="expiredType" :scene="COUPON_LIST_SCENE.ALL"></CouponList>
 	</view>
 </template>
 
 <script>
 import CouponList from '@/components/coupon-list/index.vue'
-import { COUPON_TYPE, EXPIRED_TYPE } from '@/components/coupon-list/constants.js'
+import { COUPON_TYPE, EXPIRED_TYPE, COUPON_LIST_SCENE } from '@/components/coupon-list/constants.js'
 import { resourceHrefHandler } from '@/utils/common'
 import { COUNPON_TABS, COUPON_TAB_TYPE } from './constants'
 
@@ -33,6 +33,7 @@ export default {
 		return {
 			activeTab: COUPON_TAB_TYPE.ALL, // 当前激活的tab
 			COUPON_TYPE,
+			COUPON_LIST_SCENE,
 			resourceInfo: {
 				url: 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/42bed1e64df34a5bae49856265907066/carousel-1.png?Expires=2073865388&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=wibX0MJ%2By7WmGBHvAoaHXBrkaEE%3D'
 			},
@@ -40,7 +41,7 @@ export default {
 		}
 	},
 	computed: {
-		coupinType() {
+		couponType() {
 			if (this.activeTab === COUPON_TAB_TYPE.NEW_DISCOUNT) {
 				return COUPON_TYPE.NEW_DISCOUNT
 			}

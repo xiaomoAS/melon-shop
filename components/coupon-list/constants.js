@@ -21,3 +21,9 @@ export const USE_COUPON_STATUS = {
   WAIT_USE: 1, // 待使用
   WAIT_SEND: 4, // 待赠送
 }
+
+// 优惠券列表场景
+export const COUPON_LIST_SCENE = {
+  ALL: 1, // 我的优惠券页面
+  PERSONAL: 2, // 我的页面
+}
