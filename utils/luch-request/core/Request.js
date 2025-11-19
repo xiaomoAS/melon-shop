@@ -19,7 +19,7 @@ import clone from '../utils/clone'
 export default class Request {
   /**
    * @param {Object} arg - 全局配置
-   * @param {String} arg.baseURL - 全局根路径
+   * @param {String} arg.baseUrl - 全局根路径
    * @param {Object} arg.header - 全局header
    * @param {String} arg.method = [GET|POST|PUT|DELETE|CONNECT|HEAD|OPTIONS|TRACE] - 全局默认请求方式
    * @param {String} arg.dataType = [json] - 全局默认的dataType

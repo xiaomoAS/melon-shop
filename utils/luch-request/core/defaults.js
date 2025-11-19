@@ -4,7 +4,7 @@
 
 
 export default {
-  baseURL: '',
+  baseUrl: '',
   header: {},
   method: 'GET',
   dataType: 'json',

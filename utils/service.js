@@ -1,13 +1,41 @@
 import Request from '@/utils/luch-request/index.js'
 
-const baseURL = 'https://www.melon-bamboo.com';
-// if (process.env.NODE_ENV === 'development') {
-// 	// 开发环境
-// 	// var baseURL = 'http://127.0.0.1:4523/m1/6785558-6497977-default'; //域名(网站启动时的域名)，目前用这个 js（【注意】记住改manifest.josn 源码视图中的h5配置）
-// } else {
-// 	// 生产环境
-// 	var baseURL = '101.201.111.162'; //域名(网站启动时的域名)，目前用这个 js
-// }
+const HOSTS = {
+	develop: 'https://www.melon-bamboo.fun',   // 本地开发环境
+	trial: 'https://www.melon-bamboo.com', // 体验版环境
+	prod: 'https://www.melon-bamboo.com', // 线上环境
+};
+
+// 获取环境版本，添加兼容性处理
+let envVersion = 'prod';
+try {
+  if (wx && wx.getAccountInfoSync && wx.getAccountInfoSync().miniProgram) {
+    envVersion = wx.getAccountInfoSync().miniProgram.envVersion || 'prod';
+  }
+} catch (error) {
+  console.warn('获取小程序环境信息失败:', error);
+  // 默认使用线上环境
+  envVersion = 'prod';
+}
+
+let baseUrl = "";
+switch (envVersion) {
+    case 'develop':
+			// 本地开发
+      baseUrl = `${HOSTS.develop}`;
+      break;
+    case 'trial':
+			// 体验版
+      baseUrl = `${HOSTS.trial}`;
+      break;
+    case 'release':
+			// 线上
+      baseUrl = `${HOSTS.prod}`;
+      break;
+    default:
+      baseUrl = `${HOSTS.prod}`;
+      break;
+}
 
 const http = new Request()
 
@@ -15,7 +43,7 @@ const http = new Request()
 // setConfig 这里只会执行一次。
 http.setConfig((config) => {
 	/* 设置全局配置 */
-	config.baseURL = baseURL
+	config.baseUrl = baseUrl
 	config.header = {
 		...config.header,
 	}
@@ -109,5 +137,5 @@ http.interceptors.response.use((response) => {
 
 export {
 	http,
-	baseURL
+	baseUrl
 }

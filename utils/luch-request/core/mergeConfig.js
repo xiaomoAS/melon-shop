@@ -27,7 +27,7 @@ const mergeKeys = (keys, globalsConfig, config2) => {
 export default (globalsConfig, config2 = {}) => {
   const method = config2.method || globalsConfig.method || 'GET'
   let config = {
-    baseURL: config2.baseURL || globalsConfig.baseURL || '',
+    baseUrl: config2.baseUrl || globalsConfig.baseUrl || '',
     method: method,
     url: config2.url || '',
     params: config2.params || {},

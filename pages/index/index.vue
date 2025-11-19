@@ -93,7 +93,7 @@
 	export default {
 		data() {
 			return {
-				baseUrl: this.$baseURL,
+				baseUrl: this.$baseUrl,
 				carouselImages: [],
 				cateList: [], // 所有类目
 				newPersonList: [],

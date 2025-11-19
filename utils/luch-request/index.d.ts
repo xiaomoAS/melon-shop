@@ -42,7 +42,7 @@ export interface HttpRequestConfig<T = HttpTask> {
     /** @desc 请求方式，默认为 GET */
     method?: HttpMethod;
     /** @desc 请求基地址 */
-    baseURL?: string;
+    baseUrl?: string;
     /** @desc 请求头信息，不能设置 Referer，App、H5 端会自动带上 cookie，且 H5 端不可手动修改 */
     header?: HttpRequestHeader;
     /** @desc 请求查询参数，自动拼接为查询字符串 */
