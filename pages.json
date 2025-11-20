@@ -88,6 +88,12 @@
 				"navigationBarTitleText": "我的",
 				"navigationStyle":"custom"
 			}
+		},
+		{
+			"path": "pages/group-leader/index",
+			"style": {
+				"navigationBarTitleText": "团长管理页"
+			}
 		}
 	],
 	"tabBar": {

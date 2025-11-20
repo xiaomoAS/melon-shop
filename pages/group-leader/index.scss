@@ -1,0 +1,18 @@
+.leader-box {
+  padding: 16rpx;
+  min-height: 100vh;
+  background-color: #FFF7FF;
+
+  .date-picker {
+    width: 230px;
+    margin-left: auto;
+
+    ::v-deep .uni-date-x.uni-date-range {
+      background-color: transparent;
+    }
+    ::v-deep .uni-date-editor--x.uni-date-x--border {
+      border: none;
+    }
+  }
+}
+

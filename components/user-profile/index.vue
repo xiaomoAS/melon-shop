@@ -1,5 +1,5 @@
 <template>
-  <view class="user_inf_content">
+  <view class="user_inf_content" :class="{'leader': scene === PROFILE_SCENE.LEADER}">
 		<UploadProfile @updateUserInfo="handleUpdateUserInfo">
 			<view class="ava_inf">
 				<view class="tips_txt">点击头像上传个人信息</view>
@@ -14,16 +14,25 @@
 </template>
 
 <script>
-import UploadProfile from '@/components/upload-profile/index.vue'
+	import UploadProfile from '@/components/upload-profile/index.vue'
+	import { PROFILE_SCENE } from './constants';
 
   export default {
     name: 'UserProfile',
+		props: {
+			scene: {
+				required: false,
+				type: PROFILE_SCENE,
+				default: PROFILE_SCENE.PERSONAL
+			},
+		},
     components: {
       UploadProfile,
     },
     data() {
       return {
-        userInfo: {}
+        userInfo: {},
+				PROFILE_SCENE
       }
     },
     mounted() {

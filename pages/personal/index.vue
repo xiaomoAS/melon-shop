@@ -77,7 +77,8 @@
 			</view>
 		</view>
 
-		<!-- <view class="bottom-button" @click="openArticleHandler">我要当团长!</view> -->
+		<view class="bottom-button" @click="openArticleHandler">我要当团长!</view>
+		<view class="bottom-button" @click="toGroupLeaderPage">切换团长端</view>
 
 		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
@@ -89,7 +90,7 @@
 	import { MEMBER_LEVEL } from '@/constants/common.js'
 	import UserProfile from '@/components/user-profile/index.vue'
 	import { memberConfigs } from './constants'
-import { EXPIRED_TYPE } from '../../components/coupon-list/constants'
+	import { EXPIRED_TYPE } from '../../components/coupon-list/constants'
 
 	export default {
 		components: {
@@ -107,7 +108,7 @@ import { EXPIRED_TYPE } from '../../components/coupon-list/constants'
 					currentLevelMaxValue: 0,
 					discount: 0
 				},
-				EXPIRED_TYPE
+				EXPIRED_TYPE,
 			}
 		},
 		computed: {
@@ -149,6 +150,10 @@ import { EXPIRED_TYPE } from '../../components/coupon-list/constants'
 				wx.openOfficialAccountArticle({
 				  url: 'https://mp.weixin.qq.com/s/Yf5adowfIkBW5KMBoD4TNw'
 				})
+			},
+			toGroupLeaderPage() {
+				// 跳转团长端
+				uni.navigateTo({ url: '/pages/group-leader/index' })
 			},
 			chargeHandler() {
 				this.$refs.rechargeRef.open()
