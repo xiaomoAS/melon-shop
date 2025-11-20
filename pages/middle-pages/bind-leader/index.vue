@@ -1,33 +1,38 @@
 <template>
-  <view class="get-coupon-box">
-    <button class="get-coupon-button" type="primary" :plain="true" :loading="true">优惠券领取中~</button>
+  <view class="middle-box">
+    <button class="middle-box-button" type="primary" :plain="true" :loading="true">绑定团长中~</button>
   </view>
 </template>
 
 <script>
   export default {
-    name: 'GetCoupon',
+    name: 'BindLeader',
     data() {
       return {
-        counponId: null,
+        id: null,
       }
     },
     async onLoad(options) {
-      if (options && options.scene) {
-        const scene = decodeURIComponent(options.scene)
-        const id = scene.split('=')[1]
-        this.counponId = id
-        await this.claimCoupon()
+      try {
+        if (options && options.scene) {
+          const scene = decodeURIComponent(options.scene)
+          const params = scene.split('&')
+          const leaderId = params.find((item) => item.includes('leaderId')).split('=')[1]
+          this.id = leaderId
+          await this.claimCoupon()
+        }
+      } catch (error) {
+        uni.switchTab({ url: '/pages/index/index' })
       }
     },
     methods: {
       async claimCoupon() {
         try {
-          if (!this.counponId) return
+          if (!this.id) return
           await this.$http.post('/user/coupon/claim', {
-            couponId: Number(this.counponId)
+            couponId: Number(this.id)
           })
-          uni.showToast({ title: '领取成功', icon: 'none' })
+          uni.showToast({ title: '绑定成功', icon: 'none' })
           const timer = setTimeout(() => {
             uni.switchTab({ url: '/pages/personal/index' })
             clearTimeout(timer)

@@ -1,13 +1,13 @@
 <template>
-  <div class="load-more-container">
-    <div class="load-more-content">
+  <view class="load-more-container">
+    <view class="load-more-content">
       <slot>
-        <div class="default-content">
+        <view class="default-content">
           <text class="text">加载更多</text>
-        </div>
+        </view>
       </slot>
-    </div>
-  </div>
+    </view>
+  </view>
 </template>
 
 <script>
