@@ -1,0 +1,15 @@
+.middle-box {
+  display: flex;
+  align-items: center;
+  min-height: 100vh;
+}
+
+.middle-box-button {
+  font-size: 30rpx;
+  color: #8F8F8F!important;
+  border: none!important;
+
+  &::before {
+    margin-right: 8rpx;
+  }
+}

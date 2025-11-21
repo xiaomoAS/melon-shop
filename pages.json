@@ -69,6 +69,12 @@
 			}
 		},
 		{
+			"path": "pages/middle-pages/bind-leader/index",
+			"style": {
+				"navigationBarTitleText": "绑定团长"
+			}
+		},
+		{
 			"path": "pages/user-login/index",
 			"style": {
 				"navigationBarTitleText": "登陆"

@@ -1,7 +1,7 @@
 <template>
-  <div class="send-coupon-box">
+  <view class="send-coupon-box">
     <button class="send-coupon-button" type="primary" :plain="true" :loading="true">优惠券赠送中~</button>
-  </div>
+  </view>
 </template>
 
 <script>
