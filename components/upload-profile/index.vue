@@ -51,8 +51,21 @@
     },
     methods: {
       chooseavatar(e){
-        console.log('选择头像:', e.detail.avatarUrl);
-        this.avatar = e.detail.avatarUrl;
+        console.log('选择头像:', e, e.detail.avatarUrl);
+        let self = this;
+        const fileSystemManager = uni.getFileSystemManager();
+          fileSystemManager.readFile({
+            filePath: e.detail.avatarUrl,
+            encoding: 'base64',
+            success: (res) => {
+              const base64Data = res.data;
+              self.avatar = `data:image/jpeg;base64,${base64Data}`;
+            },
+            fail: (error) => {
+              self.avatar = null
+              console.error('读取文件失败:', error);
+            }
+          });
       },
       open() {
         this.$refs.popup.open()

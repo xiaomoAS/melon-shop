@@ -19,18 +19,18 @@
           const params = scene.split('&')
           const leaderId = params.find((item) => item.includes('leaderId')).split('=')[1]
           this.id = leaderId
-          await this.claimCoupon()
+          await this.bindLeader()
         }
       } catch (error) {
         uni.switchTab({ url: '/pages/index/index' })
       }
     },
     methods: {
-      async claimCoupon() {
+      async bindLeader() {
         try {
           if (!this.id) return
-          await this.$http.post('/user/coupon/claim', {
-            couponId: Number(this.id)
+          await this.$http.post('/admin/team/user/add', {
+            leaderId: Number(this.id)
           })
           uni.showToast({ title: '绑定成功', icon: 'none' })
           const timer = setTimeout(() => {

@@ -59,14 +59,18 @@
 			},
       async handleUpdateUserInfo(userInfo) {
 				try {
+					const { url } = await this.$http.post('/file/upload', {
+						fileContent: userInfo.avatar,
+						fileName: `${userInfo.nickname}用户头像`
+					})
 					await this.$http.post('/wechat/user/patchUserInfo', {
 						nickName: userInfo.nickname,
-						headImgUrl: userInfo.avatar
+						headImgUrl: url
 					})
 					uni.showToast({ title: '更新成功', icon: 'none' })
 					// 更新本地用户信息
-					if (userInfo.avatar) {
-						this.userInfo.headImgUrl = userInfo.avatar;
+					if (url) {
+						this.userInfo.headImgUrl = url;
 					}
 					if (userInfo.nickname) {
 						this.userInfo.nickName = userInfo.nickname;

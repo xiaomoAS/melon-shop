@@ -77,8 +77,8 @@
 			</view>
 		</view>
 
-		<view class="bottom-button" @click="openArticleHandler">我要当团长!</view>
-		<view class="bottom-button" @click="toGroupLeaderPage">切换团长端</view>
+		<!-- <view class="bottom-button" @click="openArticleHandler">我要当团长!</view> -->
+		<!-- <view class="bottom-button" @click="toGroupLeaderPage">切换团长端</view> -->
 
 		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
