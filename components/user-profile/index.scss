@@ -27,11 +27,22 @@
   color: #ffffff;
 }
 .user_inf_content .ava_inf .ava {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   width: 108rpx;
   height: 108rpx;
+
+  &__frame {
+    position: absolute;
+    top: -20rpx;
+    right: -20rpx;
+    bottom: -20rpx;
+    left: -20rpx;
+    width: auto!important;
+    height: auto!important;
+  }
 }
 .user_inf_content .ava_inf .ava image {
   display: block;

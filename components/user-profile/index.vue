@@ -3,7 +3,10 @@
 		<UploadProfile @updateUserInfo="handleUpdateUserInfo">
 			<view class="ava_inf">
 				<view class="tips_txt">点击头像上传个人信息</view>
-				<view class="ava"><image :src="userInfo.headImgUrl || 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1f25a32b4b97447bac8d02f20f0a47b6/user_ava.png?Expires=2073952610&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=IQflZdBMbA4jh2W7oui1vmaxPuU%3D'" mode=""></image> </view>
+				<view class="ava">
+					<image :src="userInfo.headImgUrl || 'https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/1f25a32b4b97447bac8d02f20f0a47b6/user_ava.png?Expires=2073952610&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=IQflZdBMbA4jh2W7oui1vmaxPuU%3D'" mode=""></image>
+					<image class="ava__frame" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/59c8d701ec82439eb346d3c228b18edf/%E5%A4%B4%E5%83%8F%E5%8A%A8%E6%80%81_422.6KB.gif?Expires=2079334132&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Nf%2FEOYE1sAR0dT4EkHDOolZKjtU%3D" />
+				</view>
 			</view>
 		</UploadProfile>
 		<view class="deta_inf">
@@ -56,6 +59,7 @@
 				} catch (error) {
 					this.userInfo = {}
 				}
+				this.$emit('updateUserInfo', this.userInfo)
 			},
       async handleUpdateUserInfo(userInfo) {
 				try {

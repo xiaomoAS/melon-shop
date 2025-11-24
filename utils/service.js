@@ -3,7 +3,7 @@ import Request from '@/utils/luch-request/index.js'
 const HOSTS = {
 	develop: 'https://www.melon-bamboo.com',   // 本地开发环境
 	// https://www.melon-bamboo.fun
-	trial: 'https://www.melon-bamboo.com', // 体验版环境
+	trial: 'https://www.melon-bamboo.fun', // 体验版环境
 	prod: 'https://www.melon-bamboo.com', // 线上环境
 };
 

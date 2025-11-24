@@ -5,7 +5,7 @@
 			我的
 		</view>
 		<!-- 头像 -->
-		<UserProfile />
+		<UserProfile @updateUserInfo="updateUserInfo" />
 
 		<!-- 会员信息 -->
 		<view v-if="memberConfig" class="user_member_cont" :class="memberConfig.mainClass">
@@ -78,7 +78,8 @@
 		</view>
 
 		<!-- <view class="bottom-button" @click="openArticleHandler">我要当团长!</view> -->
-		<!-- <view class="bottom-button" @click="toGroupLeaderPage">切换团长端</view> -->
+		<view class="bottom-button" @click="toGroupLeaderPage">切换团长端</view>
+		<!-- <view class="bottom-button" @click="withdrawhandler">我要退团</view> -->
 
 		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
@@ -109,6 +110,7 @@
 					discount: 0
 				},
 				EXPIRED_TYPE,
+				userInfo: {},
 			}
 		},
 		computed: {
@@ -135,6 +137,9 @@
 			}
 		},
 		methods: {
+			updateUserInfo(val) {
+				this.userInfo = val;
+			},
 			phoneHandler() {
 				wx.makePhoneCall({
 					phoneNumber: '18612655137',
@@ -154,6 +159,24 @@
 			toGroupLeaderPage() {
 				// 跳转团长端
 				uni.navigateTo({ url: '/pages/group-leader/index' })
+			},
+			withdrawhandler() {
+				// 退团
+				try {
+					uni.showModal({
+					title: '',
+					content: '确认退团吗?',
+					success: async (res) => {
+						if (res.confirm) {
+							// await this.$http.post('/order/receive', { orderId: order.id })
+							uni.showToast({ title: '退团成功', icon: 'none' })
+							uni.reLaunch({ url: '/pages/personal/index' })
+						} else if (res.cancel) {}
+					}
+				})
+				} catch (error) {
+					
+				}
 			},
 			chargeHandler() {
 				this.$refs.rechargeRef.open()
