@@ -29,7 +29,7 @@
       async bindLeader() {
         try {
           if (!this.id) return
-          await this.$http.post('/admin/team/user/add', {
+          await this.$http.post('/team/user/add', {
             leaderId: Number(this.id)
           })
           uni.showToast({ title: '绑定成功', icon: 'none' })
