@@ -75,6 +75,12 @@
 			}
 		},
 		{
+			"path": "pages/group-leader/components/member-manage/index",
+			"style": {
+				"navigationBarTitleText": "团员管理"
+			}
+		},
+		{
 			"path": "pages/user-login/index",
 			"style": {
 				"navigationBarTitleText": "登陆"

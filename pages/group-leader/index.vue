@@ -38,9 +38,9 @@
     <!-- 功能菜单区域 -->
     <view class="function-menu">
       <view class="menu-row">
-        <view class="menu-item" @click="navigateTo('/pages/team-manage/index')">
+        <view class="menu-item" @click="navigateTo('/pages/group-leader/components/member-manage/index')">
           <uni-icons type="person-filled" size="24" color="#666666"></uni-icons>
-          <text class="menu-label">团队管理</text>
+          <text class="menu-label">团员管理</text>
         </view>
         <view class="menu-item" @click="navigateTo('/pages/order-manage/index')">
           <uni-icons type="list" size="24" color="#666666"></uni-icons>
