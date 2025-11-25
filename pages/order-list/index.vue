@@ -109,7 +109,7 @@
 			@visible="loadMoreData" 
 		>
 			<view class="custom-load-more">
-				<span>上拉加载更多</span>
+				<text>上拉加载更多</text>
 			</view>
 		</LoadMore>
 	</view>

@@ -5,7 +5,7 @@
 			我的
 		</view>
 		<!-- 头像 -->
-		<UserProfile @updateUserInfo="updateUserInfo" />
+		<UserProfile ref="userProfileRef" @updateUserInfo="updateUserInfo" />
 
 		<!-- 会员信息 -->
 		<view v-if="memberConfig" class="user_member_cont" :class="memberConfig.mainClass">
@@ -77,9 +77,9 @@
 			</view>
 		</view>
 
-		<!-- <view class="bottom-button" @click="openArticleHandler">我要当团长!</view> -->
-		<view class="bottom-button" @click="toGroupLeaderPage">切换团长端</view>
-		<!-- <view class="bottom-button" @click="withdrawhandler">我要退团</view> -->
+		<view v-if="!userInfo.teamLeader && !userInfo.teamUser" class="bottom-button" @click="openArticleHandler">我要当团长!</view>
+		<view v-if="userInfo.teamLeader" class="bottom-button" @click="toGroupLeaderPage">切换团长端</view>
+		<view v-if="userInfo.teamUser" class="bottom-button" @click="withdrawhandler">我要退团</view>
 
 		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
@@ -168,9 +168,15 @@
 					content: '确认退团吗?',
 					success: async (res) => {
 						if (res.confirm) {
-							// await this.$http.post('/order/receive', { orderId: order.id })
+							await this.$http.post('/team/user/delete', {
+								userId: this.userInfo.teamUser.userId,
+								leaderId: this.userInfo.teamUser.leaderId
+							})
 							uni.showToast({ title: '退团成功', icon: 'none' })
-							uni.reLaunch({ url: '/pages/personal/index' })
+							const timer = setTimeout(() => {
+								uni.reLaunch({ url: '/pages/personal/index' })
+								clearTimeout(timer)
+							}, 1000);
 						} else if (res.cancel) {}
 					}
 				})
@@ -204,6 +210,7 @@
 			this.getAddressInfo()
 			this.getMemberInfo()
 			this.$nextTick(() => {
+				this.$refs.userProfileRef && this.$refs.userProfileRef.getUserInfo()
 				this.$refs.couponListRef && this.$refs.couponListRef.getCouponList(true)
 			})
 		}

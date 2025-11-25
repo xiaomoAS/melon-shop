@@ -79,13 +79,23 @@
   width: calc(100% - 108rpx);
   padding-left: 20rpx;
   color: #FFFFFF;
+
+  .name-box {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20rpx;
+
+    &__icon {
+      width: 60rpx;
+      margin-left: 4rpx;
+    }
+  }
 }
 .user_inf_content .deta_inf .name {
   display: flex;
   align-items: center;
   font-size: 34rpx;
   font-weight: bold;
-  margin-bottom: 20rpx;
 }
 .user_inf_content .deta_inf .name .id {
   display: inline-block;

@@ -39,7 +39,8 @@ const privacyInfo = ref({})
 // 需要返回的页面
 const needReturnPages = [
 	'/pages/get-coupon/index',
-	'/pages/sendCoupon/index'
+	'/pages/sendCoupon/index',
+	'/pages/middle-pages/'
 ]
 
 onLoad((options) => {

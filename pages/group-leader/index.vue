@@ -1,36 +1,27 @@
 <template>
   <view class="leader-box">
-    <UserProfile :scene="PROFILE_SCENE.LEADER" />
-
-    <view class="date-picker">
-      <uni-datetime-picker
-        v-model="datetimerange"
-        type="daterange"
-        rangeSeparator="至"
-        return-type="timestamp"
-      />
-    </view>
+    <UserProfile ref="userProfileRef" :scene="PROFILE_SCENE.LEADER" @updateUserInfo="updateUserInfo"/>
 
     <!-- 数据统计卡片区域 -->
     <view class="stats-cards">
       <view class="stats-row">
         <view class="stat-item">
-          <view class="stat-label">团队数量</view>
-          <view class="stat-value">{{ statsData.teamCount }}</view>
+          <view class="stat-label">团员数量</view>
+          <view class="stat-value">{{ leaderInfo.userCount }}</view>
         </view>
         <view class="stat-item">
-          <view class="stat-label">团打单量</view>
-          <view class="stat-value">{{ statsData.orderCount }}<text class="unit">斤</text></view>
+          <view class="stat-label">团订单量</view>
+          <view class="stat-value" v-html="formatNum(leaderInfo.orderCount)"></view>
         </view>
       </view>
       <view class="stats-row">
         <view class="stat-item">
           <view class="stat-label">团销售金额</view>
-          <view class="stat-value">{{ statsData.salesAmount }}<text class="unit">万</text></view>
+          <view class="stat-value" v-html="formatNum(leaderInfo.salePrice)"></view>
         </view>
         <view class="stat-item">
           <view class="stat-label">团长推广金</view>
-          <view class="stat-value">{{ statsData.promotionAmount }}<text class="unit">万</text></view>
+          <view class="stat-value" v-html="formatNum(leaderInfo.commissionPrice)"></view>
         </view>
       </view>
     </view>
@@ -137,14 +128,8 @@ export default {
   },
   data() {
     return {
-      datetimerange: [Date.now(), (new Date()).setHours(23, 59, 59)],
       PROFILE_SCENE,
-      statsData: {
-        teamCount: 0,
-        orderCount: 0,
-        salesAmount: 31,
-        promotionAmount: 2
-      },
+      leaderInfo: {},
       recommendProduct: {
         name: '山东xxxxxxxxxx',
         sales: 13123,
@@ -170,17 +155,25 @@ export default {
       ]
     }
   },
-  onLoad() {
-    this.loadStatsData()
-  },
+  onShow() {
+		this.initData()
+		this.$nextTick(() => {
+			this.$refs.userProfileRef && this.$refs.userProfileRef.getUserInfo()
+		})
+	},
   methods: {
-    async loadStatsData() {
+    formatNum(num) {
+      if (!num) return '0'
+      if (num < 10000) return `${num}`
+      return `${Math.round((num / 10000) * 100) / 100}<span class="stat-value__unit">万</span>`
+    },
+    updateUserInfo(val) {
+      const { teamLeader } = val
+			this.leaderInfo = teamLeader;
+		},
+    async initData() {
       try {
-        // 模拟API调用获取统计数据
-        const response = await this.$http.post('/leader/getStats', {
-          dateRange: this.datetimerange
-        })
-        this.statsData = response.data || this.statsData
+
       } catch (error) {
         console.log('获取统计数据失败:', error)
       }
@@ -207,17 +200,16 @@ export default {
       })
     }
   },
-  watch: {
-    datetimerange: {
-      handler() {
-        this.loadStatsData()
-      },
-      deep: true
-    }
-  }
 }
 </script>
 
 <style lang="scss" scoped>
 @import './index.scss';
+</style>
+<style>
+.stat-value__unit {
+  font-size: 24rpx;
+  color: #6B7280;
+  margin-left: 4rpx;
+}
 </style>

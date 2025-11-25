@@ -10,7 +10,10 @@
 			</view>
 		</UploadProfile>
 		<view class="deta_inf">
-			<view class="name">{{ userInfo.nickName || '微信用户' }}</view>
+			<view class="name-box">
+				<view class="name">{{ userInfo.nickName || '微信用户' }}</view>
+				<image v-if="userInfo?.teamLeader?.level" class="name-box__icon" :src="LEADER_LEVEL_ICON?.[userInfo?.teamLeader?.level]" mode="widthFix"></image>
+			</view>
       <view v-if="userInfo.id" class="user-id">ID: {{ userInfo.id || '-' }} <image class="copy-icon" src="https://melonbamboo.oss-cn-beijing.aliyuncs.com/melonbamboo/bd39793bb992485995a2cad9664fd851/copy-icon.png?Expires=2078101640&OSSAccessKeyId=LTAI5tHrbcXwiX27kw8s1cSb&Signature=Ss38DuvAw0efEqUHnF%2FWSuB1dqI%3D" @click="copyUserId(userInfo.id)"></image></view>
 		</view>
 	</view>
@@ -18,14 +21,14 @@
 
 <script>
 	import UploadProfile from '@/components/upload-profile/index.vue'
-	import { PROFILE_SCENE } from './constants';
+	import { LEADER_LEVEL_ICON, PROFILE_SCENE } from './constants';
 
   export default {
     name: 'UserProfile',
 		props: {
 			scene: {
 				required: false,
-				type: PROFILE_SCENE,
+				type: Number,
 				default: PROFILE_SCENE.PERSONAL
 			},
 		},
@@ -35,11 +38,9 @@
     data() {
       return {
         userInfo: {},
-				PROFILE_SCENE
+				PROFILE_SCENE,
+				LEADER_LEVEL_ICON
       }
-    },
-    mounted() {
-      this.getUserInfo()
     },
     methods: {
       copyUserId(data) {
