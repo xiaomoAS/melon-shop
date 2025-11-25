@@ -111,12 +111,15 @@
         <text>团长二维码</text>
       </button>
     </view>
+
+    <CodePopup ref="codePopupRef" />
   </view>
 </template>
 
 <script>
 import UserProfile from '@/components/user-profile/index.vue'
 import { PROFILE_SCENE } from '@/components/user-profile/constants.ts'
+import CodePopup from './components/code-popup/index.vue';
 
 export default {
   name: 'GroupLeader',
@@ -124,12 +127,14 @@ export default {
     styleIsolation: 'shared'
   },
   components: {
-    UserProfile
+    UserProfile,
+    CodePopup
   },
   data() {
     return {
       PROFILE_SCENE,
       leaderInfo: {},
+      userInfo: {},
       recommendProduct: {
         name: '山东xxxxxxxxxx',
         sales: 13123,
@@ -170,6 +175,7 @@ export default {
     updateUserInfo(val) {
       const { teamLeader } = val
 			this.leaderInfo = teamLeader;
+			this.userInfo = val;
 		},
     async initData() {
       try {
@@ -195,9 +201,9 @@ export default {
       })
     },
     showQRCode() {
-      uni.navigateTo({
-        url: '/pages/leader-qrcode/index'
-      })
+      if (this.$refs.codePopupRef) {
+        this.$refs.codePopupRef.open(this.userInfo)
+      }
     }
   },
 }
