@@ -43,7 +43,7 @@
       </view>
     </view>
 
-    <button class="batch-btn">下载明细</button>
+    <button class="batch-btn">下载团员明细</button>
 
 
     <!-- 团员列表 -->
@@ -227,7 +227,7 @@ export default {
       if (!result.confirm) return
       
       try {
-        await this.$http.post('/team/leader/removeUser', {
+        await this.$http.post('/team/leader/deleteUser', {
           userId: member.userId
         })
         
@@ -240,10 +240,6 @@ export default {
         this.resetAndSearch()
       } catch (error) {
         console.error('删除团员失败:', error)
-        uni.showToast({
-          title: '删除失败',
-          icon: 'none'
-        })
       }
     }
   },

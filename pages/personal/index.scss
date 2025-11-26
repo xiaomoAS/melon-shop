@@ -420,3 +420,15 @@ page {
   border-radius: 100rpx;
   color: #FFFFFF;
 }
+.join-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 28rpx;
+  color: #8F8F8F;
+
+  &__strong-text {
+    font-weight: 600;
+    color: #262626;
+  }
+}

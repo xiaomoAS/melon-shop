@@ -79,7 +79,10 @@
 
 		<view v-if="!userInfo.teamLeader && !userInfo.teamUser" class="bottom-button" @click="openArticleHandler">我要当团长!</view>
 		<view v-if="userInfo.teamLeader" class="bottom-button" @click="toGroupLeaderPage">切换团长端</view>
-		<view v-if="userInfo.teamUser" class="bottom-button" @click="withdrawhandler">我要退团</view>
+		<view v-if="userInfo.teamUser" class="join-box">
+			<text>当前加入团：<text class="join-box__strong-text">{{ userInfo.teamUser.leaderNickName }}</text>的团</text>
+			<view class="bottom-button" @click="withdrawhandler">我要退团</view>
+		</view>
 
 		<Recharge ref="rechargeRef" @success="getMemberInfo"></Recharge>
 	</view>
